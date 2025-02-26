@@ -1,7 +1,7 @@
 {
-  "homepage": "https://gtamon-gt.github.io/usams",
+  "homepage": "https://gtamon-gt.github.io/usams-frontend/",
   "name": "org-management-module",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "dependencies": {
     "@emotion/react": "^11.11.0",
