@@ -1,0 +1,346 @@
+.guidelines-content {
+  font-family: "General Sans";
+  padding-right: 80px;
+  padding-left: 80px;
+}
+
+.text1faci{
+    text-align: left;
+    margin-top: -10px;
+    margin-left: 40px;
+    font-family: "General Sans";
+   font-weight: 700;
+   font-size: 32px;
+   color: #A93644;
+   display: flex;
+}
+.text2faci{
+    text-align: left;
+    margin-left: -30px;
+    margin-top: 10px;
+    font-family: "General Sans";
+   font-weight: 450;
+   font-size: 26px;
+ }
+ /*
+.main-container2{
+    display: flex;
+       margin-top: 40px;
+       background-color: #D9D9D9;
+       padding: 10px;
+       border-radius: 10px;
+       margin-left: 40px;
+       width: 93%;
+} */
+
+.guidelines-box{
+  display: flex;
+  margin-top: 20px;
+/*  background-color: #D9D9D9; */
+border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 10px;
+}
+.column2faci{
+    margin-left: 50px;
+}
+.column3faci{
+    margin-left: 50px;
+}
+.column1faci{
+    margin-left: 70px;
+}
+.column4faci{
+    margin-left: 50px;
+}
+.orgidinputfaci{
+    font-family: "General Sans";
+   font-weight: 200;
+   font-size: 16px;
+   margin-top: 30px;
+   margin-left: 20px;
+}
+.orgidlabelfaci{
+    margin-left: -95px;
+    
+}
+.orgidinputfaci1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top:5px;
+  }
+.actdateinputfaci{
+    margin-top: 30px;
+    margin-left: 20px;
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+  }
+  .actdateinputfaci1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+  }
+  .actdatelabelfaci{
+    margin-left: -110px;
+  }
+
+.invpersfaci{
+    margin-top: 30px;
+    margin-left: 20px;
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+  }
+.invpersfaci1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+  }
+.invperslabelfaci{
+    margin-left: -100px;
+}
+.actnameinputfaci{
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+    margin-top: 70px;
+    margin-left: 50px;
+  }
+.actnameinputfaci1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+  }
+.actnamelabelfaci{
+    margin-left: -100px;
+}
+  .acttimeinputfaci{
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+    margin-top: 30px;
+    margin-left: 50px;
+  }
+  .acttimeinputfaci1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+  }
+.acttimelabelfaci{
+    margin-left: -100px;
+}
+  .reqdeptinput{
+    margin-top: 30px;
+    margin-left: 50px;
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+  }
+  .reqdeptinput1{
+    margin-top: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 90%;
+    padding: 7px;
+  }
+  .reqdeptlabelfaci{
+    margin-left: 0px;
+  }
+  .participantsinput{
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+    margin-top: 70px;
+    margin-left: 50px;
+  }
+.participantsinput1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+  }
+.participantslabel{
+    margin-left: -120px;
+}
+.numparticipantsinput{
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+    margin-top: 30px;
+    margin-left: 50px;
+  }
+  .numparticipantsinput1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+  }
+.numparticipantslabel{
+    margin-left: 0px;
+}
+.reqpartyinput{
+    margin-top: 30px;
+    margin-left: 50px;
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+  }
+.reqpartyinput1{
+    margin-top: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 90%;
+    padding: 7px;
+  }
+.reqpartylabel{
+    margin-left: -30px;
+  }
+  .venueinput{
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+    margin-top: 70px;
+    margin-left: 50px;
+  }
+.venueinput1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+  }
+.venuelabel{
+    margin-left: -150px;
+}
+
+  .resourcesinput{
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+    margin-top: 30px;
+    margin-left: 50px;
+  }
+  .resourcesinput1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+    height: 110px;
+  }
+.resourceslabel{
+    margin-left: -70px;
+}
+.guidelineform{
+  font-family: "General Sans";
+  font-size: 15px;
+  padding: 10px;
+  text-align: left;
+  margin-left: 10px;
+}
+.text5guide2{
+  margin-left: 30px;
+  margin-top: 10px;
+}
+.editthis{
+  background-color: #292929;
+  padding: 10px ;
+  margin-left: 80%;
+  margin-right: 50px;
+  color: white;
+  border-radius: 20px;
+  font-size: 18px;
+}
+.editthis2{
+  margin-top: 60px;
+  color: white;
+  margin-right: 50px;
+  margin-left: 40px;
+}
+.editthis:hover {
+  background-color: blue;
+  color: white;
+}
+
+.backarrowimg {
+  width: 36px;
+  height: 24px;
+  margin-left: -7px;
+  margin-right: 0px;
+  
+}
+.checkimg{
+  width: 36px;
+    height: 23px;
+    margin-left: 7px;
+    margin-right: 0px;
+}
+.guidelinebtn{
+  background-color: #2A2E3A;
+  padding: 15px 15px 15px 15px;
+  
+  color: white;
+  border-radius: 20px;
+  font-size: 18px;
+display: inline-flex;
+
+}
+.guidelinebtn:hover {
+  background-color: green;
+  color: white;
+}
+.faciformbtn{
+  background-color: #2A2E3A;
+  padding: 15px 15px 15px 15px;
+  
+  color: white;
+  border-radius: 20px;
+  font-size: 18px;
+display: inline-flex;
+
+}
+.faciformbtn:hover {
+  background-color: #3498db;
+  color: white;
+}
+.guidelinebtn1{
+  margin-top: 15px;
+  text-align: right;
+  margin-right: 80px;
+ 
+}
+.guidelineback{
+  background-color: #2A2E3A;
+  padding: 15px 15px 15px 15px;
+  margin-left: 1200px;
+  color: white;
+  border-radius: 20px;
+  font-size: 18px;
+display: inline-flex;
+
+
+}
+.guidelineback:hover {
+  background-color: red;
+  color: white;
+}
+.guidelineback1{
+  margin-top: 15px;
+  text-align: right;
+ 
+  margin-left: 400px;
+ 
+}

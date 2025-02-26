@@ -1,0 +1,66 @@
+/* Actions column cell */
+.proposals-table td:last-child {
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  /* Align buttons in the Actions column */
+  .proposals-table .action-buttons {
+    display: flex;
+    justify-content: center; /* Center-align buttons */
+    gap: 10px;
+     /* Add spacing between buttons */
+  }
+  
+  /* Style for individual buttons */
+  .view-button,
+  .update-button,
+  .delete-button,
+  .comments-button {
+    padding: 8px 12px;
+    background-color: #a93644;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .view-button:hover,
+  .update-button:hover,
+  .delete-button:hover,
+  .comments-button:hover {
+    background-color: #ae4d59;
+  }
+  
+  /* Adjust table title styling */
+  .viewProsTitle {
+    font-size: 35px;
+    color: #a93644;
+    margin-bottom: 20px;
+  }
+  .comments-button:hover {
+    background-color: #ae4d59;
+  }
+  
+  .comments-section {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+  
+  .comment-item {
+    margin-bottom: 10px;
+  }
+  
+  .comment-item p {
+    margin: 0;
+  }
+  
+  .comment-item small {
+    color: #888;
+  }
+  

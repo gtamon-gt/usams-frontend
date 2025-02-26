@@ -1,0 +1,1244 @@
+/*.main-containerfaciform{
+    font-family: "General Sans";
+    
+       margin-top: 40px;
+       background-color: #D9D9D9;
+       padding: 10px;
+       border-radius: 10px;
+       margin-left: 40px;
+       width: 93%;
+} */
+
+
+.faciform-content {
+  font-family: "General Sans";
+  padding-right: 80px;
+  padding-left: 80px;
+}
+
+.acttypeinput{
+    display: flex;
+}
+.titleact{
+    font-size: 22px;
+  text-align: left;
+  margin-left: 100px;
+}
+.acttypetext1{
+    margin-left: 20px;
+    font-size: 22px;
+  text-align: left;
+  
+}
+.acttypechoices{
+    margin-top: 45px;
+    display: flex;
+    
+    font-size: 18px;
+}
+.universitysponsored{
+    margin-left: 100px;
+}
+.studentsponsored{
+    margin-left: 50px;
+}
+.actnameguide{
+   border-radius: 5px;
+   border: 2px solid #2A2E3A;
+font-size: 16px;
+padding: 10px;
+height: 20px;
+margin-top: 30px;
+margin-left: 20px;
+width: 22%;
+outline: none;
+transition: border-color 0.3s;
+}
+.actnameguide:focus {
+    border-color: #1abc9c; /* Change border color on focus */
+}
+.progdetails{
+    text-align: left;
+    margin-left: 20px;
+    font-size: 22px;
+    margin-top: 10px;
+}
+.progdetailsform{
+    justify-content: flex-start;
+    margin-top: 20px;
+    display: flex;
+}
+.col1{
+    margin-left: 10%;
+}
+.col2{
+    margin-left: 80px;
+}
+.col3{
+    margin-left: 80px;
+}
+.col4{
+    margin-left: 80px;
+}
+.col5{
+    margin-left: 80px;
+}
+.dateform{
+    margin-top: 20px;
+}
+.dateformlabel1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    margin-top: 5px;
+    transition: border-color 0.3s;
+    outline: none;
+    border: 2px solid #2A2E3A;
+}
+.timefield{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    margin-top: 5px;
+    transition: border-color 0.3s;
+    outline: none;
+    border: 2px solid #2A2E3A;
+    width: 198px;
+}
+.timelabel{
+    margin-right: 138px;
+}
+
+.suspensionfield{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    margin-top: 5px;
+    transition: border-color 0.3s;
+    outline: none;
+    border: 2px solid #2A2E3A;
+    width: 210px; 
+}
+.dateformlabel1:focus {
+    border: 2px solid #1abc9c; /* Change border color on focus */
+}
+.dateformlabel{
+    font-size: 16px;
+    margin-left: -90px;
+}
+.timedurationform{
+    margin-left: -7px;
+}
+.reqpartform{
+    margin-left: -22px;
+}
+.participantsform{
+    margin-left: -55px;
+}
+.designationlabel{
+   margin-right: 128px;
+}
+.positionlabel{
+   margin-right: 73px;
+}
+.venuetext{
+    text-align: left;
+    font-size: 22px;
+    margin-top: 10px;
+}
+.venueform{
+    display: flex
+}
+.col1venue{
+    margin-left: 10%;
+}
+.col2venue{
+    margin-left: 80px;
+}
+.col3venue{
+    margin-left: 80px;
+}
+.col4venue{
+    margin-left: 80px;
+}
+.sportspalace{
+    margin-top: 25px;
+}
+.Library{
+    margin-top: 25px;
+    margin-left: -7px;
+}
+.othervenuelabel1{
+    margin-left: 5px;
+}
+.chapelcheckbox{
+    margin-top: 25px;
+    margin-left: -70%;
+}
+.othervenuelabel1{
+    outline: none;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    border-bottom: 1px solid black;
+}
+.aircoolerslabel{
+    outline: none;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    border-bottom: 1px solid black;
+    width: 25px;
+}
+.socialhall{
+    margin-left: -18px;
+    margin-top: 25px;
+}
+.col1reqs{
+    margin-left: 10%;
+}
+.col2reqs{
+    margin-left: 80px;
+}
+.col3reqs{
+    margin-left: 70px;
+}
+.col4reqs{
+    margin-left: 100px;
+}
+.uncflag{
+    margin-top: 25px;
+    margin-left: -33px;
+}
+.aircon{
+    margin-top: 25px;
+    margin-left: -55px;
+}
+.Aeratron{
+    margin-top: 25px;
+    margin-left: -12px;
+}
+.aircoolers{
+    margin-top: 25px;
+    margin-left: 66px;
+}
+.generator{   
+    margin-top: 25px;
+    margin-left: 63px;
+}
+.displayboards{
+    margin-top: 25px;
+    margin-left: 93px;
+}
+.monobloc{
+    margin-top: 25px;
+}
+.paviliontable{
+    margin-top: 25px;
+    margin-left: -20px; 
+}
+.othersreqs{
+    margin-top: 25px;
+    margin-left: 57px;
+}
+.stillcam{
+    margin-top: 25px;
+    margin-left: -20px;
+}
+.video{
+    margin-top: 25px;
+    margin-left: -62px;
+}
+.microphone{
+    margin-top: 25px;
+    margin-left: -10px;
+}
+.computer{
+    margin-top: 25px;
+   margin-left: 50px;
+}
+.projector{
+    margin-top: 25px;
+   margin-left: 75px;
+}
+.col2amsco{
+    margin-left: 92px;
+}
+.col3amsco{
+    margin-left: 83px;
+}
+.printer{
+    margin-top: 25px;
+   margin-left: -45px;
+}
+.security{
+    margin-top: 25px;
+    margin-left: -10px;
+}
+.driver{
+    margin-top: 25px;
+    margin-left: -22px;
+}
+.icttech{
+    margin-top: 25px;
+    margin-left: 35px;
+}
+.col1ser{
+    margin-left: 100px;
+}
+.ssoperator{
+    margin-top: 25px;
+    margin-left: 80px;
+}
+.gsoperator{
+    margin-top: 25px;
+    margin-left: 77px;
+}
+.glee{
+    margin-top: 25px;
+    margin-left: -10px;
+}
+.col2ser{
+    margin-left: 60px;
+}
+.dxmc{
+    margin-top: 25px;
+    margin-left: -13px;
+}
+.colmaj{
+    margin-top: 25px;
+    margin-left: 33px;
+}
+.col3ser{
+    margin-left: 120px;
+  /*  margin-right: -50px; */
+}
+.cat{
+    margin-top: 25px;
+    margin-left: 25px;
+}
+.van{
+    margin-top: 25px;
+    margin-left: 110px;
+}
+.col4ser{
+    margin-left: 75px;
+}
+.test{
+    display: flex;
+  flex-direction: column; /* Stack checkboxes vertically */
+  gap: 10px; /* Space between checkboxes */
+}
+.test1{
+    margin-right: 15px;
+  }
+.test2{
+    display: flex;
+}
+.feedback1{
+    margin-top: 15px;
+    font-family: "General Sans";
+    margin-left: 0%;
+    width: 1400px;
+   height: 160px;
+   resize: none;
+   font-size: 20px;
+   padding: 5px;
+}
+.facilistback{
+    margin-top: 80px;
+    margin-left: 60%;
+}
+.unctext{
+    text-align: left;
+    margin-top: -10px;
+    margin-left: 45px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-family: "General Sans";
+    font-weight: 400px;
+    
+}
+.guidelinebackbtn{
+    background-color: #2A2E3A; 
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-left: 680px;
+   
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0.3px;
+    font-size: 18px;
+  display: inline-flex;
+}
+.guidelinebackbtn:hover{
+    color: white;
+    cursor: pointer;
+}
+.guidelinenextbtn{
+    background-color: #A93644;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 22px;
+    padding-left: 22px;
+    margin-left: 15px;
+
+    color: white;    border-radius: 8px;
+
+    box-shadow: 0.3px;
+    font-size: 18px;
+  display: inline-flex;
+}
+.guidelinenextbtn:hover{
+    color: white;
+    cursor: pointer;
+}
+
+.actlistback{
+    background-color: #2A2E3A; 
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-left: 780px;
+   
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0.3px;
+    font-size: 18px;
+  display: inline-flex;
+}
+.actlistback:hover{
+    color: white;
+    cursor: pointer;
+}
+.approvereturnedback{
+    background-color: #2A2E3A; 
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-left: 780px;
+   
+   position: relative;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0.3px;
+    font-size: 18px;
+  display: inline-flex;
+}
+.approvereturnedback:hover{
+    color: white;
+    cursor: pointer;
+}
+.approvereturnedmenu{
+    background-color: #A93644;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left: 15px;
+
+    color: white;   
+     border-radius: 8px;
+
+    box-shadow: 0.3px;
+    font-size: 18px;
+  display: inline-flex;
+}
+.approvereturnedmenu:hover{
+    color: white;
+    cursor: pointer;
+}
+.actlistmenu{
+    background-color: #A93644;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left: 15px;
+
+    color: white;   
+     border-radius: 8px;
+
+    box-shadow: 0.3px;
+    font-size: 18px;
+  display: inline-flex;
+}
+.actlistmenu:hover{
+    color: white;
+    cursor: pointer;
+}
+.pendingmenu{
+    background-color: #2A2E3A;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left: 715px;
+
+    color: white;   
+     border-radius: 8px;
+
+    box-shadow: 0.3px;
+    font-size: 18px;
+  display: inline-flex;
+}
+.pendingmenu:hover{
+    color: white;
+    cursor: pointer;
+}
+.pendingmenugbm{
+  background-color: #2A2E3A;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-left: 635px;
+
+  color: white;   
+   border-radius: 8px;
+
+  box-shadow: 0.3px;
+  font-size: 18px;
+display: inline-flex;
+}
+.pendingmenugbm:hover{
+  color: white;
+  cursor: pointer;
+}
+.approvedmenu{
+    background-color: #2A2E3A;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left: 700px;
+
+    color: white;   
+     border-radius: 8px;
+
+    box-shadow: 0.3px;
+    font-size: 18px;
+  display: inline-flex;
+}
+.approvedmenu:hover{
+    color: white;
+    cursor: pointer;
+}
+.pendingmenu1{
+    background-color: #2A2E3A;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left: 725px;
+
+    color: white;   
+     border-radius: 8px;
+
+    box-shadow: 0.3px;
+    font-size: 18px;
+  display: inline-flex;
+}
+.pendingmenu1:hover{
+    color: white;
+    cursor: pointer;
+}
+.submitfacibutton{
+    margin-top: 15px;
+  margin-right: 100px;
+}
+.submitfacibtn{
+    background-color: #A93644;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left: 81px;
+    margin-bottom: 27px;
+    color: white;
+    border-radius: 8px;
+  
+    box-shadow: 0.3px;
+    font-size: 18px;
+  display: inline-flex;
+}
+.submitfacibtn:hover {
+    background-color: #3d8596;
+    color: white;
+    cursor: pointer;
+  }
+.submitfacibutton1{
+    margin-top: 15px;
+  margin-left: 850px;
+}
+  .approvebtn1{
+    background-color: #A93644;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left: 81px;
+    margin-bottom: 27px;
+    color: white;
+    border-radius: 8px;
+  
+    box-shadow: 0.3px;
+    font-size: 18px;
+  display: inline-flex;
+}
+.approvebtn1:hover {
+    background-color: #3d8596;
+    color: white;
+    cursor: pointer;
+  }
+  .returnbtn{
+    background-color: #2A2E3A;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left: 81px;
+    margin-bottom: 27px;
+    color: white;
+    border-radius: 8px;
+  
+    box-shadow: 0.3px;
+    font-size: 18px;
+  display: inline-flex;
+  margin-right: -50px;
+}
+.returnbtn:hover {
+    
+    color: white;
+    cursor: pointer;
+  }
+
+
+/*from incampus CSS */
+
+.text1{
+    text-align: left;
+    margin-top: -10px;
+    margin-left: 40px;
+    font-family: "General Sans";
+   font-weight: 700;
+   font-size: 32px;
+   color: #A93644;
+ }
+ .hr1{
+    padding: 1.5px 10px;
+    background-color: #A93645;
+    width: 92%;
+    border-radius: 8px;
+    margin-left: 40px;
+ }
+ .main-container1{
+    display: flex;
+       margin-top: 40px;
+       background-color: #D9D9D9;
+       padding: 10px;
+       border-radius: 10px;
+       margin-left: 40px;
+       width: 93%;
+     }
+ .text2{
+    text-align: left;
+    margin-left: -30px;
+    margin-top: 10px;
+    font-family: "General Sans";
+   font-weight: 450;
+   font-size: 26px;
+ }
+ .text2in{
+  text-align: left;
+    margin-left: 20px;
+    margin-top: 10px;
+    font-family: "General Sans";
+   font-weight: 450;
+   font-size: 26px;
+ }
+
+ .orgidinput{
+   margin-top: 30px;
+   margin-left: 10px;
+   font-family: "General Sans";
+   font-weight: 200;
+   font-size: 16px;
+   
+ }
+ .orgidinput1{
+   border-radius: 5px;
+   font-size: 16px;
+   padding: 7px;
+   width: 50%;
+ }
+ .orgnameinput{
+   font-family: "General Sans";
+   font-weight: 200;
+   font-size: 16px;
+   margin-top: 70px;
+   margin-left: 8px;
+ }
+ .orgnameinput1{
+   border-radius: 5px;
+   font-size: 16px;
+   padding: 7px;
+   width: 50%;
+ }
+ .acttimeinput{
+   font-family: "General Sans";
+   font-weight: 200;
+   font-size: 16px;
+   margin-top: 37px;
+   margin-left: 40px;
+ }
+ .acttimeinput1{
+   border-radius: 5px;
+   font-size: 16px;
+   padding: 7px;
+   width: 55%;
+ }
+ .actnameinput{
+   margin-top: 40px;
+   margin-left: 13px;
+   font-family: "General Sans";
+   font-weight: 200;
+   font-size: 16px;
+ }
+ .actnameinput1{
+   border-radius: 5px;
+   font-size: 16px;
+   padding: 7px;
+   width: 55%;
+
+ }
+
+ .actdateinput{
+   margin-top: 40px;
+   margin-left: 25px;
+   font-family: "General Sans";
+   font-weight: 200;
+   font-size: 16px;
+ }
+ .actdateinput1{
+   border-radius: 5px;
+   font-size: 16px;
+   padding: 7px;
+   width: 55%;
+
+ }
+
+ .actdesinput{
+   margin-top: 15px;
+   margin-left: 12px;
+   font-family: "General Sans";
+   font-weight: 200;
+   font-size: 16px;
+   display: flex;
+   
+ }
+ .actdes1{
+   width: 179px;
+   height: 80px;
+   margin-left: 5px;
+ }
+ .actdes{
+   margin-top: 30px;
+ }
+.text3{
+   margin-left: -45px;
+   margin-top: 20px;
+   font-family: "General Sans";
+   font-weight: 300;
+   font-size: 20px;
+}
+.text4{
+   font-family: "General Sans";
+   font-weight: 300;
+   font-size: 16px;
+   margin-top: 5px;
+   text-align: left;
+   margin-left: 120px;
+   color: #878787;
+}
+.text5{
+   margin-left: -15px;
+   margin-top: 20px;
+   font-family: "General Sans";
+   font-weight: 300;
+   font-size: 18px;
+}
+.proceedin{
+   background-color: #2A2E3A;
+   padding: 20px;
+   color: white;
+   border-radius: 20px;
+   font-size: 18px;
+
+}
+.proceedin:hover {
+   background-color: green;
+   color: white;
+ }
+.proceedinbutton{
+   margin-top: 60px;
+   text-align: right;
+   margin-right: 80px;
+}
+
+.fileinput1{
+  margin-top: 25px;
+  margin-left: -60px;
+  font-family: "General Sans";
+   font-size: 14px;
+}
+.text3app{
+  margin-left: 40px;
+  margin-top: 48px;
+  font-family: "General Sans";
+  font-weight: 100;
+  font-size: 18px;
+}
+.filesub{
+  margin-top: 10px;
+  margin-left: 40px;
+  color: #878787;
+}
+.feedbackactinput{
+  font-family: "General Sans";
+  font-weight: 200;
+  font-size: 16px;
+  margin-top: 30px;
+  margin-left: 120px;
+}
+.feedbackinputact1{
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 7px;
+  width: 130%;
+  margin-top: 5px;
+  height: 110px;
+}
+.feedbackact{
+  margin-left: -100px;
+}
+.approvebtn{
+  background-color: #2A2E3A;
+  padding: 20px;
+  color: white;
+  border-radius: 20px;
+  font-size: 18px;
+
+}
+.approvebtn:hover {
+  background-color: green;
+  color: white;
+}
+.approvebutton{
+  margin-top: 60px;
+ 
+  margin-right: 50px;
+}
+.rejectbtn{
+  background-color: #2A2E3A;
+  padding: 20px 30px 20px 30px;
+  color: white;
+  border-radius: 20px;
+  font-size: 18px;
+
+}
+.rejectbtn:hover {
+  background-color: red;
+  color: white;
+}
+.rejectbutton{
+  margin-top: 60px;
+  
+  margin-right: 50px;
+}
+.buttonsapp{
+  display: flex;
+  margin-left: 77%;
+  margin-top: 0px;
+}
+.column1approve{
+  margin-left: 60px;
+}
+.chedcontainer{
+  border-style: groove;
+ 
+  padding: 10px;
+  margin-top: 10px;
+}
+.column3off{
+  margin-left: 50px;
+  margin-top: 70px;
+}
+.pdfoff{
+  height: 70px;
+   width: 70px;
+  
+}
+.filename{
+  font-size: 12px;
+  font-family: "General Sans";
+}
+.text3off{
+  font-family: "General Sans";
+}
+.checkbox1{
+  margin-left: -20px;
+  margin-top: 10px;
+}
+.column4off{
+  margin-left: 50px;
+  margin-top: 120px;
+}
+.filecolumnoff{
+  margin-top: 10px;
+}
+.text5off{
+  font-family: "General Sans";
+}
+
+/*from facires */
+
+.text1faci{
+    text-align: left;
+    margin-top: -10px;
+    margin-left: 40px;
+    font-family: "General Sans";
+   font-weight: 700;
+   font-size: 32px;
+   color: #A93644;
+}
+.text2faci{
+    text-align: left;
+    margin-left: -30px;
+    margin-top: 10px;
+    font-family: "General Sans";
+   font-weight: 450;
+   font-size: 26px;
+ }
+ /*
+.main-container2{
+    display: flex;
+       margin-top: 40px;
+       background-color: #D9D9D9;
+       padding: 10px;
+       border-radius: 10px;
+       margin-left: 40px;
+       width: 93%;
+} */
+
+.main-container2{
+  display: flex;
+  margin-top: 20px;
+/*  background-color: #D9D9D9; */
+border: 2px solid grey;
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: 40px;
+  width: 93%;
+}
+.column2faci{
+    margin-left: 50px;
+}
+.column3faci{
+    margin-left: 50px;
+}
+.column1faci{
+    margin-left: 70px;
+}
+.column4faci{
+    margin-left: 50px;
+}
+.orgidinputfaci{
+    font-family: "General Sans";
+   font-weight: 200;
+   font-size: 16px;
+   margin-top: 30px;
+   margin-left: 20px;
+}
+.orgidlabelfaci{
+    margin-left: -95px;
+    
+}
+.orgidinputfaci1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top:5px;
+  }
+.actdateinputfaci{
+    margin-top: 30px;
+    margin-left: 20px;
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+  }
+  .actdateinputfaci1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+  }
+  .actdatelabelfaci{
+    margin-left: -110px;
+  }
+
+.invpersfaci{
+    margin-top: 30px;
+    margin-left: 20px;
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+  }
+.invpersfaci1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+  }
+.invperslabelfaci{
+    margin-left: -100px;
+}
+.actnameinputfaci{
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+    margin-top: 70px;
+    margin-left: 50px;
+  }
+.actnameinputfaci1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+  }
+.actnamelabelfaci{
+    margin-left: -100px;
+}
+  .acttimeinputfaci{
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+    margin-top: 30px;
+    margin-left: 50px;
+  }
+  .acttimeinputfaci1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+  }
+.acttimelabelfaci{
+    margin-left: -100px;
+}
+  .reqdeptinput{
+    margin-top: 30px;
+    margin-left: 50px;
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+  }
+  .reqdeptinput1{
+    margin-top: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 90%;
+    padding: 7px;
+  }
+  .reqdeptlabelfaci{
+    margin-left: 0px;
+  }
+  .participantsinput{
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+    margin-top: 70px;
+    margin-left: 50px;
+  }
+.participantsinput1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+  }
+.participantslabel{
+    margin-left: -120px;
+}
+.numparticipantsinput{
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+    margin-top: 30px;
+    margin-left: 50px;
+  }
+  .numparticipantsinput1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+  }
+.numparticipantslabel{
+    margin-left: 0px;
+}
+.reqpartyinput{
+    margin-top: 30px;
+    margin-left: 50px;
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+  }
+.reqpartyinput1{
+    margin-top: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 90%;
+    padding: 7px;
+  }
+.reqpartylabel{
+    margin-left: -30px;
+  }
+  .venueinput{
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+    margin-top: 70px;
+    margin-left: 50px;
+  }
+.venueinput1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+  }
+.venuelabel{
+    margin-left: -150px;
+}
+
+  .resourcesinput{
+    font-family: "General Sans";
+    font-weight: 200;
+    font-size: 16px;
+    margin-top: 30px;
+    margin-left: 50px;
+  }
+  .resourcesinput1{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 7px;
+    width: 90%;
+    margin-top: 5px;
+    height: 110px;
+  }
+.resourceslabel{
+    margin-left: -70px;
+}
+.text5guide2{
+  margin-left: 30px;
+  margin-top: 10px;
+}
+.editthis{
+  background-color: #292929;
+  padding: 10px ;
+  margin-left: 80%;
+  margin-right: 50px;
+  color: white;
+  border-radius: 20px;
+  font-size: 18px;
+}
+.editthis2{
+  margin-top: 60px;
+  color: white;
+  margin-right: 50px;
+  margin-left: 40px;
+}
+.editthis:hover {
+  background-color: blue;
+  color: white;
+}
+
+.backarrowimg {
+  width: 36px;
+  height: 24px;
+  margin-left: -7px;
+  margin-right: 0px;
+  
+}
+.checkimg{
+  width: 36px;
+    height: 23px;
+    margin-left: 7px;
+    margin-right: 0px;
+}
+.guidelinebtn{
+  background-color: #2A2E3A;
+  padding: 15px 15px 15px 15px;
+  
+  color: white;
+  border-radius: 20px;
+  font-size: 18px;
+display: inline-flex;
+
+}
+.guidelinebtn:hover {
+  background-color: green;
+  color: white;
+}
+.faciformbtn{
+  background-color: #2A2E3A;
+  padding: 15px 15px 15px 15px;
+  
+  color: white;
+  border-radius: 20px;
+  font-size: 18px;
+display: inline-flex;
+
+}
+.faciformbtn:hover {
+  background-color: #3498db;
+  color: white;
+}
+.guidelinebtn1{
+  margin-top: 15px;
+  text-align: right;
+  margin-right: 80px;
+ 
+}
+.guidelineback{
+  background-color: #2A2E3A;
+  padding: 15px 15px 15px 15px;
+  margin-left: 1200px;
+  color: white;
+  border-radius: 20px;
+  font-size: 18px;
+display: inline-flex;
+
+
+}
+.guidelineback:hover {
+  background-color: red;
+  color: white;
+}
+.guidelineback1{
+  margin-top: 15px;
+  text-align: right;
+ 
+  margin-left: 400px;
+ 
+}
+

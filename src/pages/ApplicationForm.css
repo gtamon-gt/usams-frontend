@@ -1,0 +1,131 @@
+.application-form-content {
+  padding: 140px 0px 100px 0px;
+  font-family: "General Sans";
+  font-size: 14px;
+}
+
+.application-form-box {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  border: 2px solid #ddd;
+  padding: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.application-form-box {
+  margin-left: 22%;
+  margin-right: 22%;
+}
+
+.application-form-box2 {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  border: 2px solid #ddd;
+  padding: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.application-form-box2 {
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+.application-form-hr {
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.application-form-input-group {
+  margin-bottom: 15px;
+  line-height: 2.5;
+  text-align: justify;
+}
+
+.application-form-input-group2 {
+  margin-bottom: 15px;
+}
+
+.application-form-input-group3 {
+  margin-bottom: 15px;
+  margin-left: 25px;
+}
+
+.application-form-input-group label {
+  display: block;
+}
+
+.application-form-input-group input[type="text"],
+.application-form-input-group input[type="file"] {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+  font-family: "General Sans";
+}
+
+.application-form-input-group input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.custom-checkbox {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.custom-checkbox::before {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: #A93645;
+  border-radius: 2px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.2s;
+}
+
+.application-form-checkbox2 {
+  display: none; /* Hide the default checkbox */
+}
+
+
+.application-form-checkbox2:checked + .custom-checkbox::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.application-form-input-group input[type="text"]:focus,
+.application-form-input-group input[type="file"]:focus {
+  outline: none;
+  border-color: #A72837;
+}
+
+.application-form-input-group span {
+  display: inline-block;
+  margin-bottom: 0px;
+}
+
+.application-form-submit-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #A72837;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.application-form-file-name {
+  margin-top: 10px;
+}

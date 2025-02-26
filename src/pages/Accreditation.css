@@ -1,0 +1,175 @@
+.accre-form-content {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.accre-form-content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.accre-form-content-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.accre-form-content-subtitle {
+  color: var(--primary-color);
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.accre-form-content-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.accre-form-content-cancel,
+.accre-form-content-submit {
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.accre-form-content-cancel {
+  background-color: black;
+  color: white;
+}
+
+.accre-form-content-submit {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.accre-form-content-form {
+  margin-top: 20px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.accre-form-content-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.accre-form-content-section {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.accre-form-content-label {
+  font-weight: 400px;
+}
+
+.accre-form-content-label2 {
+  font-weight: 400px;
+  margin: 0px;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.accre-form-content-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+  width: 100%;
+}
+
+.accre-form-content-input:focus {
+  border-color: var(--primary-color);
+}
+
+.accre-form-content-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.accre-form-content-table thead {
+  background-color: #f4f4f4;
+
+}
+
+.accre-form-content-table th {
+  font-weight: 100;
+
+}
+
+.accre-form-content-table th,
+.accre-form-content-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.accre-form-content-table-row:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.accre-form-content-remove-btn {
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s;
+  border: none;
+  background: #A93645;
+  font-size: 14px;
+}
+
+.accre-form-content-remove-btn:hover {
+  background-color: darkred;
+}
+
+.accre-form-content-add-member {
+  background-color: #A93645;
+  color: white;
+  padding: 5px 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+  width: 10%;
+}
+
+.accre-form-content-add-member:hover {
+  cursor: pointer;
+  background-color: darkred;
+}
+.accre-form-content-table input {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  background: transparent;
+}
+
+.accre-form-content-table input:focus {
+  border: none;
+  outline: none;
+}
+
+.members-row-buttons {
+  display:flex;
+  flex-direction: row;
+  gap: 10px;
+}

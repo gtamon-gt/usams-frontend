@@ -1,0 +1,131 @@
+.main-content4 {
+    flex: 1;
+    padding: 20px;
+    padding-top: 89px;
+    width: 100%;
+    flex-wrap: nowrap;
+    gap: 20px;
+    font-family: "General Sans";
+  }
+
+.update-org-container {
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+  }
+  
+  .options-tabs {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+    padding-left: 90px;
+    padding-right: 90px;
+    margin-left: -100px;
+    margin-top: 100px;
+  }
+  
+  .tab {
+    flex: 1;
+    position: relative;
+    padding: 20px;
+    padding-top: 35px;
+    margin: 0 10px; 
+    background-color: #D9DDDC;
+    border-radius: 15px;
+    box-shadow:  0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+   
+  }
+  
+  .tab:hover {
+    transform: translateY(-5px);
+  }
+  
+  .tab::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #fff;
+  }
+  
+  .tab::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #fff;
+  }
+
+
+  .options-top {
+    display: block;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .organizations-name {
+    margin-bottom: 0px;
+  }
+
+  .organizations-description {
+    margin-top: 10px;
+  }
+
+  .tab img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    padding: 5px;
+  }
+  
+  .orglist-container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .orglist-border {
+    background-color: #fac9d0;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .organizations-links {
+    color: #2A2E3A;
+    font-weight: 700;
+    margin-bottom: -10px;
+    font-size: 22px;
+  }
+
+  .organizations-links:hover {
+    color: #A93645;
+  }
+
+  .organizations-desc {
+    color: #2A2E3A;
+    font-weight: 400;
+    font-size: 16px;
+  }
+ 

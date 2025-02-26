@@ -1,0 +1,260 @@
+.main-containerfaciform {
+    padding: 30px;
+    padding-left: 40px;
+    padding-right: 40px;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .section-divider {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+  }
+  
+  .acttype-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
+    margin-bottom: 20px;
+  }
+
+  .acttype-section,
+  .title-act-section {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px; 
+  }
+
+  .acttype-text,
+  .title-act-label {
+    font-weight: 500;
+  }
+
+  .acttype-choices {
+    display: flex;
+    flex-direction: row; 
+    gap: 10px;
+  }
+
+  .student-sponsored,
+  .university-sponsored {
+    display: flex;
+    align-items: center;
+  }
+
+  .actname-guide {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  /* Program details */
+  .progdetails-text {
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  .progdetails-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 14px;
+  }
+  
+  .progdetails-row {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .progdetails-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .dateform-label,
+  .invpers-form,
+  .reqdept-form,
+  .reqpart-form,
+  .suspension-label,
+  .office-label,
+  .participants-label,
+  .designation-label,
+  .time-label,
+  .position-label,
+  .number-label {
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  
+  .dateform-label1,
+  .time-field {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .suspension-field {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  /* Additional Information */
+  .additional-info {
+    margin-top: 20px;
+  }
+  
+  .additional-info-label {
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  
+  .additional-info-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 100px;
+  }
+  
+  /* Venue */
+  .venuetext {
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  .venue-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 14px;
+  }
+  
+  .venue-row {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .venue-group {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .other-venue-label1 {
+    margin-left: 10px;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  /* Resources */
+  .resources-row {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .resources-group {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .resources-check {
+    margin-right: 10px;
+  }
+  
+  .aircoolers-label {
+    margin-left: 10px;
+    width: 50px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .aircooler-label {
+    margin-left: 10px;
+  }
+  
+  /* AMSCO and ICT Resources */
+  .amsco-row {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .amsco-group {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .amsco-check {
+    margin-right: 10px;
+  }
+  
+  /* Personnel and Special Services */
+  .services-row {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .services-group {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .services-check {
+    margin-right: 10px;
+  }
+  
+  /* Submit button */
+  .submitfacibutton {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .submitfacibtn {
+    background-color: #A72837;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .submitfacibtn:hover {
+    background-color: #8b222f;
+  }
+  
+  .input {
+    font-family: "General Sans";
+  }
+
+  .adviser-input {
+    margin-top: 20px;
+    padding: 5px;
+    width: 250px;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    border-bottom: 2px solid #213547;
+    font-size: 18px;
+    color: #213547;
+    font-family: "General Sans";
+  }

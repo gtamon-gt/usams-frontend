@@ -1,0 +1,1012 @@
+.main-content7 {
+  padding: 140px 60px 100px 60px;
+  font-family: "General Sans", sans-serif;
+}
+
+.unc-title {
+  font-weight: 400;
+  color: #333;
+  font-size: 15px;
+  padding-bottom: -10px;
+}
+
+.osa-title {
+  font-weight: 400;
+  color: #333;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 13px;
+}
+
+.doc-title {
+  font-weight: 500;
+  color: #333;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 12px;
+}
+
+.incampus-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.incampus-header {
+  flex: 1;
+}
+
+.incampus-title {
+  margin: 0;
+  color: #A72837;
+}
+
+.proposal-form-container {
+  display: flex;
+  gap: 30px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.sidebar {
+  width: 280px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 140px;
+  height: calc(100vh - 140px);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  color: #555;
+}
+
+.sidebar li:hover {
+  background-color: #eef0f2;
+  color: #A72837;
+}
+
+.sidebar li.active {
+  background-color: #f8e5e7;
+  color: #A72837;
+  font-weight: 500;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  color: #555;
+}
+
+.sidebar li:hover {
+  background-color: #eef0f2;
+  color: #A72837;
+}
+
+.sidebar li.active {
+  background-color: #eef0f2;
+  color: #A72837;
+  font-weight: 500;
+}
+
+.form-content {
+  flex: 1;
+  padding: 30px;
+  padding-top: 10px;
+  background-color: #fff;
+  overflow-y: auto;
+  height: calc(100vh - 140px);
+  scrollbar-width: none;
+}
+
+.section h2 {
+  color: #333;
+  margin-bottom: 0px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.section label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section label span {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.section input,
+.section select,
+.section textarea {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+  font-family: "General Sans", sans-serif;
+}
+
+.section input:focus,
+.section select:focus,
+.section textarea:focus {
+  outline: none;
+  border-color: #A72837;
+}
+
+.section textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.incampus-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.incampus-button-cancel,
+.incampus-button-proceed {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.incampus-button-cancel {
+  background-color: #f8f9fa;
+  color: #666;
+  border: 1px solid #ddd;
+  text-decoration: none;
+}
+
+.incampus-button-proceed {
+  background-color: #A72837;
+  color: white;
+  border: none;
+}
+
+.incampus-button-cancel:hover {
+  background-color: #e9ecef;
+}
+
+.incampus-button-proceed:hover {
+  background-color: #8f222f;
+}
+
+.form-a-title {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+/* Flexbox container to align the form and table side by side */
+.form-and-table-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Program Form Container */
+.program-form-container {
+  flex: 1;
+  padding-right: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.program-form-container form {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+}
+
+.program-form-container input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.add-program {
+  padding: 6px 12px;
+  background-color: #A72837;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-program:hover {
+  background-color: #8f222f;
+}
+
+/* Common button styles for Edit and Delete */
+.programs-table-container button {
+  padding: 6px 6px;
+  background-color: transparent; /* Remove default background */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.programs-table-container button svg {
+  width: 20px;
+  height: 20px;
+  fill: #666; /* Default color for the icon */
+  transition: fill 0.2s ease; /* Smooth transition for color change */
+}
+
+/* Button hover effects (optional for background) */
+.programs-table-container button:hover {
+  background-color: rgba(0, 0, 0, 0.05); /* Optional for some background effect */
+}
+
+/* Table Container */
+.programs-table-container {
+  flex: 2;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.programs-table-container span {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.programs-table-container h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 500;
+  margin-top: 0px;
+}
+
+.programs-table-container td {
+  font-size: 14px;
+  word-wrap: break-word; /* Ensures that long words wrap onto the next line */
+}
+
+.programs-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.programs-table-container th,
+.programs-table-container td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.programs-table-container th {
+  background-color: #f4f4f4;
+  font-weight: 500;
+}
+
+.programs-table-container tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Custom widths for each column */
+.programs-table-container th:nth-child(1),
+.programs-table-container td:nth-child(1) {
+  width: 35%; /* Program Name - larger width */
+}
+
+.programs-table-container th:nth-child(2),
+.programs-table-container td:nth-child(2) {
+  width: 20%; /* Time - smaller width */
+}
+
+.programs-table-container th:nth-child(3),
+.programs-table-container td:nth-child(3) {
+  width: 25%; /* Persons Involved - medium width */
+}
+
+.programs-table-container th:nth-child(4),
+.programs-table-container td:nth-child(4) {
+  width: 15%; /* Actions - smallest width */
+}
+
+.edit-buttons {
+  display: flex;
+}
+
+/* Grid Layouts for Specific Groups */
+.proponent-group,
+.approval-group,
+.details-group {
+  display: grid;
+  gap: 20px;
+}
+
+.proponent-group,
+.approval-group {
+  grid-template-columns: 1fr 1fr;
+}
+
+.details-group {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.title-field,
+.objectives-field,
+.rationale-field,
+.participants-field {
+  width: 100%;
+}
+
+/* Specific field stylings */
+.title-field input {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.details-group input {
+  width: 100%;
+}
+
+.objectives-field textarea,
+.rationale-field textarea {
+  min-height: 120px;
+}
+
+.participants-field textarea {
+  min-height: 80px;
+}
+
+.section form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.budget-form-and-table {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.budget-form {
+  flex: 1;
+  padding-right: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.budget-table {
+  flex: 2;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.budget-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.budget-table th, .budget-table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.budget-table th {
+  background-color: #f4f4f4;
+  font-weight: 500;
+}
+
+.budget-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.budget-table button {
+  padding: 6px 12px;
+  background-color: #A72837;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.budget-table button:hover {
+  background-color: #8f222f;
+}
+
+.budget-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.budget-form label {
+  display: flex;
+  flex-direction: column;
+}
+
+.budget-form input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.budget-form button {
+  padding: 10px 20px;
+  background-color: #A72837;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.budget-form button:hover {
+  background-color: #8f222f;
+}
+
+.total-amount {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.formb-title {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.budget-table h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 500;
+  margin-top: 0px;
+}
+
+.budget-table span {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.budget-table strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.budget-table td {
+  font-size: 14px;
+}
+
+.custom-line {
+  border: none; 
+  border-top: 1.5px solid #ddd; 
+  margin-top: 45px;
+  margin-bottom: 30px;
+}
+
+.title-custom-line {
+  border: none; 
+  border-top: 1.5px solid #ddd; 
+  margin-top: 20px;
+  margin-bottom: 25px;
+}
+
+.budget-table button {
+  padding: 6px 6px;
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.budget-table button svg {
+  width: 20px;
+  height: 20px;
+  fill: #666; 
+  transition: fill 0.2s ease; 
+}
+
+.budget-table button:hover {
+  background-color: rgba(0, 0, 0, 0.05); 
+}
+
+.budget-table th:nth-child(1),
+.budget-table td:nth-child(1) {
+  width: 45%; 
+}
+
+.budget-table th:nth-child(2),
+.budget-table td:nth-child(2) {
+  width: 40%; 
+}
+
+.budget-table th:nth-child(3),
+.budget-table td:nth-child(3) {
+  width: 15%; 
+}
+
+.two th:nth-child(1),
+.two td:nth-child(1) {
+  width: 60%; 
+}
+
+.two th:nth-child(2),
+.two td:nth-child(2) {
+  width: 10%; 
+}
+
+.two th:nth-child(3),
+.two td:nth-child(3) {
+  width: 15%; 
+}
+
+.two th:nth-child(4),
+.two td:nth-child(4) {
+  width: 15%; 
+}
+
+.form-c-section {
+  margin-bottom: 30px;
+}
+
+.form-c-title {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.form-c-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.student-form-container {
+  flex: 1;
+  padding-right: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.student-form-container form {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+}
+
+.student-form-container input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.add-student {
+  padding: 6px 12px;
+  background-color: #A72837;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-student:hover {
+  background-color: #8f222f;
+}
+
+.withpermit {
+  flex: 2;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.withpermit span {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.withpermit h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 500;
+  margin-top: 0px;
+}
+
+.withpermit td {
+  font-size: 14px;
+  word-wrap: break-word;
+}
+
+.withpermit table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.withpermit th,
+.withpermit td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.withpermit th {
+  background-color: #f4f4f4;
+  font-weight: 500;
+}
+
+.withpermit tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.withpermit button {
+  padding: 6px 6px;
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.withpermit button svg {
+  width: 20px;
+  height: 20px;
+  fill: #666;
+  transition: fill 0.2s ease;
+}
+
+.withpermit button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.form-d-section {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.form-d-title {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.form-d-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-d-content label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-d-content label span {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.form-d-content select,
+.form-d-content textarea {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.form-d-content select:focus,
+.form-d-content textarea:focus {
+  outline: none;
+  border-color: #A72837;
+}
+
+.form-e-section {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.form-e-title {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.form-e-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.objective h3 {
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+.objective input {
+  margin-bottom: 10px;
+}
+
+.form-f-section,
+.form-g-section {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.form-f-title,
+.form-g-title {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.form-f-content,
+.form-g-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-f-content label,
+.form-g-content label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-f-content label span,
+.form-g-content label span {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.form-f-content textarea,
+.form-g-content textarea {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Committee Section Styles */
+.committees-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.committees-field span {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.committee-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.committee-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+}
+
+.committee-item input,
+.committee-item textarea {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+  font-family: "General Sans", sans-serif;
+}
+
+.committee-item input:focus,
+.committee-item textarea:focus {
+  outline: none;
+  border-color: #A72837;
+}
+
+.committee-item textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.committee-item button {
+  align-self: flex-end;
+  padding: 6px 12px;
+  background-color: #A72837;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.committee-item button:hover {
+  background-color: #8f222f;
+}
+
+.committees-field button {
+  align-self: flex-start;
+  padding: 10px 20px;
+  background-color: #A72837;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.committees-field button:hover {
+  background-color: #8f222f;
+}
+
+.main-table th:nth-child(1),
+.main-table td:nth-child(1) {
+  width: 35%; 
+}
+
+.subheading-form-a {
+  color: #333;
+  margin-bottom: 4px;
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 15px;
+}
+
+.withpermit th:nth-child(1),
+.withpermit td:nth-child(1) {
+  width: 17%; /* Student ID - smaller width */
+}
+
+.withpermit th:nth-child(2),
+.withpermit td:nth-child(2) {
+  width: 11; /* Department - medium width */
+}
+
+.withpermit th:nth-child(3),
+.withpermit td:nth-child(3) {
+  width: 25%; /* Student Name - larger width */
+}
+
+.withpermit th:nth-child(4),
+.withpermit td:nth-child(4) {
+  width: 30%; /* Permit Link - larger width */
+}
+
+.withpermit th:nth-child(5),
+.withpermit td:nth-child(5) {
+  width: 17%; /* Actions - smallest width */
+}
+
+.student-form-container form label {
+  display: block;
+  margin-bottom: 10px;
+  position: relative; /* Ensure the label is positioned relative */
+}
+
+.student-form-container form label input {
+  width: 100%; /* Ensure the input takes the full width of the label */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.student-form-container form label ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 150px; /* Adjust as needed */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  position: absolute;
+  z-index: 1000;
+  width: 100%; /* Ensure the ul takes the full width of the label */
+  top: 100%; /* Position the ul below the input */
+  left: 0; /* Align the ul with the left edge of the input */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.student-form-container form label ul li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.student-form-container form label ul li:hover {
+  background-color: #f0f0f0;
+}
+
+.withpermit td {
+  font-size: 14px;
+  word-wrap: break-word; /* Ensure long words wrap onto the next line */
+  overflow-wrap: break-word; /* Ensure long words wrap onto the next line */
+}
+
+.withpermit table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* Ensure the table layout is fixed */
+}
