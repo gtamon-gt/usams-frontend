@@ -203,10 +203,11 @@ const OrgDetails: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <div className="spacer"></div>
   
       <div className="main-content2">
         <div className="org-details-container">
-          <div className="whitespace"></div>
           <div className="org-details-header">
             <img src={`http://127.0.0.1/uploads/${organization.org_header}`} alt={organization.org_name} />
           </div>
@@ -237,7 +238,7 @@ const OrgDetails: React.FC = () => {
             {renderTabContent()}
           </div>
         </div>
-        <div className="org-expanded">
+        {/* <div className="org-expanded">
           <h1 className="org-summary"> Organization Summary </h1>
           <div className="school-year-dropdown">
             <label htmlFor="school-year">School Year:</label>
@@ -268,7 +269,7 @@ const OrgDetails: React.FC = () => {
               <div className="count-label">Members</div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
   
       <div className="footer-container">

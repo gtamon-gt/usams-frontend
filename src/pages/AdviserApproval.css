@@ -39,11 +39,20 @@
     margin-top: -10px;
     margin-right: 100px;
   }
+
+  .header-row-proposals-list {
+    font-weight: 600;
+    border: 0px;
+    margin-bottom: -20px;
+    margin-top: -10px;
+    margin-right: 0px;
+  }
   
   .proposal-cell {
     flex: 1;
     text-align: left;
     padding: 10px;
+    color: #2A2E3A;
   }
 
   .ext {
@@ -110,13 +119,13 @@
   }
   
   .overlay-content button:first-child {
-    background-color: #28a745;
+    background-color: #A93645;
     color: white;
   }
   
   .overlay-content button:last-child {
-    background-color: #dc3545;
-    color: white;
+    background-color: white;
+    color: #A93645;
   }
 
   .instructions {
@@ -136,4 +145,92 @@
   .overlay textarea {
     font-family: 'General Sans';
   }
+
+
+  /*--------------------facility tracker------------------------*/
+
+
+  .header-row1 {
+    font-weight: 600;
+    border: 0px;
+    margin-bottom: -20px;
+    margin-top: -10px;
+    margin-right: 0px;
+  }
   
+
+  .proposals-list1 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  
+  .proposal-cell-status {
+    flex: 1;
+    text-align: left;
+    padding: 10px;
+  }
+  .proposal-cell-facility {
+    flex: 1;
+    text-align: left;
+    padding: 10px;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0;
+   margin-left: 31.5%;
+ 
+  }
+  .search-inputgbm {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0;
+   margin-left: 28%;
+ 
+  }
+
+  .search-inputorg {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0;
+   margin-left: 30%;
+ 
+  }
+
+   /*--------------------UEP List------------------------*/
+   .header-row2 {
+    font-weight: 600;
+    border: 0px;
+    margin-bottom: -20px;
+    margin-top: -10px;
+    margin-right: 0px;
+  }
+
+  .search-input2 {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0;
+   margin-left: 36.5%;
+ 
+  }
+  
+

@@ -374,7 +374,7 @@ const AccreditationForm: React.FC = () => {
             </div>
 
             <div className="accre-form-content-section">
-              <p className="accre-form-content-label font-bold">6. Appendices</p>
+              <p className="accre-form-content-label font-bold">6. Appendices (Document Containing Organization's Vision, Mission, History of the Organization, and Seal of the Organization)</p>
               <input type="file" name="appendices" accept="application/pdf" className="accre-form-content-input" required />
             </div>
           </form>

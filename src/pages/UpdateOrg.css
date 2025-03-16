@@ -1,15 +1,13 @@
 .main-content5 {
   flex: 1;
-  padding: 20px;
-  padding-top: 140px;
-  padding-left: 60px;
-  padding-right: 60px;
+  padding: 0px 120px 0px 120px;
   width: 100%;
   flex-wrap: nowrap;
   gap: 20px;
   font-family: "General Sans";
   padding-bottom: 120px;
 }
+
 
 .update-title {
   color: #A93644;
@@ -200,6 +198,27 @@
   background-color: #17191f;
 }
 
+.editEvent-button {
+  display: flex; 
+  align-items: center;
+  justify-content: center; 
+  gap: 5px; 
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #A72837;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "General Sans";
+  font-size: 15px;
+  height: fit-content;
+}
+
+.editEvent-button:hover {
+  background-color: darkred;
+}
+
 .addEvent-button {
   display: flex; 
   align-items: center;
@@ -332,7 +351,7 @@
 .dialog-content button {
   padding: 8px 16px;
   margin-top: 10px;
-  background-color: #007BFF;
+  background-color: #A72837;
   color: white;
   border: none;
   border-radius: 4px;
@@ -341,7 +360,7 @@
 }
 
 .dialog-content button:hover {
-  background-color: #0056b3;
+  background-color: darkred;
 }
 
 .preview-image-event {

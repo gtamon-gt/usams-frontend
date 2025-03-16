@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './reports.css';
 import './faciformCSS.css';
@@ -31,7 +31,7 @@ const Accomplishment = () => {
   const [documentationPreview, setDocumentationPreview] = useState([]);
   const [financialfiles, setFinancialfiles] = useState([]);
   const [financialfilesPreview, setFinancialfilesPreview] = useState([]);
-  const [date, setDate] = useState('');
+ 
   const [remaining, setRemaining] = useState(0);
   const [total, setTotal] = useState(0);
   const [groupId, setGroupId] = useState("");
@@ -46,10 +46,14 @@ const Accomplishment = () => {
   const [selectedImage1, setSelectedImage1] = useState(null);
   const [selectedImage2, setSelectedImage2] = useState(null);
 
+  const [rows2, setRows2] = useState([{ date: "", reference: "", recipient: "" , amount2: "" }]);
+
+  const{pros_key} = useParams();
+
   useEffect(() => {
     const fetchActivity = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/conducted/activities`);
+        const response = await axios.get("http://localhost:8800/selected/activities/"+pros_key);
         const activities = response.data;
         const matchedOrg = activities.find(act => act.org_id === userId);
         if (matchedOrg) {
@@ -156,6 +160,7 @@ const Accomplishment = () => {
     formData.append("total", total);
     formData.append("remaining", remaining);
     formData.append("records", JSON.stringify(rows));
+    formData.append("records2", JSON.stringify(rows2));
 
     axios
       .post("http://localhost:8800/accomplishment/add", formData)
@@ -173,7 +178,7 @@ const Accomplishment = () => {
   const updateToggle = (id) => {
     setToggle(id);
   };
-
+//table1
   const handleDelete = (index) => {
     const newRows = rows.filter((_, rowIndex) => rowIndex !== index);
     setRows(newRows);
@@ -188,6 +193,21 @@ const Accomplishment = () => {
     newRows[index][field] = value;
     setRows(newRows);
   };
+//table 2
+const handleDelete2 = (index) => {
+  const newRows2 = rows2.filter((_, rowIndex) => rowIndex !== index);
+  setRows2(newRows2);
+};
+
+const addRow2 = () => {
+  setRows2([...rows2, { date: "", reference: "", recipient: "" , amount2: "" }]);
+};
+
+const handleChangeRow2 = (index, field, value) => {
+  const newRows2 = [...rows2];
+  newRows2[index][field] = value;
+  setRows2(newRows2);
+};
 
   const handleImageClick = (src) => {
     setSelectedImage(src);
@@ -376,12 +396,12 @@ const Accomplishment = () => {
                     <label htmlFor="title" className='accomplishment-totalfundlabel'>Total Fund:</label>
                     <input type="text" id="orgidfaci" name="reqdep" className="accomplishment-title" value={total} onChange={e => setTotal(e.target.value)} />
                     <br />
-                    <div className='accomplishment-financialdocstext'>Liquidation of Expenses:</div>
+                    <div className='accomplishment-financialdocstext'>Less: Expenses</div>
                     <table className="accomplishment-financial-table">
                       <thead>
                         <tr>
                           <th>Item</th>
-                          <th>Description</th>
+                          <th>Quantity</th>
                           <th>Amount</th>
                           <th>Actions</th>
                         </tr>
@@ -402,8 +422,34 @@ const Accomplishment = () => {
                     <br />
                     <label htmlFor="title" className='accomplishment-sourcefundlabel'>Remaining Balance:</label>
                     <input type="text" id="orgidfaci" name="reqdep" className="accomplishment-title" value={remaining} onChange={e => setRemaining(e.target.value)} />
+                    <br></br>
+                    <div className='accomplishment-financialdocstext'>Financial Statements: </div>
+                    <table className="accomplishment-financial-table">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Reference No.</th>
+                          <th>Recipient</th>
+                          <th>Amount</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {rows2.map((row2, index) => (
+                          <tr key={index}>
+                            <td><input type="date" value={row2.date} onChange={(e) => handleChangeRow2(index, "date", e.target.value)} /></td>
+                            <td><input type="text" value={row2.reference} onChange={(e) => handleChangeRow2(index, "reference", e.target.value)} /></td>
+                            <td><input type="text" value={row2.recipient} onChange={(e) => handleChangeRow2(index, "recipient", e.target.value)} /></td>
+                            <td><input type="number" value={row2.amount2} onChange={(e) => handleChangeRow2(index, "amount2", e.target.value)} /></td>
+                            <td><button onClick={() => handleDelete2(index)} style={{ backgroundColor: "#A93644", color: "white", border: "none", padding: "5px 10px", cursor: "pointer", borderRadius: "4px" }}>Delete</button></td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                     <br />
-                    <div className='accomplishment-financialdocstext'>Attach Necessary Documents Here:</div>
+                    <button onClick={addRow2} style={{ color: "white", backgroundColor: "#2A2E3A", padding: "8px 12px", border: "none", borderRadius: "4px", cursor: "pointer", marginRight: "10px" }}>Add a Row</button>
+                    <br></br>
+                    <div className='accomplishment-financialdocstext'>Attach Supporting Documents Here:</div>
                     <div className="accomplishment-draganddropfile" style={{ border: dragging ? '2px dashed #4CAF50' : '2px dashed #787276', borderRadius: '5px', padding: '20px', textAlign: 'center', cursor: 'pointer', marginLeft: '2px' }}>
                       <input type="file" name="evaluationfile" id="evaluationfile" onChange={handleFileChange3} accept="image/*" multiple style={{ marginTop: '20px', marginBottom: '20px' }} />
                       <div style={{ display: "flex", gap: "10px", marginTop: "10px", flexWrap: "wrap" }}>

@@ -1,15 +1,16 @@
 .main-content2 {
-  display: flex;
-  height: calc(100vh - 60px); 
-  padding-top: 73px;
-  overflow: hidden; 
+  flex: 1;
+  padding: 0px 120px 0px 120px;
+  width: 100%;
+  overflow-y: auto; 
+  padding-bottom: 115px;
   font-family: "General Sans";
 }
 
 .org-expanded {
   flex: 1;
   margin-right:62px;
-  border: 1.5px solid #95979d;
+  border: 1.5px solid #cacdd4;
   border-radius: 15px;
   margin-top: 70px;
   overflow: hidden;
@@ -17,7 +18,6 @@
   top: 20px; 
   min-height: fit-content; 
   margin-bottom: 25px;
-  background-color: #343a40;
 }
 
 .whitespace {
@@ -251,7 +251,6 @@ strong {
 .event-details {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
 }
 
 .event-name {
@@ -311,7 +310,7 @@ strong {
 }
 
 .event-view-button-button {
-  background-color: #DA4B5C;
+  background-color: #A72837;
   border: none;
   color: white;
   border-radius: 15px;
@@ -357,7 +356,7 @@ strong {
 }
 
 .org-summary {
-  color: white;
+  color: #A93645;
   font-size: 22px;
   font-weight: 600;
   margin-left: 25px;
@@ -374,7 +373,7 @@ strong {
 .school-year-dropdown label {
   font-weight: 400;
   margin-right: 10px;
-  color: #ffffff;
+  color: #2A2E3A;
   font-size: 13px;
 }
 
@@ -423,7 +422,7 @@ strong {
 
 .count-number {
   font-size: 30px;
-  font-weight: bold;
+  font-weight: 600;
   margin-left: 25px;
   margin-bottom: -3px;
 }

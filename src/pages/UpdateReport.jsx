@@ -60,7 +60,10 @@ const [image, setImage] = useState([]); // First set of files
                        { item: "", description: "", amount: "" },
                      ]);
 
-                 
+                     const [fetchedData2, setFetchedData2] = useState([]);
+                     const [rows2, setRows2] = useState([
+                      { date: "", reference: "", recipient: "", amount2: "" },
+                    ]);
 
 
   const [director, setDirector]= useState(null);
@@ -210,6 +213,25 @@ const [image, setImage] = useState([]); // First set of files
             .catch((err) => console.error("Error fetching data:", err));
     }, [reps_id]);
 
+    //fetch financial statements
+    useEffect(() => {
+      if (!reps_id) return;
+  
+      console.log("Fetching data for ID:", reps_id);
+    
+      axios.get(`http://localhost:8800/financial_statements/fetch/${reps_id}`)
+          .then((res) => {
+              console.log("Fetched Data:", res.data);
+              if (res.data && Array.isArray(res.data) && res.data.length > 0) {
+                  setRows2(res.data); // ✅ Set rows correctly
+              } else {
+                  setRows2([]); // Reset if no data is found
+              }
+          })
+          .catch((err) => console.error("Error fetching data:", err));
+  }, [reps_id]);
+
+
       //fetch the data from accomplishment table
       useEffect(() => {
         console.log("Fetching data for ID:", reps_id);
@@ -283,6 +305,7 @@ const handleUpload = () => {
   });
 
   formData.append("records", JSON.stringify(rows));
+  formData.append("records2", JSON.stringify(rows2));
 
   (evalfiles ?? []).forEach((file) => formData.append("evalfiles", file));
   (documentation ?? []).forEach((file) => formData.append("documentation", file));
@@ -299,8 +322,6 @@ const handleUpload = () => {
       alert("Form update failed. Check the console for details.");
   });
 };
-    
-    
     
     
 
@@ -461,7 +482,7 @@ const handleUpload = () => {
         }
     };
 
-       // Handle row deletion
+       
       // Handle row deletion
       const handleDelete = async (indexToRemove) => {
         try {
@@ -480,6 +501,25 @@ const handleUpload = () => {
           console.error("Error deleting financial record:", error);
         }
       };
+
+      // Handle row deletion
+      const handleDelete2 = async (indexToRemove) => {
+        try {
+          const recordToDelete = rows2[indexToRemove]; // Get the specific record
+          if (!recordToDelete || !recordToDelete.fs_id) {
+            console.error("Error: Record ID is missing.");
+            return;
+          }
+      
+          await axios.delete(`http://localhost:8800/financial_statements/${recordToDelete.fs_id}`);
+      
+          // Only update state after successful deletion
+          setRows2((prevData) => prevData.filter((_, index) => index !== indexToRemove));
+      
+        } catch (error) {
+          console.error("Error deleting financial record:", error);
+        }
+      };
       
     
 
@@ -487,7 +527,6 @@ const handleUpload = () => {
 useEffect(() => {
     setRows(fetchedData);
 }, [fetchedData]);
-
 
        // Function to update remaining when rows change
               useEffect(() => {
@@ -513,6 +552,7 @@ const handleEdit = (index) => {
   setSelectedRowIndex(index);
   setFormData(rows[index]);
 };
+
     
       // Handle input changes
       // Handle input changes
@@ -523,6 +563,38 @@ const handleEdit = (index) => {
             );
         });
     };
+
+    //FOR FETCH FINANCIAL STATEMENTS
+
+    // Sync rows with fetched data after changes
+useEffect(() => {
+  setRows2(fetchedData2);
+}, [fetchedData2]);
+  
+    // Add a new row
+    const addRow2 = () => {
+      setRows2([...rows2, { date: "", reference: "", recipient: "", amount2: "" }]);
+  };
+  // Function to update an existing row
+const updateRow2 = (index, updatedData) => {
+setRows2((prevRows2) => prevRows2.map((row2, i) => (i === index ? updatedData : row2)));
+};
+
+// Handle editing a row
+const handleEdit2 = (index) => {
+setSelectedRowIndex(index);
+setFormData(rows[index]);
+};
+
+// Handle input changes
+const handleChangeRow2 = (index, field, value) => {
+  setRows2((prevRows2) => {
+      return prevRows2.map((row2, i) =>
+          i === index ? { ...row2, [field]: field === "amount" ? parseFloat(value) || 0 : value } : row2
+      );
+  });
+};
+  
     
 
       const handleRemaining = () => {
@@ -743,14 +815,13 @@ const handleEdit = (index) => {
     <br></br>
     <br></br>
     <br></br>
-    <div className='financialdocstext'>Liquidation of Expenses: </div>
-      <br></br>
+    <div className='financialdocstext'>Less: Expenses </div>
    
       <table className="financial-table">
   <thead>
     <tr>
       <th>Item</th>
-      <th>Description</th>
+      <th>Quantity</th>
       <th>Amount</th>
       <th>Actions</th>
     </tr>
@@ -805,8 +876,6 @@ const handleEdit = (index) => {
   </tbody>
 </table>
 
-
-
     <br />
     <button
       onClick={addRow}
@@ -823,10 +892,102 @@ const handleEdit = (index) => {
       Add a Row
     </button>
 
+    <br/>
+    <br/>
+<label for="title" className='sourcefundlabel'>Remaning Balance:</label>
+          <input type="text" id="orgidfaci" name="reqdep" className= "title"  value={remaining} 
+                            onChange={e => setRemaining(e.target.value)} 
+       ></input>
+        <br></br>
+        <br></br>
+        <div className='financialdocstext'>Financial Statements: </div>
+      
+        <table className="financial-table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Reference No.</th>
+      <th>Recipient</th>
+      <th>Amount</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {rows2.length > 0 ? (
+      rows2.map((row2, index) => (
+        <tr key={index}>
+          <td>
+            <input
+              type="date"
+              value={row2.date}
+              onChange={(e) => handleChangeRow2(index, "date", e.target.value)}
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              value={row2.reference}
+              onChange={(e) => handleChangeRow2(index, "reference", e.target.value)}
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              value={row2.recipient}
+              onChange={(e) => handleChangeRow2(index, "recipient", e.target.value)}
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              value={row2.amount2}
+              onChange={(e) => handleChangeRow2(index, "amount2", e.target.value)}
+            />
+          </td>
+          <td>
+            <button
+              onClick={() => handleDelete2(index)}
+              style={{
+                backgroundColor: "#A93644",
+                color: "white",
+                border: "none",
+                padding: "5px 10px",
+                cursor: "pointer",
+                borderRadius: "4px",
+              }}
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan="4">No data found</td>
+      </tr>
+    )}
+  </tbody>
+</table>
+
+    <br />
+    <button
+      onClick={addRow2}
+      style={{
+        color: "white",
+        backgroundColor: "#2A2E3A",
+        padding: "8px 12px",
+        border: "none",
+        borderRadius: "4px",
+        cursor: "pointer",
+        marginRight: "10px",
+      }}
+    >
+      Add a Row
+    </button>
 
         <br></br>
         <br></br>
-<div className='financialdocstext'>Attach Necessary Documents Here: </div>
+<div className='financialdocstext'>Attach Supporting Documents Here: </div>
         <div  className="draganddropfile"
         
         style={{
@@ -960,12 +1121,8 @@ const handleEdit = (index) => {
 
       </div>
 <br></br>
-<br></br>
-<br></br>
-      <label for="title" className='sourcefundlabel'>Remaning Balance:</label>
-          <input type="text" id="orgidfaci" name="reqdep" className= "title"  value={remaining} 
-                            onChange={e => setRemaining(e.target.value)} 
-       ></input>
+
+      
 
 
           </div>

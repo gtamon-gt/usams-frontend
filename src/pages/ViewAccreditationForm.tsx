@@ -178,8 +178,6 @@ const ViewAccreditationForm: React.FC = () => {
                   <tr>
                     <th>Student Number</th>
                     <th>Name</th>
-                    <th>Contact Number</th>
-                    <th>Email</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -187,8 +185,6 @@ const ViewAccreditationForm: React.FC = () => {
                     <tr key={index}>
                       <td>{member.stud_id}</td>
                       <td>{member.member_name}</td>
-                      <td>{member.member_contact}</td>
-                      <td>{member.member_email}</td>
                     </tr>
                   ))}
                 </tbody>

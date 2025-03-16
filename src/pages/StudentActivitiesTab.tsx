@@ -63,6 +63,8 @@ const StudentActivitiesTab: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useState<User | null>(null);
   const [student, setStudent] = useState<Student | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,6 +113,20 @@ const StudentActivitiesTab: React.FC = () => {
   const handleViewEvent = (prosKey: string) => {
     navigate('/event-details', { state: { prosKey } });
   };
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleFilter = (nature: string) => {
+    setFilter(nature);
+  };
+
+  const filteredProposals = proposals.filter(proposal =>
+    (proposal.pros_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      proposal.org_id.toLowerCase().includes(searchQuery.toLowerCase())) &&
+    (filter ? proposal.pros_nature === filter : true)
+  );
 
   if (loading) {
     return <div>Loading...</div>;
@@ -164,40 +180,55 @@ const StudentActivitiesTab: React.FC = () => {
 
       <div className="spacer"></div>
       <div className="student-activities-content">
-      <div className="title-top-part">
+        <div className="title-top-part">
           <h2>Student Activities</h2>
           <p className="instructions">The list shows the approved student activities organized by accredited organizations</p>
         </div>
         <hr className="title-custom-line" />
 
-        <div className="activities-list">
-          {proposals.map(proposal => {
-            const organization = organizations.find(org => org.org_id === proposal.org_id);
-            return (
-              <div key={proposal.pros_key} className="activity-card">
-                <img src="/default_header.jpg" alt="Event" className="event-header-img" />
-                <div className="event-tags">
-                  <div className="event-tag">{new Date(proposal.pros_date).toLocaleDateString()}</div>
-                  <div className="event-tag">{proposal.pros_venue}</div>
-                  <div className="event-tag">{proposal.pros_participants}</div>
-                </div>
-                <div className="event-details">
-                  <h2 className="event-title">{proposal.pros_title}</h2>
-                  <p className="event-rationale">{proposal.pros_rationale}</p>
-                </div>
-                <div className="event-org">
-                  {organization && (
-                    <>
-                      <img src={`http://127.0.0.1/uploads/${organization.org_img}`} alt={organization.org_name} className="org-img-activities" />
-                      <div className="org-name-activities">{organization.org_name}</div>
-                    </>
-                  )}
-                </div>
-                <button className="view-button-activities" onClick={() => handleViewEvent(proposal.pros_key)}>View</button>
-              </div>
-            );
-          })}
+        <div className="search-filter-section">
+          <input
+            type="text"
+            placeholder="Search by event or organization name"
+            value={searchQuery}
+            onChange={handleSearch}
+            className="search-input"
+          />
+          <div className="filter-buttons">
+            <button onClick={() => handleFilter('Extra-Curricular')} className={filter === 'Extra-Curricular' ? 'active-filter' : ''}>Extra-Curricular</button>
+            <button onClick={() => handleFilter('Co-Curricular')} className={filter === 'Co-Curricular' ? 'active-filter' : ''}>Co-Curricular</button>
+            <button onClick={() => handleFilter('')} className={filter === '' ? 'active-filter' : ''}>All</button>
+          </div>
         </div>
+
+        <div className="activities-list">
+      {filteredProposals.map(proposal => {
+        const organization = organizations.find(org => org.org_id === proposal.org_id);
+        return (
+          <div key={proposal.pros_key} className="activity-card">
+            <img src="/default_event_pic.png" alt="Event" className="event-header-img" />
+            <div className="event-details">
+              <h2 className="event-title">{proposal.pros_title}</h2>
+              <div className="event-meta">
+                <p className="event-date">{new Date(proposal.pros_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                <p className="event-venue">{proposal.pros_venue}</p>
+              </div>
+              <p className="event-rationale">{proposal.pros_rationale}</p>
+              {organization && (
+                <div className="event-org">
+                  <hr className="org-line" />
+                  <div className="org-details2">
+                    <img src={`http://127.0.0.1/uploads/${organization.org_img}`} alt={organization.org_name} className="org-img-activities" />
+                    <div className="org-name-activities">{organization.org_name}</div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <button className="view-button-activities" onClick={() => handleViewEvent(proposal.pros_key)}>View</button>
+          </div>
+        );
+      })}
+    </div>
       </div>
 
       <div className="footer-container">

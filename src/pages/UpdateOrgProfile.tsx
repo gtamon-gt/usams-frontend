@@ -203,6 +203,8 @@ const UpdateOrgProfile: React.FC = () => {
         </div>
       </div>
 
+      <div className="spacer"></div>
+
       <div className="main-content5">
         <h1 className="update-title">Update Organization Information</h1>
         <p className="instructions">Update your organization's information.</p>

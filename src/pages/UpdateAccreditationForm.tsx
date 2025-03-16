@@ -316,8 +316,6 @@ const UpdateAccreditationForm: React.FC = () => {
                   <tr>
                     <th>Student Number</th>
                     <th>Name</th>
-                    <th>Contact Number</th>
-                    <th>Email</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -326,8 +324,6 @@ const UpdateAccreditationForm: React.FC = () => {
                     <tr key={index}>
                       <td><input type="text" name="member_studno" value={member.stud_id} onChange={(e) => handleInputChange(index, "stud_id", e.target.value, 'members')} className="w-full" required /></td>
                       <td><input type="text" name="member_name" value={member.member_name} onChange={(e) => handleInputChange(index, "member_name", e.target.value, 'members')} className="w-full" required /></td>
-                      <td><input type="text" name="member_contact" value={member.member_contact} onChange={(e) => handleInputChange(index, "member_contact", e.target.value, 'members')} className="w-full" required /></td>
-                      <td><input type="text" name="member_email" value={member.member_email} onChange={(e) => handleInputChange(index, "member_email", e.target.value, 'members')} className="w-full" required /></td>
                       <td><button type="button" onClick={() => removeMember(index)} className="accre-form-content-remove-btn">Remove</button></td>
                     </tr>
                   ))}

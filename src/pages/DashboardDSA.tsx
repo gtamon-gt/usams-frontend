@@ -125,7 +125,7 @@ const DashboardDSA: React.FC = () => {
           <div className="navbar-links">
             <Link to="/home" state={{ userId }} className="navbar-link">Home</Link>
             <Link to="/adviser-activities-tab" state={{ userId }} className="navbar-link">Activities</Link>
-            <Link to="/adviser-organizations-tab" state={{ userId }} className="navbar-link">Organizations</Link>
+            <Link to="/org-list-dsa" state={{ userId }} className="navbar-link">Organizations</Link>
             <Link to="/accreditation-tab" state={{ userId }} className="navbar-link">Accreditation</Link>
             <Link to="/osa-services-tab" state={{ userId }} className="navbar-link">OSA Services</Link>
           </div>
@@ -142,6 +142,46 @@ const DashboardDSA: React.FC = () => {
               <p className="organizations-description">What do you want to do?</p>
             </div>
             <div className="option-shortcut-boxes">
+            <div className="option-tab">
+                <div className="orglist-container">
+                  <div className="orglist-border shortcutimg">
+                    <img src="/shortcut2.png" alt="Evaluate Project Proposals" />
+                  </div>
+                </div>
+                <div className="option-shortcut-text-section">
+                  <Link
+                    className="organizations-links option-shortcut-name"
+                    to="/user-management"
+                    state={{ userId: userId, userInfo: userInfo }}
+                  >
+                    User Management
+                  </Link>
+                  <p className="organizations-desc option-shortcut-desc">
+                    Manage the users of this system.
+                  </p>
+                </div>
+                <img src="/arrow.png" alt="Arrow" className="arrowimg" />
+              </div>
+              <div className="option-tab">
+                <div className="orglist-container">
+                  <div className="orglist-border shortcutimg">
+                    <img src="/shortcut2.png" alt="Evaluate Project Proposals" />
+                  </div>
+                </div>
+                <div className="option-shortcut-text-section">
+                  <Link
+                    className="organizations-links option-shortcut-name"
+                    to="/org-list-dsa"
+                    state={{ userId: userId, userInfo: userInfo }}
+                  >
+                    View Organization Details & Reports
+                  </Link>
+                  <p className="organizations-desc option-shortcut-desc">
+                    View organizations' activities, members, officers, accreditation history, and activity reports.
+                  </p>
+                </div>
+                <img src="/arrow.png" alt="Arrow" className="arrowimg" />
+              </div>
               <div className="option-tab">
                 <div className="orglist-container">
                   <div className="orglist-border shortcutimg">
@@ -185,6 +225,26 @@ const DashboardDSA: React.FC = () => {
               <div className="option-tab">
                 <div className="orglist-container">
                   <div className="orglist-border shortcutimg">
+                    <img src="/uep3.png" alt="Evaluate Facility Requests" />
+                  </div>
+                </div>
+                <div className="option-shortcut-text-section">
+                  <Link
+                    className="organizations-links option-shortcut-name"
+                    to="/ueplist"
+                    state={{ userId: userId, userInfo: userInfo }}
+                  >
+                    Students with Uniform Exemption Pass
+                  </Link>
+                  <p className="organizations-desc option-shortcut-desc">
+                    View students with uniform exemption pass for tracking.
+                  </p>
+                </div>
+                <img src="/arrow.png" alt="Arrow" className="arrowimg" />
+              </div>
+              {/*<div className="option-tab">
+                <div className="orglist-container">
+                  <div className="orglist-border shortcutimg">
                     <img src="/manageaccomplishment.png" alt="Approve Accomplishment Reports" />
                   </div>
                 </div>
@@ -201,7 +261,7 @@ const DashboardDSA: React.FC = () => {
                   </p>
                 </div>
                 <img src="/arrow.png" alt="Arrow" className="arrowimg" />
-              </div>
+              </div>*/}
               <div className="option-tab">
                 <div className="orglist-container">
                   <div className="orglist-border shortcutimg">

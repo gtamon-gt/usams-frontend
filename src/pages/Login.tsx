@@ -82,10 +82,10 @@ const Login: React.FC = () => {
                 navigate('/dsaa-approval', { state: { userId } });
                 break;
             case 'facility_approver':
-                navigate('/viewrequestsgbm', { state: { userId } });
+                navigate('/dashboard-gbm', { state: { userId } });
                 break;
-            case 'security':
-                navigate('/director-approval', { state: { userId } });
+            case 'security guard':
+                navigate('/ueplist-security', { state: { userId } });
                 break;
             default:
               throw new Error('Invalid user role');
@@ -187,7 +187,7 @@ const Login: React.FC = () => {
                 <option value="osa_director">OSA Director</option>
                 <option value="activity_approver">Activity Approver</option>
                 <option value="facility_approver">Facility Approver</option>
-                <option value="security">Security Guard</option>
+                <option value="security guard">Security Guard</option>
               </select>
             </div>
             <div className="form-group">

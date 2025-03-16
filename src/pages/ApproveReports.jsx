@@ -73,7 +73,7 @@ const ApproveReports = () => {
     useEffect(() => {
         const fetchAllBooks = async () => {
           try {
-            const res = await axios.get("http://localhost:8800/accomplishment");
+            const res = await axios.get("http://localhost:8800/accomplishment/osa");
             //console.log(res);
             setBooks(res.data);
           } catch (err) {
@@ -173,9 +173,9 @@ const handleApprove = (reps_id) =>{
 
 <div className="adviser-approval-content">
   <div className="title-top-part">
-    <h2>Accomplishment Reports of organizations</h2>
+    <h2>Accomplishment Reports for Approval</h2>
     <p className="instructions">
-      Review accomplishment and financial reports submitted by organizations.
+      Review and approve or return the facility reservation requests submitted by organizations.
     </p>
   </div>
   <hr className="title-custom-line" />
@@ -184,7 +184,8 @@ const handleApprove = (reps_id) =>{
       <div className="proposal-row header-row">
         <div className="proposal-cell">Organization Name</div>
         <div className="proposal-cell">Activity Title</div>
-      
+        <div className="proposal-cell">Date Submitted</div>
+        
         <div className="proposal-cell"></div>
       </div>
       {books.map((list) => (
@@ -193,7 +194,7 @@ const handleApprove = (reps_id) =>{
             {list.reqdep}
           </div>
           <div className="proposal-cell">{list.title}</div>
-          
+          <div className="proposal-cell">{list.date_submitted}</div>
           <div className="proposal-cell ext">
             <button  onClick={() => {
                    

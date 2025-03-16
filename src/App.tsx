@@ -70,6 +70,15 @@ import UpdateReaccreditationForm from './pages/UpdateReaccreditationForm';
 import ReaccreditationList from './pages/ReaccreditationList';
 import ViewReaccreditationForm from './pages/ViewReaccreditationForm';
 import ViewConductedActivities from './pages/ViewConductedActivities';
+import DashboardGbm from './pages/DashboardGbm';
+import ProposalsList from './pages/ProposalsList';
+import UserManagement from './pages/UserManagement';
+import OrgListDSA from './pages/OrgListDSA';
+import OrgDetailsDSA from './pages/OrgDetailsDSA';
+import ViewFacilityAdviser from './pages/ViewFacilityAdviser';
+import UeplistSecurity from './pages/UeplistSecurity';
+import ViewApplicationPassOsa from './pages/ViewApplicationPassOsa';
+import Ueplist from './pages/Ueplist';
 
 
 const App: React.FC = () => {
@@ -111,6 +120,8 @@ const App: React.FC = () => {
         <Route path="/updatereport/:org_id/:reps_id" element={<UpdateReport/>} />
         <Route path="/updatefinancial/:org_id/:group_id" element={<UpdateFinancial />} />
         <Route path="/financial/:org_id" element={<Financial />} />
+        <Route path="/viewfacilityadviser" element={<ViewFacilityAdviser />} />
+        <Route path="/dashboard-gbm" element={<DashboardGbm />} />
 
         {/* !! Dan's Module !! */}
         <Route path="/appform" element={<ApplicationForm/>}/>
@@ -135,6 +146,9 @@ const App: React.FC = () => {
         {/* !! Viewing Submitted Proposals of an organization !! */}
         <Route path="/view-activities/:org_id" element={<ViewConductedActivities />} />
         <Route path="/accomplishment/:org_id/:pros_key" element={<Accomplishment />} />
+
+        {/* !! Viewing Submitted Proposals of all organization !! */}
+        <Route path="/proposals-list" element={<ProposalsList />} />
         
         {/* Proposal Forms > */}
         <Route path="/in-campus/:org_id" element={<InCampus />} />
@@ -175,6 +189,17 @@ const App: React.FC = () => {
 
         {/* Viewing Student Activity Info > */}
         <Route path="/event/:event_key" element={<EventDetails />} />
+
+        {/* User Management > */}
+        <Route path="/user-management" element={<UserManagement />} />
+
+        <Route path="/org-list-dsa" element={<OrgListDSA />} />
+        <Route path="/org-details-dsa/:org_id" element={<OrgDetailsDSA />} />
+
+        <Route path="/ueplist" element={<Ueplist />} />
+        <Route path="/ueplist-security" element={<UeplistSecurity />} />
+        <Route path="/view-application-pass-osa/:control_no" element={<ViewApplicationPassOsa />} />
+
       </Routes>
     </Router>
   );

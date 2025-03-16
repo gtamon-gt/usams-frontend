@@ -7,8 +7,6 @@ import axios from 'axios';
 interface Accreditation {
   acc_id: string;
   org_id: string;
-  //stud_id: string;
-  //constitution: string;
   orgname: string;
   type: string;
   adv_letter: string;
@@ -18,44 +16,42 @@ interface Accreditation {
 }
 
 interface Organization {
-    org_id: string;
-    org_name: string;
-    org_type: string;
-    org_tag: string;
-    org_desc: string;
-    adv_id: string;
-    dean_id: string;
-    sy_id: string;
-    org_img: string;
-    org_header: string;
-    user_id: string;
-    user_role: string;
-  }
-
+  org_id: string;
+  org_name: string;
+  org_type: string;
+  org_tag: string;
+  org_desc: string;
+  adv_id: string;
+  dean_id: string;
+  sy_id: string;
+  org_img: string;
+  org_header: string;
+  user_id: string;
+  user_role: string;
+}
 
 interface Director {
-    dir_id: string;
-    dir_name: string;
-    sy_id: string;
-    user_id: string;
-  }
+  dir_id: string;
+  dir_name: string;
+  sy_id: string;
+  user_id: string;
+}
 
-  interface Student {
-    stud_id: string;
-    user_id: string;
-    stud_dept: string;
-    stud_name: string;
-    stud_img: string;
-  }
-  
-  interface Approver {
-    employee_id: string;
-    user_id: string;
-    sy_id: string;
-    employee_name: string;
-    employee_position: string;
-  }
+interface Student {
+  stud_id: string;
+  user_id: string;
+  stud_dept: string;
+  stud_name: string;
+  stud_img: string;
+}
 
+interface Approver {
+  employee_id: string;
+  user_id: string;
+  sy_id: string;
+  employee_name: string;
+  employee_position: string;
+}
 
 interface User {
   user_id: string;
@@ -68,8 +64,7 @@ const ReaccreditationList: React.FC = () => {
   const { stud_id } = useParams<{ stud_id: string }>();
   const { userId } = location.state || {};
 
-   const [director, setDirector] = useState<Director | null>(null);
-
+  const [director, setDirector] = useState<Director | null>(null);
   const [student, setStudent] = useState<Student | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -78,15 +73,22 @@ const ReaccreditationList: React.FC = () => {
   const [accreditations, setAccreditations] = useState<Accreditation[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
   const [userInfo, setUserInfo] = useState<User | null>(null);
-
   const [organization, setOrganization] = useState<Organization | null>(null);
-       const { org_id } = useParams<{ org_id: string }>();
-      const [orgId, setOrgId] = useState<Organization | null>(null);
-       const [organizations, setOrganizations] = useState<Organization[]>([]);
-
+  const { org_id } = useParams<{ org_id: string }>();
+  const [orgId, setOrgId] = useState<Organization | null>(null);
+  const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [comment, setComment] = useState('');
   const [selectedProposal, setSelectedProposal] = useState<Accreditation | null>(null);
-  
+
+  const fetchAccreditations = async () => {
+    try {
+      const accreditationsRes = await axios.get(`http://localhost:8800/reaccreditations`);
+      setAccreditations(accreditationsRes.data);
+    } catch (err) {
+      console.error('Error fetching accreditations:', err);
+      setError('Failed to load accreditations.');
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,8 +99,7 @@ const ReaccreditationList: React.FC = () => {
         const orgRes = await axios.get(`http://localhost:8800/organizations`);
         setOrganizations(orgRes.data);
 
-        const accreditationsRes = await axios.get(`http://localhost:8800/reaccreditations`);
-        setAccreditations(accreditationsRes.data);
+        await fetchAccreditations();
 
         setLoading(false);
       } catch (err) {
@@ -132,9 +133,6 @@ const ReaccreditationList: React.FC = () => {
           user_id: directorData?.user_id,
         });
 
-      //  setLoading(false);
-
-
       } catch (error) {
         console.error(error);
         setError('Failed to fetch data');
@@ -145,8 +143,6 @@ const ReaccreditationList: React.FC = () => {
 
     fetchData();
   }, []);
-
-  
 
   useEffect(() => {
     if (userId && users.length > 0 && students.length > 0) {
@@ -165,16 +161,14 @@ const ReaccreditationList: React.FC = () => {
 
   const handleDeleteAccreditation = async (acc_id: string) => {
     try {
-      await axios.delete(`http://localhost:8800/accreditations/${acc_id}`);
+      await axios.delete(`http://localhost:8800/reaccreditations/${acc_id}`);
       setAccreditations(accreditations.filter(acc => acc.acc_id !== acc_id));
-      alert('Accreditation application successfully deleted.');
+      alert('Re-accreditation application successfully deleted.');
     } catch (err) {
-      console.error('Error deleting accreditation application:', err);
-      alert('Failed to delete accreditation application.');
+      console.error('Error deleting re-accreditation application:', err);
+      alert('Failed to delete re-accreditation application.');
     }
   };
-
-
 
   if (loading) {
     return <div>Loading...</div>;
@@ -188,22 +182,15 @@ const ReaccreditationList: React.FC = () => {
     navigate('/', { state: { userId: null } });
   };
 
-  /*
   const filteredAccreditations = accreditations.filter(acc =>
-    students.some(student => student.stud_id === acc.stud_id)
-  ); */
-
-  const filteredAccreditations = accreditations.filter(acc =>
-    organizations.some(organization => organization.org_id === acc.org_id)
+    organizations.some(organization => organization.org_id === acc.org_id) && acc.status === 'Pending'
   );
-
 
   const handleApprove = async (acc_id: string) => {
     try {
       await axios.put(`http://localhost:8800/reaccreditation-approved/${acc_id}`);
-    //  setProposals(proposals.map(proposal => proposal.pros_key === pros_key ? { ...proposal, status: 'Approved by Director of Student Affairs' } : proposal));
-      alert('application approved successfully!');
-     // fetchProposals(); 
+      alert('Application approved successfully!');
+      await fetchAccreditations();
     } catch (err) {
       console.error('Error approving proposal:', err);
       alert('Failed to approve proposal.');
@@ -219,21 +206,19 @@ const ReaccreditationList: React.FC = () => {
   const handleSubmitReject = async () => {
     if (selectedProposal && comment) {
       try {
-        await axios.post(`http://localhost:8800/reccreditationreturned/${selectedProposal.acc_id}`, {
-            comment_content: `[${director?.dir_name}] ${comment}`
+        await axios.post(`http://localhost:8800/reaccreditationreturned/${selectedProposal.acc_id}`, {
+          comment_content: `[${director?.dir_name}] ${comment}`
         });
-      //  setProposals(proposals.map(proposal => proposal.pros_key === selectedProposal.pros_key ? { ...proposal, status: 'Rejected by Director of Student Affairs' } : proposal));
         setSelectedProposal(null);
         setComment('');
         alert('Application Returned!');
-     //   fetchProposals(); 
+        await fetchAccreditations();
       } catch (err) {
         console.error('Error rejecting proposal:', err);
         alert('Failed to reject proposal.');
       }
     }
   };
-
 
   return (
     <div className="main-wrapper">
@@ -279,8 +264,8 @@ const ReaccreditationList: React.FC = () => {
 
       <div className="adviser-approval-content">
         <div className="title-top-part">
-          <h2>Submitted Accreditation Applications</h2>
-          <p className="instructions">View and manage the accreditation applications submitted by students.</p>
+          <h2>Re-Accreditation Applications</h2>
+          <p className="instructions">View and manage the accreditation applications submitted by existing student organizations.</p>
         </div>
         <hr className="title-custom-line" />
         {filteredAccreditations.length > 0 ? (
@@ -289,23 +274,24 @@ const ReaccreditationList: React.FC = () => {
               <div className="proposal-cell">Date Submitted</div>
               <div className="proposal-cell">Organization Name</div>
               <div className="proposal-cell">Type</div>
-              
-              {/* <div className="proposal-cell">Comment</div> */}
               <div className="proposal-cell">Actions</div>
             </div>
             {filteredAccreditations.map(accreditation => (
               <React.Fragment key={accreditation.acc_id}>
                 <div className="proposal-row">
-                  <div className="proposal-cell">{new Date(accreditation.date_submitted).toLocaleDateString()}</div>
+                  <div className="proposal-cell">
+                    {new Date(accreditation.date_submitted).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </div>
                   <div className="proposal-cell">{accreditation.orgname}</div>
                   <div className="proposal-cell">{accreditation.type}</div>
-                 
-                  {/* <div className="proposal-cell">{accreditation.comment}</div> */}
                   <div className="proposal-cell ext">
                     <button onClick={() => navigate(`/viewreaccreditationform/${accreditation.acc_id}`, { state: { userId, userInfo} })}>View</button>
-                    <button className="approve-button"onClick={() => handleApprove(accreditation.acc_id)}>Approve</button>
-                    <button className="reject-button"  onClick={() => handleReject(accreditation)}>Request Revision</button>
-
+                    <button className="approve-button" onClick={() => handleApprove(accreditation.acc_id)}>Approve</button>
+                    <button className="reject-button" onClick={() => handleReject(accreditation)}>Request Revision</button>
                     {accreditation.status === 'Approved' && (
                       <button onClick={() => navigate(`/view-accreditation-pass/${accreditation.acc_id}`, { state: { userId, userInfo, student, accreditation } })}>View Pass</button>
                     )}
@@ -315,7 +301,7 @@ const ReaccreditationList: React.FC = () => {
             ))}
           </div>
         ) : (
-          <p>No accreditation applications available for management.</p>
+          <p>No re-accreditation applications available for management.</p>
         )}
       </div>
 
@@ -329,12 +315,9 @@ const ReaccreditationList: React.FC = () => {
               placeholder="Enter your comment or feedback..."
             ></textarea>
             <button onClick={handleSubmitReject} style={{
-                    
-                    color: "white",
-                   
-                    cursor: "pointer",
-                   
-                  }}>Submit</button>
+              color: "white",
+              cursor: "pointer",
+            }}>Submit</button>
             <button onClick={() => setSelectedProposal(null)}>Cancel</button>
           </div>
         </div>

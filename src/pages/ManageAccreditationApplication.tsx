@@ -222,7 +222,13 @@ const ManageAccreditationApplication: React.FC = () => {
             {filteredAccreditations.map(accreditation => (
               <React.Fragment key={accreditation.acc_id}>
                 <div className="proposal-row">
-                  <div className="proposal-cell">{new Date(accreditation.date_submitted).toLocaleDateString()}</div>
+                <div className="proposal-cell">
+                    {new Date(accreditation.date_submitted).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </div>
                   <div className="proposal-cell">{accreditation.orgname}</div>
                   <div className="proposal-cell">{accreditation.type}</div>
                   <div className="proposal-cell">{accreditation.status}</div>

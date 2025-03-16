@@ -10,6 +10,7 @@ import './AdviserApproval.css';
 import './ViewRequests.css';
 
 
+
 const ViewFacility = () => {
 
      const location = useLocation();
@@ -23,6 +24,19 @@ const ViewFacility = () => {
     const [comments, setComments] = useState({});
  const [feedback, setFeedback] = useState('');
    const [adviser, setAdviser] = useState(''); 
+
+   const [searchTerm, setSearchTerm] = useState('');
+   const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredBooks = books.filter(book => 
+    book.reqdep.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    book.actname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    book.otherfacility.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (book.facility && book.facility.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+
 
     useEffect(() => {
         const fetchAllBooks = async () => {
@@ -141,35 +155,61 @@ const ViewFacility = () => {
       <div className="spacer"></div>
 
 <div className="adviser-approval-content">
-  <div className="title-top-part">
-    <h2>List of GBM-Approved Facility Reservations</h2>
-    <p className="instructions">
-      Track the approval status of the facility reservation requests submitted by your organization.
-    </p>
-  </div>
+<div className="title-top-part" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0px' }}>
+  <h2 style={{ margin: 0 }}>List of All Facility Reservation Requests</h2>
+  <input
+    type="text"
+    placeholder="Search..."
+    value={searchTerm}
+    onChange={handleSearch}
+    className="search-input"
+    style={{ marginLeft: 'auto', marginBottom: '0px' }}
+  />
+</div>
+<p className="instructions" style={{ textAlign: 'left', marginLeft: 0 }}>
+  Track the approval status of the facility reservation requests submitted by the organizations.
+</p>
+
+
   <hr className="title-custom-line" />
-  {books.length > 0 ? (
-    <div className="proposals-list">
-      <div className="proposal-row header-row">
+
+  <div>
+ 
+</div>
+
+  {filteredBooks.length > 0 ? (
+    <div className="proposals-list1">
+      <div className="proposal-row header-row1">
         <div className="proposal-cell">Organization Name</div>
         <div className="proposal-cell">Activity Title</div>
         <div className="proposal-cell">Facility</div>
         <div className="proposal-cell">Schedule</div>
+        <div className="proposal-cell">Status</div>
       
       </div>
-      {books.map((list) => (
+      {filteredBooks.map((list) => (
         <div key={list.id} className="proposal-row">
           <div className="proposal-cell">
             {list.reqdep}
           </div>
           <div className="proposal-cell">{list.actname}</div>
-          <div className="proposal-cell">{list.facility || ""}
-      {list.facility && list.otherfacility ? " " : ""}
-      {list.otherfacility || ""}</div>
+          <div className="proposal-cell-facility">
+  {list.facility !== "Others:" && list.facility} 
+  {list.otherfacility && (list.facility !== "Others:" ? " | " : "")}
+  {list.otherfacility}
+</div>
           <div className="proposal-cell">{list.date && list.timefaci && list.timefaciend && (
   <span>{list.date} | {list.timefaci} - {list.timefaciend}</span>
 )}
              </div>
+             <div
+  className="proposal-cell-status"
+  style={{
+    color: list.status === "Approved by GBM" ? "green" : "red",
+  }}
+>
+  {list.status}
+</div>
           
         </div>
         
@@ -183,6 +223,7 @@ const ViewFacility = () => {
   
 </div>
 
+<div className="bottom-spacer"></div>
 
       <div className="footer-container">
         <div className="footer-row">

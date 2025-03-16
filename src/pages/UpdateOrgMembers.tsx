@@ -351,6 +351,8 @@ const UpdateOrgMembers: React.FC = () => {
         </div>
       </div>
 
+      <div className="spacer"></div>
+
       <div className="main-content5">
         <h1 className="update-title">Update Organization Members & Officers</h1>
         <p className="instructions">Update your members' and officers' information.</p>

@@ -17,28 +17,27 @@ interface Accreditation {
 }
 
 interface Director {
-    dir_id: string;
-    dir_name: string;
-    sy_id: string;
-    user_id: string;
-  }
+  dir_id: string;
+  dir_name: string;
+  sy_id: string;
+  user_id: string;
+}
 
-  interface Student {
-    stud_id: string;
-    user_id: string;
-    stud_dept: string;
-    stud_name: string;
-    stud_img: string;
-  }
-  
-  interface Approver {
-    employee_id: string;
-    user_id: string;
-    sy_id: string;
-    employee_name: string;
-    employee_position: string;
-  }
+interface Student {
+  stud_id: string;
+  user_id: string;
+  stud_dept: string;
+  stud_name: string;
+  stud_img: string;
+}
 
+interface Approver {
+  employee_id: string;
+  user_id: string;
+  sy_id: string;
+  employee_name: string;
+  employee_position: string;
+}
 
 interface User {
   user_id: string;
@@ -51,8 +50,7 @@ const AccreditationList: React.FC = () => {
   const { stud_id } = useParams<{ stud_id: string }>();
   const { userId } = location.state || {};
 
-   const [director, setDirector] = useState<Director | null>(null);
-
+  const [director, setDirector] = useState<Director | null>(null);
   const [student, setStudent] = useState<Student | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -61,10 +59,18 @@ const AccreditationList: React.FC = () => {
   const [accreditations, setAccreditations] = useState<Accreditation[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
   const [userInfo, setUserInfo] = useState<User | null>(null);
-
   const [comment, setComment] = useState('');
   const [selectedProposal, setSelectedProposal] = useState<Accreditation | null>(null);
-  
+
+  const fetchAccreditations = async () => {
+    try {
+      const accreditationsRes = await axios.get(`http://localhost:8800/accreditations`);
+      setAccreditations(accreditationsRes.data);
+    } catch (err) {
+      console.error('Error fetching accreditations:', err);
+      setError('Failed to load accreditations.');
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,8 +81,7 @@ const AccreditationList: React.FC = () => {
         const studentsRes = await axios.get(`http://localhost:8800/students`);
         setStudents(studentsRes.data);
 
-        const accreditationsRes = await axios.get(`http://localhost:8800/accreditations`);
-        setAccreditations(accreditationsRes.data);
+        await fetchAccreditations();
 
         setLoading(false);
       } catch (err) {
@@ -110,9 +115,6 @@ const AccreditationList: React.FC = () => {
           user_id: directorData?.user_id,
         });
 
-      //  setLoading(false);
-
-
       } catch (error) {
         console.error(error);
         setError('Failed to fetch data');
@@ -123,8 +125,6 @@ const AccreditationList: React.FC = () => {
 
     fetchData();
   }, []);
-
-  
 
   useEffect(() => {
     if (userId && users.length > 0 && students.length > 0) {
@@ -152,8 +152,6 @@ const AccreditationList: React.FC = () => {
     }
   };
 
-
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -167,16 +165,14 @@ const AccreditationList: React.FC = () => {
   };
 
   const filteredAccreditations = accreditations.filter(acc =>
-    students.some(student => student.stud_id === acc.stud_id)
+    students.some(student => student.stud_id === acc.stud_id) && acc.status === 'Pending'
   );
-
 
   const handleApprove = async (acc_id: string) => {
     try {
       await axios.put(`http://localhost:8800/accreditation-approved/${acc_id}`);
-    //  setProposals(proposals.map(proposal => proposal.pros_key === pros_key ? { ...proposal, status: 'Approved by Director of Student Affairs' } : proposal));
-      alert('application approved successfully!');
-     // fetchProposals(); 
+      alert('Application approved successfully!');
+      await fetchAccreditations();
     } catch (err) {
       console.error('Error approving proposal:', err);
       alert('Failed to approve proposal.');
@@ -193,20 +189,18 @@ const AccreditationList: React.FC = () => {
     if (selectedProposal && comment) {
       try {
         await axios.post(`http://localhost:8800/accreditationreturned/${selectedProposal.acc_id}`, {
-            comment_content: `[${director?.dir_name}] ${comment}`
+          comment_content: `[${director?.dir_name}] ${comment}`
         });
-      //  setProposals(proposals.map(proposal => proposal.pros_key === selectedProposal.pros_key ? { ...proposal, status: 'Rejected by Director of Student Affairs' } : proposal));
         setSelectedProposal(null);
         setComment('');
         alert('Application Returned!');
-     //   fetchProposals(); 
+        await fetchAccreditations();
       } catch (err) {
         console.error('Error rejecting proposal:', err);
         alert('Failed to reject proposal.');
       }
     }
   };
-
 
   return (
     <div className="main-wrapper">
@@ -252,7 +246,7 @@ const AccreditationList: React.FC = () => {
 
       <div className="adviser-approval-content">
         <div className="title-top-part">
-          <h2>Submitted Accreditation Applications</h2>
+          <h2>Accreditation Applications</h2>
           <p className="instructions">View and manage the accreditation applications submitted by students.</p>
         </div>
         <hr className="title-custom-line" />
@@ -262,23 +256,24 @@ const AccreditationList: React.FC = () => {
               <div className="proposal-cell">Date Submitted</div>
               <div className="proposal-cell">Organization Name</div>
               <div className="proposal-cell">Type</div>
-              
-              {/* <div className="proposal-cell">Comment</div> */}
               <div className="proposal-cell">Actions</div>
             </div>
             {filteredAccreditations.map(accreditation => (
               <React.Fragment key={accreditation.acc_id}>
                 <div className="proposal-row">
-                  <div className="proposal-cell">{new Date(accreditation.date_submitted).toLocaleDateString()}</div>
+                  <div className="proposal-cell">
+                    {new Date(accreditation.date_submitted).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </div>
                   <div className="proposal-cell">{accreditation.orgname}</div>
                   <div className="proposal-cell">{accreditation.type}</div>
-                 
-                  {/* <div className="proposal-cell">{accreditation.comment}</div> */}
                   <div className="proposal-cell ext">
                     <button onClick={() => navigate(`/viewaccreditationform/${accreditation.acc_id}`, { state: { userId, userInfo} })}>View</button>
-                    <button className="approve-button"onClick={() => handleApprove(accreditation.acc_id)}>Approve</button>
-                    <button className="reject-button"  onClick={() => handleReject(accreditation)}>Request Revision</button>
-
+                    <button className="approve-button" onClick={() => handleApprove(accreditation.acc_id)}>Approve</button>
+                    <button className="reject-button" onClick={() => handleReject(accreditation)}>Request Revision</button>
                     {accreditation.status === 'Approved' && (
                       <button onClick={() => navigate(`/view-accreditation-pass/${accreditation.acc_id}`, { state: { userId, userInfo, student, accreditation } })}>View Pass</button>
                     )}
@@ -301,13 +296,7 @@ const AccreditationList: React.FC = () => {
               onChange={(e) => setComment(e.target.value)}
               placeholder="Enter your comment or feedback..."
             ></textarea>
-            <button onClick={handleSubmitReject} style={{
-                    
-                    color: "white",
-                   
-                    cursor: "pointer",
-                   
-                  }}>Submit</button>
+            <button onClick={handleSubmitReject}>Submit</button>
             <button onClick={() => setSelectedProposal(null)}>Cancel</button>
           </div>
         </div>

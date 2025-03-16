@@ -94,9 +94,7 @@ const ManageApplication: React.FC = () => {
     navigate('/', { state: { userId: null } });
   };
 
-  const filteredApplications = applications.filter(app =>
-    students.some(student => student.stud_id === app.stud_id)
-  );
+  const filteredApplications = applications.filter(app => app.stud_id === student.stud_id);
 
   return (
     <div className="main-wrapper">

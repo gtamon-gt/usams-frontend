@@ -24,6 +24,12 @@ const ViewRequests = () => {
  const [feedback, setFeedback] = useState('');
    const [adviser, setAdviser] = useState(''); 
 
+    const [searchTerm, setSearchTerm] = useState('');
+          const handleSearch = (e) => {
+           setSearchTerm(e.target.value);
+         };
+   
+
    useEffect(() => {
     const fetchAllBooks = async () => {
       try {
@@ -110,6 +116,14 @@ const ViewRequests = () => {
 
       //  navigate(`/updatefaci/${orgId}/${list.id}`);
 
+      const filteredBooks = books.filter(book => 
+        book.reqdep.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.actname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.otherfacility.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (book.facility && book.facility.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+    
+
   return (
     <div className="main-wrapper">
       <div className="header-container">
@@ -155,13 +169,21 @@ const ViewRequests = () => {
 
 <div className="adviser-approval-content">
   <div className="title-top-part">
-    <h2>Submitted Facility Reservation Requests</h2>
+    <h2>Submitted Facility Reservation Requests
+    <input
+            type="text" 
+            placeholder="Search..." 
+            value={searchTerm} 
+            onChange={handleSearch} 
+            className="search-inputorg"
+          />
+    </h2>
     <p className="instructions">
       Track the approval status of the facility reservation requests submitted by your organization.
     </p>
   </div>
   <hr className="title-custom-line" />
-  {books.length > 0 ? (
+  {filteredBooks.length > 0 ? (
     <div className="proposals-list">
       <div className="proposal-row header-row">
         <div className="proposal-cell">Activity Title</div>
@@ -170,15 +192,17 @@ const ViewRequests = () => {
         <div className="proposal-cell">Status</div>
         <div className="proposal-cell">Actions</div>
       </div>
-      {books.map((list) => (
+      {filteredBooks.map((list) => (
         <div key={list.faci_id} className="proposal-row">
           <div className="proposal-cell">
             {list.actname}
           </div>
           <div className="proposal-cell">{list.acttype}</div>
-          <div className="proposal-cell">{list.facility || ""}
-      {list.facility && list.otherfacility ? " " : ""}
-      {list.otherfacility || ""}</div>
+          <div className="proposal-cell-facility">
+  {list.facility !== "Others:" && list.facility} 
+  {list.otherfacility && (list.facility !== "Others:" ? " | " : "")}
+  {list.otherfacility}
+</div>
           <div className="proposal-cell">{list.status} </div>
           <div className="proposal-cell ext">
             <button  onClick={() => {

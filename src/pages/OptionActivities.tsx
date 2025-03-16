@@ -155,7 +155,27 @@ const OptionActivities: React.FC = () => {
                 Send a Project Proposal
               </Link>
               <p className="organizations-desc option-shortcut-desc">
-                Submit your in-campus or off-campus activity proposal to the approvers.
+                Submit an in-campus or off-campus activity proposal to the approvers.
+              </p>
+            </div>
+            <img src="/arrow.png" alt="Arrow" className="arrowimg" />
+          </div>
+          <div className="option-tab">
+            <div className="orglist-container">
+              <div className="orglist-border shortcutimg">
+                <img src="/list.png" alt="Shortcut 1" />
+              </div>
+            </div>
+            <div className="option-shortcut-text-section">
+              <Link
+                className="organizations-links option-shortcut-name"
+                to={`/proposals-list/`}
+                state={{ userId: userId, userInfo: userInfo }}
+              >
+                View All Sent Project Proposals
+              </Link>
+              <p className="organizations-desc option-shortcut-desc">
+                View submitted project proposals of organizations.
               </p>
             </div>
             <img src="/arrow.png" alt="Arrow" className="arrowimg" />
@@ -195,7 +215,7 @@ const OptionActivities: React.FC = () => {
                 Reserve a Facility
               </Link>
               <p className="organizations-desc option-shortcut-desc">
-                Request a facility reservation for your approved activity proposals.
+                Request a facility reservation for your activity.
               </p>
             </div>
             <img src="/arrow.png" alt="Arrow" className="arrowimg" />

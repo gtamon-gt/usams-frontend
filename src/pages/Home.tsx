@@ -182,7 +182,7 @@ const Home: React.FC = () => {
               <img src="/shortcut1.png" alt="Shortcut 1" className="shortcutimg" />
               <div className="home-shortcut-text-section">
                 <div className="home-shortcut-name">Accredit your Organization</div>
-                <div className="home-shortcut-desc">Description</div>
+                <div className="home-shortcut-desc">Apply for accreditation for your new or existing organization.</div>
               </div>
               <img src="/arrow.png" alt="Arrow" className="arrowimg" />
             </div>
@@ -190,7 +190,7 @@ const Home: React.FC = () => {
               <img src="/shortcut2.png" alt="Shortcut 2" className="shortcutimg" />
               <div className="home-shortcut-text-section">
                 <div className="home-shortcut-name">Send Project Proposal</div>
-                <div className="home-shortcut-desc">Description</div>
+                <div className="home-shortcut-desc">Submit an in-campus or off-campus activity proposal to the approvers.</div>
               </div>
               <img src="/arrow.png" alt="Arrow" className="arrowimg" />
             </div>
@@ -198,15 +198,15 @@ const Home: React.FC = () => {
               <img src="/shortcut3.png" alt="Shortcut 3" className="shortcutimg" />
               <div className="home-shortcut-text-section">
                 <div className="home-shortcut-name">Reserve Facility</div>
-                <div className="home-shortcut-desc">Description</div>
+                <div className="home-shortcut-desc">Request a facility reservation for your activity.</div>
               </div>
               <img src="/arrow.png" alt="Arrow" className="arrowimg" />
             </div>
             <div id="home-shortcut-box-4" className="home-shortcut-box">
               <img src="/shortcut4.png" alt="Shortcut 4" className="shortcutimg" />
               <div className="home-shortcut-text-section">
-                <div className="home-shortcut-name">Apply for Uniform Exemption</div>
-                <div className="home-shortcut-desc">Description</div>
+                <div className="home-shortcut-name">Apply for Uniform Exemption Pass</div>
+                <div className="home-shortcut-desc">Fill out the Application form.</div>
               </div>
               <img src="/arrow.png" alt="Arrow" className="arrowimg" />
             </div>

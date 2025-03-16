@@ -175,7 +175,8 @@ const ViewReports = () => {
     <div className="proposals-list">
       <div className="proposal-row header-row">
         <div className="proposal-cell">Activity Title</div>
-        <div className="proposal-cell">Status</div>
+        <div className="proposal-cell">Date Submitted</div>
+        <div className="proposal-cell"></div>
       
         <div className="proposal-cell">Actions</div>
       </div>
@@ -184,7 +185,8 @@ const ViewReports = () => {
           <div className="proposal-cell">
             {list.title}
           </div>
-          <div className="proposal-cell">{list.status}</div>
+          <div className="proposal-cell">{list.date_submitted}</div>
+          <div className="proposal-cell"></div>
         
           <div className="proposal-cell ext">
             
@@ -198,12 +200,6 @@ const ViewReports = () => {
                         }
               >Update</button>
             <button >Delete</button>
-            <button
-                     
-                        onClick={() => toggleComments(list.reps_id)}
-                      >
-                        {showComments[list.reps_id] ? 'Hide Comments' : 'Show Comments'}
-              </button>
           
           
           </div>
@@ -242,6 +238,8 @@ const ViewReports = () => {
   )}
   
 </div>
+
+<div className="bottom-spacer"></div>
 
 
       <div className="footer-container">

@@ -3,75 +3,82 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logo from '/unc_logo.png';
 
-interface Adviser {
-  adv_id: string;
-  adv_name: string;
-  sy_id: string;
-  user_id: string;
-}
+
+interface GBM {
+    gbm_id: string;
+    gbm_name: string;
+    sy_id: string;
+    user_id: string;
+  }
+  
 
 interface User {
   user_id: string;
   user_role: string;
 }
 
-const DashboardAdviser: React.FC = () => {
+const DashboardGbm: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { userId } = location.state || {};
 
   console.log('DashboardAdviser userId:', userId); // Debugging statement
 
-  const [adviser, setAdviser] = useState<Adviser | null>(null);
+  
+  const [gbm, setGbm] = useState<GBM | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [users, setUsers] = useState<User[]>([]);
-  const [advisers, setAdvisers] = useState<Adviser[]>([]);
+  
   const [userInfo, setUserInfo] = useState<User | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!userId) {
+        setError('User not found.');
+        setLoading(false);
+        return;
+      }
+
       try {
-        const [usersResponse, advisersResponse] = await Promise.all([
-          axios.get('http://localhost:8800/users'),
-          axios.get('http://localhost:8800/advisers'),
+        const [gbmResponse, userResponse] = await Promise.all([
+          axios.get<GBM[]>('http://localhost:8800/gbm'),
+          axios.get<User[]>(`http://localhost:8800/users`)
         ]);
 
-        setUsers(usersResponse.data);
-        setAdvisers(advisersResponse.data);
-        console.log('Fetched users:', usersResponse.data);
-        console.log('Fetched advisers:', advisersResponse.data);
-      } catch (error) {
-        console.error(error);
-        setError('Failed to fetch data');
-      } finally {
+        const gbms = gbmResponse.data;
+        const users = userResponse.data;
+
+        // Find GBM adviser based on userId
+        const foundGbm = gbms.find((item) => item.user_id === userId);
+        if (!foundGbm) {
+          setError('GBM Officer not found.');
+          setLoading(false);
+          return;
+        }
+
+        setGbm(foundGbm);
+        console.log('Found GBM:', foundGbm);
+
+        // Find user info
+        const foundUser = users.find((user) => user.user_id === userId);
+        if (foundUser) {
+          setUserInfo(foundUser);
+        } else {
+          setError('User information not found.');
+        }
+        
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setError('Failed to load data.');
         setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [userId]);
 
-  useEffect(() => {
-    if (userId && users.length > 0 && advisers.length > 0) {
-      const user = users.find((u) => u.user_id === userId);
-      if (user) {
-        console.log('Found user:', user);
-        setUserInfo(user);
-        if (user.user_role === 'Adviser') {
-          const adv = advisers.find((a) => a.user_id === userId);
-          if (adv) {
-            console.log('Found adviser:', adv);
-            setAdviser(adv);
-          } else {
-            console.log('Adviser not found for userId:', userId);
-          }
-        }
-      } else {
-        console.log('User not found for userId:', userId);
-      }
-    }
-  }, [userId, users, advisers]);
 
   const handleSignOut = () => {
     navigate('/', { state: { userId: null } });
@@ -89,7 +96,7 @@ const DashboardAdviser: React.FC = () => {
     return <div>No user information found.</div>;
   }
 
-  const isAdviser = userInfo?.user_role === 'Adviser';
+  const isAdviser = userInfo?.user_role === 'Facility_Approver';
 
   return (
     <div className="main-wrapper">
@@ -110,7 +117,7 @@ const DashboardAdviser: React.FC = () => {
               <>
                 <div className="profile-text">
                   <div className="user-name">
-                    {adviser?.adv_name}
+                    {gbm?.gbm_name}
                   </div>
                   <button className="sign-out-button" onClick={handleSignOut}>
                     SIGN OUT
@@ -137,30 +144,11 @@ const DashboardAdviser: React.FC = () => {
         <div className="main-content4">
           <div className="update-org-container">
             <div className="options-top">
-              <h1 className="organizations-name">Adviser Dashboard</h1>
+              <h1 className="organizations-name">GBM Dashboard</h1>
               <p className="organizations-description">What do you want to do?</p>
             </div>
             <div className="option-shortcut-boxes">
-              <div className="option-tab">
-                <div className="orglist-container">
-                  <div className="orglist-border shortcutimg">
-                    <img src="/shortcut2.png" alt="Evaluate Project Proposals" />
-                  </div>
-                </div>
-                <div className="option-shortcut-text-section">
-                  <Link
-                    className="organizations-links option-shortcut-name"
-                    to="/adviser-approval"
-                    state={{ userId: userId, userInfo: userInfo }}
-                  >
-                    Evaluate Project Proposals
-                  </Link>
-                  <p className="organizations-desc option-shortcut-desc">
-                    Evaluate project proposals submitted by your advised organizations.
-                  </p>
-                </div>
-                <img src="/arrow.png" alt="Arrow" className="arrowimg" />
-              </div>
+          
               <div className="option-tab">
                 <div className="orglist-container">
                   <div className="orglist-border shortcutimg">
@@ -170,7 +158,7 @@ const DashboardAdviser: React.FC = () => {
                 <div className="option-shortcut-text-section">
                   <Link
                     className="organizations-links option-shortcut-name"
-                    to="/viewrequestsadviser"
+                    to="/viewrequestsgbm"
                     state={{ userId: userId, userInfo: userInfo }}
                   >
                     Evaluate Facility Requests
@@ -248,4 +236,4 @@ const DashboardAdviser: React.FC = () => {
   );
 }
 
-export default DashboardAdviser;
+export default DashboardGbm;

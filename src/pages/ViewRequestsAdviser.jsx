@@ -4,119 +4,106 @@ import logo from '/unc_logo.png';
 import './AdviserApproval.css';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-//import { color } from 'html2canvas/dist/types/css/types/color';
 
 const ViewRequestsAdviser = () => {
   const location = useLocation();
- // const { userId } = location.state || {};
-
- const { userId, userInfo } = location.state || {};
+  const { userId, userInfo } = location.state || {};
   const [adviser, setAdviser] = useState(null);
-  const [org_id, setOrg_id] = useState(null);
   const [organizations, setOrganizations] = useState([]);
-  const [proposals, setProposals] = useState([]);
+  const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [feedback, setFeedback] = useState('');
   const [selectedProposal, setSelectedProposal] = useState(null);
   const navigate = useNavigate();
   const [comment, setComment] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const fetchBooks = async () => {
+    try {
+      const [advisersResponse, organizationsResponse, proposalsResponse] = await Promise.all([
+        axios.get('http://localhost:8800/advisers'),
+        axios.get('http://localhost:8800/organizations'),
+        axios.get('http://localhost:8800/facilityrequestadviser'),
+      ]);
+
+      const advisers = advisersResponse.data;
+      const organizationsData = organizationsResponse.data;
+      const proposalsData = proposalsResponse.data;
+
+      // Find adviser based on userId
+      const foundAdviser = advisers.find((adv) => adv.user_id === userId);
+      if (!foundAdviser) {
+        setError('Adviser not found.');
+        setLoading(false);
+        return;
+      }
+
+      setAdviser(foundAdviser);
+
+      // Get organizations advised by the adviser
+      const advisedOrganizations = organizationsData.filter(
+        (org) => org.adv_id === foundAdviser.adv_id
+      );
+      setOrganizations(advisedOrganizations);
+
+      // Get proposals for the advised organizations with status "Pending"
+      const orgIds = advisedOrganizations.map((org) => org.org_id);
+      const filteredProposals = proposalsData.filter(
+        (proposal) =>
+          orgIds.includes(proposal.org_id) && proposal.status === 'Pending'
+      );
+      setBooks(filteredProposals);
+      setLoading(false);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      setError('Failed to load data.');
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [advisersResponse, organizationsResponse, proposalsResponse] = await Promise.all([
-          axios.get('http://localhost:8800/advisers'),
-          axios.get('http://localhost:8800/organizations'),
-          axios.get('http://localhost:8800/facilityrequestadviser'),
-        ]);
-
-        const advisers = advisersResponse.data;
-        const organizationsData = organizationsResponse.data;
-        const proposalsData = proposalsResponse.data;
-
-        // Find adviser based on userId
-        const foundAdviser = advisers.find((adv) => adv.user_id === userId);
-        if (!foundAdviser) {
-          setError('Adviser not found.');
-          setLoading(false);
-          return;
-        }
-       
-        setAdviser(foundAdviser);
-
-        // Get organizations advised by the adviser
-        const advisedOrganizations = organizationsData.filter(
-          (org) => org.adv_id === foundAdviser.adv_id
-        );
-        setOrganizations(advisedOrganizations);
-      //  console.log(advisedOrganizations);
-        // Get proposals for the advised organizations
-        const orgIds = advisedOrganizations.map((org) => org.org_id);
-        const filteredProposals = proposalsData.filter(
-          (proposal) =>
-            orgIds.includes(proposal.org_id) 
-        ); 
-     /*   const filteredProposals = proposalsData.filter((org) => org.org_id === org_id); */
-        setBooks(filteredProposals);
-console.log(filteredProposals);
-        setLoading(false);
-      } catch (err) {
-        console.error('Error fetching data:', err);
-        setError('Failed to load data.');
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    fetchBooks();
   }, [userId]);
 
-  const handleApprove = (faci_id) =>{
-    try{ 
-   // e.preventDefault() 
-     axios.put('http://localhost:8800/adviserapproved/'+faci_id);
+  const handleApprove = async (faci_id) => {
+    try {
+      await axios.put('http://localhost:8800/adviserapproved/' + faci_id);
       alert('Form Approved!');
-    //  navigate('/returnedlist');
-    console.log(response.data);
-    }catch(err){
+      fetchBooks(); // Refetch the books after approval
+    } catch (err) {
       console.log(err.response.data);
     }
+  };
 
-}
+  const handleReject = (book) => {
+    setSelectedProposal(book);
+    setComment('');
+  };
 
-const{faci_id} = useParams();
-  const [books, setBooks] = useState([]);
+  const handleSubmitReject = async (e) => {
+    e.preventDefault();
 
-const handleReject = (books) => {
-  setSelectedProposal(books);
-  console.log(books);
-  setComment('');
-};
+    if (selectedProposal && comment) {
+      try {
+        await axios.post(`http://localhost:8800/adviserreturned/${selectedProposal.faci_id}`, {
+          comment_content: `[${adviser?.adv_name}] ${comment}`,
+        });
 
-const handleSubmitReject = async (e) => {
-  e.preventDefault(); // Ensure this runs first to prevent default form submission
-
-  if (selectedProposal && comment) {
-      try { 
-          const response = await axios.post(`http://localhost:8800/adviserreturned/${selectedProposal.faci_id}`, {
-              comment_content: `[${adviser?.adv_name}] ${comment}` // Ensure correct key name
-          });
-
-          alert('Form Returned!');
-          setSelectedProposal(null);
-          setComment('');
-          console.log(response.data); // Corrected usage of response
-
-          // navigate('/returnedlist'); // Uncomment if navigation is needed
+        alert('Form Returned!');
+        setSelectedProposal(null);
+        setComment('');
+        fetchBooks(); // Refetch the books after rejection
       } catch (err) {
-          console.error(err.response?.data || "An error occurred"); // Improved error handling
+        console.error(err.response?.data || 'An error occurred');
       }
-  } else {
-      alert("Please select a proposal and provide a comment.");
-  }
-};
-
-
+    } else {
+      alert('Please select a proposal and provide a comment.');
+    }
+  };
 
   const handleSignOut = () => {
     navigate('/', { state: { userId: null } });
@@ -129,6 +116,14 @@ const handleSubmitReject = async (e) => {
   if (error) {
     return <div className="error">{error}</div>;
   }
+
+  const filteredBooks = books.filter(
+    (book) =>
+      book.reqdep.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      book.actname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      book.otherfacility.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (book.facility && book.facility.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
 
   return (
     <div className="main-wrapper">
@@ -172,13 +167,21 @@ const handleSubmitReject = async (e) => {
 
       <div className="adviser-approval-content">
         <div className="title-top-part">
-          <h2>Facility Reservation Requests for Approval</h2>
+          <h2>Facility Reservation Requests for Approval
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={handleSearch}
+              className="search-inputgbm"
+            />
+          </h2>
           <p className="instructions">
             Review and approve or return the facility reservation requests submitted by your advised organizations.
           </p>
         </div>
         <hr className="title-custom-line" />
-        {books.length > 0 ? (
+        {filteredBooks.length > 0 ? (
           <div className="proposals-list">
             <div className="proposal-row header-row">
               <div className="proposal-cell">Organization Name</div>
@@ -187,26 +190,25 @@ const handleSubmitReject = async (e) => {
               <div className="proposal-cell">Facility</div>
               <div className="proposal-cell">Actions</div>
             </div>
-            {books.map((list) => (
+            {filteredBooks.map((list) => (
               <div key={list.faci_id} className="proposal-row">
-                <div className="proposal-cell">
-                  {list.reqdep}
-                </div>
+                <div className="proposal-cell">{list.reqdep}</div>
                 <div className="proposal-cell">{list.actname}</div>
                 <div className="proposal-cell">{list.acttype}</div>
-                <div className="proposal-cell"> {list.facility || ""}
-            {list.facility && list.otherfacility ? " " : ""}
-            {list.otherfacility || ""}</div>
+                <div className="proposal-cell-facility">
+                  {list.facility !== 'Others:' && list.facility}
+                  {list.otherfacility && (list.facility !== 'Others:' ? ' | ' : '')}
+                  {list.otherfacility}
+                </div>
                 <div className="proposal-cell ext">
-                  <button  onClick={() => {
-                         
-                         navigate(`/viewrequestform/${list.faci_id}`, { state: { userId, userInfo } });
-
-                     }
-                   } >
+                  <button
+                    onClick={() => {
+                      navigate(`/viewrequestform/${list.faci_id}`, { state: { userId, userInfo } });
+                    }}
+                  >
                     View
                   </button>
-                  <button className="approve-button"onClick={() => handleApprove(list.faci_id)}>Approve</button>
+                  <button className="approve-button" onClick={() => handleApprove(list.faci_id)}>Approve</button>
                   <button className="reject-button" onClick={() => handleReject(list)}>Request Revision</button>
                 </div>
               </div>
@@ -226,13 +228,7 @@ const handleSubmitReject = async (e) => {
               onChange={(e) => setComment(e.target.value)}
               placeholder="Enter your comment or feedback..."
             ></textarea>
-            <button onClick={handleSubmitReject} className='submitfeedback'style={{
-                    
-                    color: "white",
-                   
-                    cursor: "pointer",
-                   
-                  }}>Submit</button>
+            <button onClick={handleSubmitReject} className='submitfeedback' style={{ cursor: 'pointer' }}>Submit</button>
             <button onClick={() => setSelectedProposal(null)}>Cancel</button>
           </div>
         </div>

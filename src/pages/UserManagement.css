@@ -1,0 +1,170 @@
+/* UserManagement.css */
+
+.user-management-main-content {
+    flex: 1;
+    padding: 0px 120px;
+    width: 100%;
+    flex-wrap: nowrap;
+    gap: 20px;
+    font-family: "General Sans";
+    padding-bottom: 120px;
+  }
+  
+  .user-management-update-title {
+    color: #A93644;
+    font-family: "General Sans";
+    font-weight: 700;
+    font-size: 28px;
+    text-align: left;
+    margin-left: 0px;
+    margin-bottom: -5px;
+  }
+  
+  .user-management-instructions {
+    font-family: "General Sans";
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .user-management-title-custom-line {
+    border: none;
+    border-top: 2px solid #A93644;
+    margin: 20px 0;
+  }
+  
+  .user-management-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .user-management-controls select,
+  .user-management-controls input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: "General Sans";
+    margin-right: 10px;
+  }
+  
+  .user-management-controls button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #A72837;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "General Sans";
+  }
+  
+  .user-management-controls button:hover {
+    background-color: #871D2C;
+  }
+  
+  .user-management-user-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .user-management-user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: "General Sans";
+  }
+  
+  .user-management-user-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-management-user-id,
+  .user-management-user-role {
+    font-size: 16px;
+  }
+  
+  .user-management-user-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .user-management-user-actions button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #A72837;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "General Sans";
+  }
+  
+  .user-management-user-actions button:hover {
+    background-color: #871D2C;
+  }
+  
+  .user-management-dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  
+  .user-management-dialog-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 50%;
+    max-height: 85%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+    overflow: auto;
+  }
+  
+  .user-management-dialog-content h2 {
+    margin-bottom: 10px;
+  }
+  
+  .user-management-dialog-content label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .user-management-dialog-content input,
+  .user-management-dialog-content textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .user-management-dialog-content button {
+    padding: 8px 16px;
+    margin-top: 10px;
+    background-color: #A72837;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .user-management-dialog-content button:hover {
+    background-color: darkred;
+  }
+  

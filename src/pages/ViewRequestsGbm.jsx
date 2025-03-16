@@ -4,120 +4,116 @@ import logo from '/unc_logo.png';
 import './AdviserApproval.css';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-//import { color } from 'html2canvas/dist/types/css/types/color';
 
 const ViewRequestsGbm = () => {
- 
- const location = useLocation();
- // const { userId } = location.state || {};
-
- const { userId, userInfo } = location.state || {};
+  const location = useLocation();
+  const { userId, userInfo } = location.state || {};
   const [gbm, setGbm] = useState(null);
- const [orgId, setOrgId] = useState(null);
   const [organizations, setOrganizations] = useState([]);
-  const [proposals, setProposals] = useState([]);
+  const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [feedback, setFeedback] = useState('');
   const [selectedProposal, setSelectedProposal] = useState(null);
   const [comment, setComment] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [gbmResponse] = await Promise.all([
-          axios.get('http://localhost:8800/gbm')
-        
-        ]);
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
-        const gbms = gbmResponse.data;
-    
+  const fetchBooks = async () => {
+    try {
+      const [gbmResponse, proposalsResponse] = await Promise.all([
+        axios.get('http://localhost:8800/gbm'),
+        axios.get('http://localhost:8800/facilityrequestall'),
+      ]);
 
-        // Find adviser based on userId
-        const foundAdviser = gbms.find((gbm) => gbm.user_id === userId);
-        if (!foundAdviser) {
-          setError('GBM Officer not found.');
-          setLoading(false);
-          return;
-        }
- 
-        setGbm(foundAdviser);
-console.log(foundAdviser)
-   
-      } catch (err) {
-        console.error('Error fetching data:', err);
-        setError('Failed to load data.');
+      const gbms = gbmResponse.data;
+      const proposalsData = proposalsResponse.data;
+
+      // Find GBM officer based on userId
+      const foundGbm = gbms.find((gbm) => gbm.user_id === userId);
+      if (!foundGbm) {
+        setError('GBM Officer not found.');
         setLoading(false);
+        return;
       }
-    };
 
-    fetchData();
+      setGbm(foundGbm);
+
+      // Filter proposals to only include those with status "For Approval of GBM"
+      const filteredProposals = proposalsData.filter(
+        (proposal) => proposal.status === 'For Approval of GBM'
+      );
+      setBooks(filteredProposals);
+      setLoading(false);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      setError('Failed to load data.');
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchBooks();
   }, [userId]);
 
- 
+  const handleApprove = async (faci_id) => {
+    try {
+      await axios.put('http://localhost:8800/gbmapproved/' + faci_id);
+      alert('Form Approved!');
+      fetchBooks(); // Refetch the books after approval
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
+  const handleReject = (book) => {
+    setSelectedProposal(book);
+    setComment('');
+  };
+
+  const handleSubmitReject = async (e) => {
+    e.preventDefault();
+
+    if (selectedProposal && comment) {
+      try {
+        await axios.post(`http://localhost:8800/gbmreturned/${selectedProposal.faci_id}`, {
+          comment_content: `[${gbm?.gbm_name}] ${comment}`,
+        });
+
+        alert('Form Returned!');
+        setSelectedProposal(null);
+        setComment('');
+        fetchBooks(); // Refetch the books after rejection
+      } catch (err) {
+        console.error(err.response?.data || 'An error occurred');
+      }
+    } else {
+      alert('Please select a proposal and provide a comment.');
+    }
+  };
+
   const handleSignOut = () => {
     navigate('/', { state: { userId: null } });
   };
 
-  const{id} = useParams();
-  const [books, setBooks] = useState([]);
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
 
-    useEffect(() => {
-        const fetchAllBooks = async () => {
-          try {
-            const res = await axios.get("http://localhost:8800/facilityrequestall");
-            //console.log(res);
-            setBooks(res.data);
-          } catch (err) {
-            console.log(err);
-          }
-        };
-        fetchAllBooks();
-      }, []);
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
 
-      const handleReject = (books) => {
-        setSelectedProposal(books);
-        console.log(books);
-        setComment('');
-      };
-      
-      const handleSubmitReject = async (e) => {
-        e.preventDefault(); // Ensure this runs first to prevent default form submission
-      
-        if (selectedProposal && comment) {
-            try { 
-                const response = await axios.post(`http://localhost:8800/gbmreturned/${selectedProposal.faci_id}`, {
-                    comment_content: `[${gbm?.gbm_name}] ${comment}` // Ensure correct key name
-                });
-      
-                alert('Form Returned!');
-                setSelectedProposal(null);
-                setComment('');
-                console.log(response.data); // Corrected usage of response
-      
-                // navigate('/returnedlist'); // Uncomment if navigation is needed
-            } catch (err) {
-                console.error(err.response?.data || "An error occurred"); // Improved error handling
-            }
-        } else {
-            alert("Please select a proposal and provide a comment.");
-        }
-      };
-      
-
-const handleApprove = (faci_id) =>{
-    try{ 
-   // e.preventDefault() 
-     axios.put('http://localhost:8800/gbmapproved/'+faci_id);
-      alert('Form Approved!');
-    //  navigate('/returnedlist');
-    console.log(response.data);
-    }catch(err){
-      console.log(err.response.data);
-    }
-
-}
+  const filteredBooks = books.filter(
+    (book) =>
+      book.reqdep.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      book.actname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      book.otherfacility.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (book.facility && book.facility.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
 
   return (
     <div className="main-wrapper">
@@ -134,7 +130,6 @@ const handleApprove = (faci_id) =>{
             <div className="ellipse-div" />
             <img className="vector-icon" loading="lazy" alt="" src="/vector.svg" />
             <img className="pfp-1-icon" loading="lazy" alt="" src="/default.png" />
-          
             {gbm && (
               <>
                 <div className="profile-text">
@@ -145,7 +140,6 @@ const handleApprove = (faci_id) =>{
                 </div>
               </>
             )}
-   
           </div>
         </div>
         <div className="navbar">
@@ -160,56 +154,62 @@ const handleApprove = (faci_id) =>{
       </div>
 
       <div className="spacer"></div>
-     
 
-<div className="adviser-approval-content">
-  <div className="title-top-part">
-    <h2>Facility Reservation Requests for Approval</h2>
-    <p className="instructions">
-      Review and approve or return the facility reservation requests submitted by organizations.
-    </p>
-  </div>
-  <hr className="title-custom-line" />
-  {books.length > 0 ? (
-    <div className="proposals-list">
-      <div className="proposal-row header-row">
-        <div className="proposal-cell">Organization Name</div>
-        <div className="proposal-cell">Activity Title</div>
-        <div className="proposal-cell">Activity Type</div>
-        <div className="proposal-cell">Facility</div>
-        <div className="proposal-cell">Actions</div>
-      </div>
-      {books.map((list) => (
-        <div key={list.faci_id} className="proposal-row">
-          <div className="proposal-cell">
-            {list.reqdep}
-          </div>
-          <div className="proposal-cell">{list.actname}</div>
-          <div className="proposal-cell">{list.acttype}</div>
-          <div className="proposal-cell"> {list.facility || ""}
-      {list.facility && list.otherfacility ? " " : ""}
-      {list.otherfacility || ""}</div>
-          <div className="proposal-cell ext">
-            <button  onClick={() => {
-                   
-                   navigate(`/viewrequestformgbm/${list.faci_id}`, { state: { userId, userInfo } });
-
-               }
-             } >
-              View
-            </button>
-            <button className="approve-button"onClick={() => handleApprove(list.faci_id)}>Approve</button>
-            <button className="reject-button" onClick={() => handleReject(list)}>Request Revision</button>
-          </div>
+      <div className="adviser-approval-content">
+        <div className="title-top-part">
+          <h2>Facility Reservation Requests for Approval
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={handleSearch}
+              className="search-inputgbm"
+            />
+          </h2>
+          <p className="instructions">
+            Review and approve or return the facility reservation requests submitted by organizations.
+          </p>
         </div>
-      ))}
-    </div>
-  ) : (
-    <p>No proposals available for approval.</p>
-  )}
-</div>
+        <hr className="title-custom-line" />
+        {filteredBooks.length > 0 ? (
+          <div className="proposals-list">
+            <div className="proposal-row header-row">
+              <div className="proposal-cell">Organization Name</div>
+              <div className="proposal-cell">Activity Title</div>
+              <div className="proposal-cell">Activity Type</div>
+              <div className="proposal-cell">Facility</div>
+              <div className="proposal-cell">Actions</div>
+            </div>
+            {filteredBooks.map((list) => (
+              <div key={list.faci_id} className="proposal-row">
+                <div className="proposal-cell">{list.reqdep}</div>
+                <div className="proposal-cell">{list.actname}</div>
+                <div className="proposal-cell">{list.acttype}</div>
+                <div className="proposal-cell">
+                  {list.facility || ''}
+                  {list.facility && list.otherfacility ? ' ' : ''}
+                  {list.otherfacility || ''}
+                </div>
+                <div className="proposal-cell ext">
+                  <button
+                    onClick={() => {
+                      navigate(`/viewrequestformgbm/${list.faci_id}`, { state: { userId, userInfo } });
+                    }}
+                  >
+                    View
+                  </button>
+                  <button className="approve-button" onClick={() => handleApprove(list.faci_id)}>Approve</button>
+                  <button className="reject-button" onClick={() => handleReject(list)}>Request Revision</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>No proposals available for approval.</p>
+        )}
+      </div>
 
-{selectedProposal && (
+      {selectedProposal && (
         <div className="overlay">
           <div className="overlay-content">
             <h3>Return Reports</h3>
@@ -218,13 +218,7 @@ const handleApprove = (faci_id) =>{
               onChange={(e) => setComment(e.target.value)}
               placeholder="Enter your comment or feedback..."
             ></textarea>
-            <button onClick={handleSubmitReject} className='submitfeedback' style={{
-                    
-                    color: "white",
-                   
-                    cursor: "pointer",
-                   
-                  }}>Submit</button>
+            <button onClick={handleSubmitReject} className='submitfeedback' style={{ cursor: 'pointer' }}>Submit</button>
             <button onClick={() => setSelectedProposal(null)}>Cancel</button>
           </div>
         </div>
