@@ -925,21 +925,6 @@
   background-color: #8f222f;
 }
 
-.committees-field button {
-  align-self: flex-start;
-  padding: 10px 20px;
-  background-color: #A72837;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.committees-field button:hover {
-  background-color: #8f222f;
-}
-
 .main-table th:nth-child(1),
 .main-table td:nth-child(1) {
   width: 35%; 
@@ -965,6 +950,18 @@
 .note-allmembers {
   width: 100%;
 }
+
+.arrow-icon {
+  width: 16px; /* Adjust the width as needed */
+  height: 16px; /* Adjust the height as needed */
+  margin-left: 8px; /* Adjust the spacing as needed */
+  fill: white; /* Ensure the SVG is colored white */
+  margin-bottom: 0px;
+  padding-top: 5px;
+  padding-bottom: 0px;
+
+}
+
 
 
 

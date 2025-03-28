@@ -48,7 +48,7 @@ const ViewSubmittedProposals: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { userId, userInfo } = location.state || {};
-  
+
   const { org_id } = useParams<{ org_id: string }>();
   const [organization, setOrganization] = useState<Organization | null>(null);
   const [proposals, setProposals] = useState<Proposal[]>([]);
@@ -97,22 +97,22 @@ const ViewSubmittedProposals: React.FC = () => {
   }, [org_id]);
 
   useEffect(() => {
-      if (userId && users.length > 0 && organizations.length > 0) {
-        const user = users.find((u) => u.user_id === userId);
-        if (user) {
-          console.log('Found user:', user);
-          const selectedOrganization = organizations.find((o) => o.user_id === userId);
-          if (selectedOrganization) {
-            console.log('Found organization:', selectedOrganization);
-            setUserInfoState(selectedOrganization);
-          } else {
-            console.log('Organization not found for userId:', userId);
-          }
+    if (userId && users.length > 0 && organizations.length > 0) {
+      const user = users.find((u) => u.user_id === userId);
+      if (user) {
+        console.log('Found user:', user);
+        const selectedOrganization = organizations.find((o) => o.user_id === userId);
+        if (selectedOrganization) {
+          console.log('Found organization:', selectedOrganization);
+          setUserInfoState(selectedOrganization);
         } else {
-          console.log('User not found for userId:', userId);
+          console.log('Organization not found for userId:', userId);
         }
+      } else {
+        console.log('User not found for userId:', userId);
       }
-    }, [userId, users, organizations]);
+    }
+  }, [userId, users, organizations]);
 
   const handleDeleteProposal = async (pros_key: string) => {
     try {
@@ -193,87 +193,86 @@ const ViewSubmittedProposals: React.FC = () => {
         </div>
         <hr className="title-custom-line" />
         {proposals.length > 0 ? (
-  <div className="proposals-list">
-    <div className="proposal-row header-row">
-      <div className="proposal-cell">Nature of Activity</div>
-      <div className="proposal-cell">Proposal Type</div>
-      <div className="proposal-cell">Project Title</div>
-      <div className="proposal-cell">Status</div>
-      <div className="proposal-cell">Actions</div>
-    </div>
-    {proposals.map(proposal => (
-      <React.Fragment key={proposal.pros_key}>
-        <div className="proposal-row">
-          <div className="proposal-cell">{proposal.pros_type}</div>
-          <div className="proposal-cell">{proposal.pros_nature}</div>
-          <div className="proposal-cell">{proposal.pros_title}</div>
-          <div className="proposal-cell">{proposal.status}</div>
-          <div className="proposal-cell ext">
-            <button
-              onClick={() => {
-                switch (proposal.pros_type) {
-                  case 'In Campus':
-                    navigate(`/preview/${proposal.pros_key}`);
-                    break;
-                  case 'Off-Campus A':
-                    navigate(`/preview/out-campus-a/${proposal.pros_key}`);
-                    break;
-                  case 'Off-Campus B':
-                    navigate(`/preview/out-campus-b/${proposal.pros_key}`);
-                    break;
-                  default:
-                    alert('Proposal not found');
-                }
-              }}
-            >
-              View
-            </button>
-            <button
-              onClick={() => {
-                switch (proposal.pros_type) {
-                  case 'In Campus':
-                    navigate(`/update/in-campus/${org_id}/${proposal.pros_key}`);
-                    break;
-                  case 'Off-Campus A':
-                    navigate(`/update/out-campus-a/${org_id}/${proposal.pros_key}`);
-                    break;
-                  case 'Off-Campus B':
-                    navigate(`/update/out-campus-b/${org_id}/${proposal.pros_key}`);
-                    break;
-                  default:
-                    alert('Unknown proposal nature');
-                }
-              }}
-            >
-              Update
-            </button>
-            <button onClick={() => handleDeleteProposal(proposal.pros_key)}>Delete</button>
-            <button onClick={() => toggleComments(proposal.pros_key)}>
-              {showComments[proposal.pros_key] ? 'Hide Comments' : 'Show Comments'}
-            </button>
-          </div>
-        </div>
-        {showComments[proposal.pros_key] && (
-          <div className="comments-section">
-            {comments[proposal.pros_key] && comments[proposal.pros_key].length > 0 ? (
-              comments[proposal.pros_key].map((comment) => (
-                <div key={comment.comment_key} className="comment-item">
-                  <p>{comment.comment_content}</p>
-                  <p><small>{new Date(comment.date).toLocaleString()}</small></p>
+          <div className="proposals-list">
+            <div className="proposal-row header-row">
+              <div className="proposal-cell">Nature of Activity</div>
+              <div className="proposal-cell">Proposal Type</div>
+              <div className="proposal-cell">Project Title</div>
+              <div className="proposal-cell">Status</div>
+              <div className="proposal-cell">Actions</div>
+            </div>
+            {proposals.map(proposal => (
+              <React.Fragment key={proposal.pros_key}>
+                <div className="proposal-row">
+                  <div className="proposal-cell">{proposal.pros_type}</div>
+                  <div className="proposal-cell">{proposal.pros_nature}</div>
+                  <div className="proposal-cell">{proposal.pros_title}</div>
+                  <div className="proposal-cell">{proposal.status}</div>
+                  <div className="proposal-cell ext">
+                    <button
+                      onClick={() => {
+                        switch (proposal.pros_type) {
+                          case 'In Campus':
+                            navigate(`/preview/${proposal.pros_key}`, { state: { userId } });
+                            break;
+                          case 'Off-Campus A':
+                            navigate(`/preview/out-campus-a/${proposal.pros_key}`, { state: { userId } });
+                            break;
+                          case 'Off-Campus B':
+                            navigate(`/preview/out-campus-b/${proposal.pros_key}`, { state: { userId } });
+                            break;
+                          default:
+                            alert('Proposal not found');
+                        }
+                      }}
+                    >
+                      View
+                    </button>
+                    <button
+                      onClick={() => {
+                        switch (proposal.pros_type) {
+                          case 'In Campus':
+                            navigate(`/update/in-campus/${org_id}/${proposal.pros_key}`, { state: { userId, userInfo } });
+                            break;
+                          case 'Off-Campus A':
+                            navigate(`/update/out-campus-a/${org_id}/${proposal.pros_key}`, { state: { userId } });
+                            break;
+                          case 'Off-Campus B':
+                            navigate(`/update/out-campus-b/${org_id}/${proposal.pros_key}`, { state: { userId } });
+                            break;
+                          default:
+                            alert('Unknown proposal nature');
+                        }
+                      }}
+                    >
+                      Update
+                    </button>
+                    <button onClick={() => handleDeleteProposal(proposal.pros_key)}>Delete</button>
+                    <button onClick={() => toggleComments(proposal.pros_key)}>
+                      {showComments[proposal.pros_key] ? 'Hide Comments' : 'Show Comments'}
+                    </button>
+                  </div>
                 </div>
-              ))
-            ) : (
-              <p>No comments available.</p>
-            )}
+                {showComments[proposal.pros_key] && (
+                  <div className="comments-section">
+                    {comments[proposal.pros_key] && comments[proposal.pros_key].length > 0 ? (
+                      comments[proposal.pros_key].map((comment) => (
+                        <div key={comment.comment_key} className="comment-item">
+                          <p>{comment.comment_content}</p>
+                          <p><small>{new Date(comment.date).toLocaleString()}</small></p>
+                        </div>
+                      ))
+                    ) : (
+                      <p>No comments available.</p>
+                    )}
+                  </div>
+                )}
+              </React.Fragment>
+            ))}
           </div>
+        ) : (
+          <p>No proposals available for approval.</p>
         )}
-      </React.Fragment>
-    ))}
-  </div>
-) : (
-  <p>No proposals available for approval.</p>
-)}
-
       </div>
 
       <div className="spacer"></div>

@@ -1,0 +1,436 @@
+.previewmain {
+    padding: 40px 40px 100px 40px;
+    font-family: "General Sans", sans-serif;
+    border: 1px solid #e0e0e0;
+    margin-left: 60px;
+    page-break-inside: avoid; /* Avoid breaking inside this element */
+    width: 215.9mm;
+  height: 355.6mm;
+  margin-bottom: 20px; /* Space between pages */
+  }
+
+  .spacer {
+    padding-top: 160px;
+  }
+  
+  .details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 5px;
+    page-break-inside: auto; /* Allow breaking inside this element */
+  }
+  
+  .details-table th,
+  .details-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .details-table th {
+    font-weight: 600;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .details-table tbody tr:hover {
+    background-color: #f5f5f5;
+    transition: background-color 0.2s ease;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .details-table, .details-table tbody, .details-table tr, .details-table td {
+      display: block;
+    }
+  
+    .details-table thead {
+      display: none;
+    }
+  
+    .details-table tr {
+      margin-bottom: 15px;
+      border-bottom: 2px solid #e0e0e0;
+    }
+  
+    .details-table td {
+      padding: 10px 5px 10px 50%;
+      position: relative;
+      text-align: right;
+    }
+  
+    .details-table td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 6px;
+      width: 45%;
+      text-align: left;
+      font-weight: 600;
+    }
+  }
+  
+  .preview {
+    text-align: center;
+    display: block;
+    margin-bottom: 30px;
+  }
+  
+  .previewmain {
+    margin-left: 22%;
+    margin-right: 22%;
+  }
+  
+  .spacer1 {
+    height: 10px;
+  }
+  
+  .form-a-section strong, .form-b-section strong {
+    color:#333;
+    font-weight: 600;
+  }
+  
+  .programs-details h2 {
+    color: #a93644;
+  }
+  
+  .form-a-section h2, .form-b-section h2 {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #e0e0e0;
+    width: fit-content;
+    font-size: 21px;
+    color: #a93644;
+  }
+  
+  .budgets-details h2, .allocations-details h2 {
+    font-size: 15px;
+    color:#333;
+    padding-left: 5px;
+  }
+  
+  .previewSign {
+    text-align: center;
+    margin-top: 10px;
+    background-color: #f8b8bf;
+    font-weight: 500;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  
+  .previewheaderfacifaci {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .previewheaderfacifaci td {
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .previewheaderfacifaci h4 {
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  .previewheaderfacifaci h1 {
+    font-size: 1.5em;
+    margin: 0;
+  }
+  
+  .previewheaderfacifaci h5 {
+    font-size: 1em;
+    margin: 0;
+  }
+  
+  .details-container p span {
+    font-weight: 500;
+    font-size: 14px;
+  }
+  
+  .details-container p{
+    font-size: 14px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .details-table th, .details-table td {
+    border: 1px solid #e0e0e0;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .details-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .previewheaderfaci {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e0e0e0;
+    margin-bottom: -35px;
+  }
+  
+  .previewheaderfaci td {
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .previewheaderfaci h4 {
+    font-size: 14px;
+    margin: 0;
+    color: #213547;
+  }
+  
+  .previewheaderfaci h1 {
+    font-size: 20px;
+    margin: 0;
+  }
+  
+  .previewheaderfaci h5 {
+    font-size: 14px;
+    margin: 0;
+    font-weight: 500;
+  }
+  
+  .previewheaderfaci img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .logo-img_osa {
+    border-radius: 100%;
+  }
+  
+  .details-container p span {
+    font-weight: 500;
+  }
+  
+  .details-table th, .details-table td {
+    border: 1px solid #e0e0e0;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .details-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .previewmain h3 {
+    font-size: 18px;
+    margin: 0;
+    color: #213547;
+    margin-bottom: 12px;
+    margin-top: 15px;
+    font-weight: 500;
+  }
+  
+  .previewmain h6 {
+    font-size: 15px;
+    margin: 0;
+    color: #213547;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .forPDF {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh; /* Optional: to center vertically within the viewport */
+    margin-bottom: 60px;
+  }
+  
+  .forPDF button {
+    align-self: center;
+    background-color: #A72837;
+    color: white;
+    border: none;
+  }
+
+  .forPDF button:hover {
+    background-color: #8f222f;
+  }
+  
+  .projTitleBreak {
+    height: 5px;
+  }
+ .acttype-textprev{
+    font-size: 12px;
+    font-weight: 600;
+    
+ }
+ .acttype-containerprev {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
+    margin-bottom: -10px;
+  }
+
+ .student-sponsoredprev{
+    font-size: 12px;
+    
+ }
+ .actname-guideprev {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+    
+  }
+  .progdetails-formprev {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 12px;
+    margin-top: -18px;
+    margin-bottom: -10px;
+    
+  }
+  .additional-infoprev {
+    margin-top: -10px;
+  }
+  .dateform-prev,
+  .time-fieldprev {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  
+  .suspension-fieldprev {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  .venuetextprev {
+ margin-top: -10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .venuetextprev-adviser {
+    margin-top: 10px;
+       margin-bottom: 10px;
+       font-size: 12px;
+       font-weight: 600;
+     }
+     .venuetextprev-dean {
+      margin-top: 10px;
+         margin-bottom: 10px;
+         font-size: 12px;
+         font-weight: 600;
+       }
+       .venuetextprev-officer {
+        margin-top: 10px;
+           margin-bottom: 10px;
+           
+           font-size: 12px;
+           font-weight: 600;
+         }
+  .venue-formprev {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 12px;
+    margin-bottom: -10px;
+    margin-top: -8px;
+  }
+  .venue-formprev2 {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 12px;
+    margin-bottom: -10px;
+    margin-top: -8px;
+  }
+  
+  .aircoolers-labelprev {
+    margin-left: 5px;
+    width: 50px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  .adviser-inputprev {
+    margin-top: -10px;
+    padding: 5px;
+    width: 180px;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    border-bottom: 1px solid #213547;
+    font-size: 12px;
+    color: #213547;
+    font-family: "General Sans";
+  }
+  .forPDF-faci {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh; /* Optional: to center vertically within the viewport */
+    margin-bottom: 60px;
+    margin-top: -40px;
+    margin-left: -60px;
+  }
+  
+  .forPDF-faci button {
+    align-self: center;
+    background-color: #A72837;
+    color: white;
+    border: none;
+  }
+
+  .forPDF-faci button:hover {
+    background-color: #8f222f;
+  }
+  .input-row-faci {
+    display: flex;
+    gap: 20px; /* Space between inputs */
+    margin-top: 30px;
+   
+  }
+  
+  .input-group-faci {
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+  }
+  .input-group-faci2 {
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+  }
+  .engrlabel1{
+    font-size: 12px;
+    margin-top: -10px;
+  }
+  .guidelinestexth3{
+    text-align: center;
+  }
+  .guidelineformprev{
+    font-size: 12px;
+    margin-top: 30px;
+  }
+  .text12guide{
+    margin-top: 5px;
+    font-weight: bold;
+  }
+  .table-adviser{
+    width: 100%;
+    border-collapse: collapse; /* Ensures borders are clean */
+  }
+  .table-adviser th, td {
+    border: 1px solid black; /* Simple plain border */
+    padding: 8px;
+    text-align: left;
+}

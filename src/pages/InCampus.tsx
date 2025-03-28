@@ -48,6 +48,9 @@ interface Proposal {
   ilo2: string;
   ilo3: string;
   house_rules: string;
+  faculty: string | null;
+  affiliation: string;
+  stakeholder: string;
 }
 
 interface Program {
@@ -149,7 +152,9 @@ const InCampus: React.FC = () => {
   const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [userInfoState, setUserInfoState] = useState<Organization | null>(null);
   const [allMembersNote, setAllMembersNote] = useState('');
-  const [participantChoice, setParticipantChoice] = useState('individual'); // 'individual' or 'note'
+  const [participantChoice, setParticipantChoice] = useState('individual');
+  const [isEditingBudgetSource, setIsEditingBudgetSource] = useState(false);
+  const [isEditingBudgetAllocation, setIsEditingBudgetAllocation] = useState(false);
 
   // Proposals
   const [proposals, setProposals] = useState<Proposal[]>([]);
@@ -177,7 +182,10 @@ const InCampus: React.FC = () => {
     ilo1: '',
     ilo2: '',
     ilo3: '',
-    house_rules: ''
+    house_rules: '',
+    faculty: null, // Initialize faculty as null
+    affiliation: '',
+    stakeholder: '',
   });
 
   // Committees
@@ -246,13 +254,13 @@ const InCampus: React.FC = () => {
         if (org) {
           const adv = advRes.data.find((a: Adviser) => a.adv_id === org.adv_id);
           setAdviser(adv || null);
-          setAdviserName(adv ? adv.adv_name : ''); // Set adviser name
+          setAdviserName(adv ? adv.adv_name : '');
         }
 
         if (org) {
           const dean = deanRes.data.find((a: Dean) => a.dean_id === org.dean_id);
           setDean(dean || null);
-          setDeanName(dean ? dean.dean_name : ''); // Set adviser name
+          setDeanName(dean ? dean.dean_name : '');
         }
 
         setUsers(usersRes.data);
@@ -287,10 +295,23 @@ const InCampus: React.FC = () => {
     }
   }, [userId, users, organizations]);
 
+  useEffect(() => {
+    if (organization) {
+      setNewProposal((prevProposal) => ({
+        ...prevProposal,
+        affiliation: organization.org_name,
+        stakeholder: organization.org_name,
+      }));
+    }
+  }, [organization]);
+
   // Proposal
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setNewProposal({ ...newProposal, [name]: value });
+    setNewProposal(prevProposal => ({
+      ...prevProposal,
+      [name]: value === '' ? null : value, // Set to null if the input is empty
+    }));
   };
 
   const handleNewProposal = async () => {
@@ -298,8 +319,7 @@ const InCampus: React.FC = () => {
       'pros_nature', 'pros_proponent', 'pros_title', 'pros_date', 'pros_venue',
       'pros_objectives', 'pros_rationale', 'pros_participants', 'selected_sdg',
       'alignment_explanation', 'objective1_title', 'objective1_explanation',
-      'objective2_title', 'objective2_explanation', 'objective3_title',
-      'objective3_explanation', 'ilo1', 'ilo2', 'ilo3', 'house_rules'
+      'ilo1', 'house_rules'
     ];
 
     for (const field of requiredFields) {
@@ -333,7 +353,6 @@ const InCampus: React.FC = () => {
       }))));
     }
     formData.append('committees', JSON.stringify(committees));
-    
 
     for (let pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1]);
@@ -355,247 +374,211 @@ const InCampus: React.FC = () => {
     }
   };
 
-  <div className="sidebar">
-  <ul>
-    <li
-      onClick={() => setActiveSection('ProjectDetails')}
-      className={activeSection === 'ProjectDetails' ? 'active' : ''}
-    >
-      Project Details
-    </li>
-    <li
-      onClick={() => setActiveSection('FormA')}
-      className={activeSection === 'FormA' ? 'active' : ''}
-    >
-      Form A - Program of Activity
-    </li>
-    <li
-      onClick={() => setActiveSection('FormB')}
-      className={activeSection === 'FormB' ? 'active' : ''}
-    >
-      Form B - Proposed Budget
-    </li>
-    <li
-      onClick={() => setActiveSection('FormC')}
-      className={activeSection === 'FormC' ? 'active' : ''}
-    >
-      Form C - List of Student Participants
-    </li>
-    <li
-      onClick={() => setActiveSection('FormD')}
-      className={activeSection === 'FormD' ? 'active' : ''}
-    >
-      Form D - UN SDG Alignment
-    </li>
-    <li
-      onClick={() => setActiveSection('FormE')}
-      className={activeSection === 'FormE' ? 'active' : ''}
-    >
-      Form E - Alignment to Program Objectives (Acad)/ Organizations Objectives (Non-Acad)
-    </li>
-    <li
-      onClick={() => setActiveSection('FormF')}
-      className={activeSection === 'FormF' ? 'active' : ''}
-    >
-      Form F - Intended Learning Outcomes
-    </li>
-    <li
-      onClick={() => setActiveSection('FormG')}
-      className={activeSection === 'FormG' ? 'active' : ''}
-    >
-      Form G - House Rules
-    </li>
-  </ul>
-</div>
-
-// Form A - Programs
-const handleAddProgram = () => {
-  const newProgKey = `prog_${Date.now()}`;
-  const updatedProgram = {
-    ...newProgram,
-    prog_key: newProgKey,
-    pros_key: newProposal.pros_key,
+  const handleSignOut = () => {
+    navigate('/', { state: { userId: null } });
   };
 
-  setPrograms([...programs, updatedProgram]);
-  setNewProgram({
-    prog_key: '',
-    pros_key: newProposal.pros_key,
-    program_name: '',
-    start_time: '',
-    end_time: '',
-    persons_involved: '',
-  });
-};
+  // Form A - Programs
+  const handleAddProgram = () => {
+    const newProgKey = `prog_${Date.now()}`;
+    const updatedProgram = {
+      ...newProgram,
+      prog_key: newProgKey,
+      pros_key: newProposal.pros_key,
+    };
 
-const handleProgramInputChange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-) => {
-  const { name, value } = e.target;
-  setNewProgram({ ...newProgram, [name]: value });
-};
-
-const handleEditProgram = (prog_key: string) => {
-  const programToEdit = programs.find((program) => program.prog_key === prog_key);
-  if (programToEdit) {
-    setNewProgram({ ...programToEdit });
-    setIsEditing(true);
-  }
-};
-
-const handleUpdateProgram = () => {
-  const updatedPrograms = programs.map((program) =>
-    program.prog_key === newProgram.prog_key ? newProgram : program
-  );
-  setPrograms(updatedPrograms);
-  setIsEditing(false);
-  setNewProgram({
-    prog_key: '',
-    pros_key: newProposal.pros_key,
-    program_name: '',
-    start_time: '',
-    end_time: '',
-    persons_involved: '',
-  });
-};
-
-const handleDeleteProgram = (prog_key: string) => {
-  const updatedPrograms = programs.filter((program) => program.prog_key !== prog_key);
-  setPrograms(updatedPrograms);
-};
-
-const handleBudgetSourceInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const { name, value } = e.target;
-  setNewBudgetSource(prevState => ({
-    ...prevState,
-    [name]: value,
-  }));
-};
-
-// Form B - Budget
-const handleAddBudgetSource = () => {
-  const newSourceKey = `source_${Date.now()}`;
-  const updatedSource = {
-    ...newBudgetSource,
-    source_key: newSourceKey,
-    pros_key: newProposal.pros_key
+    setPrograms([...programs, updatedProgram]);
+    setNewProgram({
+      prog_key: '',
+      pros_key: newProposal.pros_key,
+      program_name: '',
+      start_time: '',
+      end_time: '',
+      persons_involved: '',
+    });
   };
 
-  setBudgetSources([...budgetSources, updatedSource]);
-  setNewBudgetSource({ source_key: '', pros_key: newProposal.pros_key, source: '', particulars: '' });
-};
+  const handleProgramInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setNewProgram({ ...newProgram, [name]: value });
+  };
 
-const handleEditBudgetSource = (source_key: string) => {
-  const sourceToEdit = budgetSources.find((source) => source.source_key === source_key);
-  if (sourceToEdit) {
-    setNewBudgetSource(sourceToEdit);
+  const handleEditProgram = (prog_key: string) => {
+    const programToEdit = programs.find((program) => program.prog_key === prog_key);
+    if (programToEdit) {
+      setNewProgram({ ...programToEdit });
+      setIsEditing(true);
+    }
+  };
+
+  const handleUpdateProgram = () => {
+    const updatedPrograms = programs.map((program) =>
+      program.prog_key === newProgram.prog_key ? newProgram : program
+    );
+    setPrograms(updatedPrograms);
+    setIsEditing(false);
+    setNewProgram({
+      prog_key: '',
+      pros_key: newProposal.pros_key,
+      program_name: '',
+      start_time: '',
+      end_time: '',
+      persons_involved: '',
+    });
+  };
+
+  const handleDeleteProgram = (prog_key: string) => {
+    const updatedPrograms = programs.filter((program) => program.prog_key !== prog_key);
+    setPrograms(updatedPrograms);
+  };
+
+  // Form B - Budget
+  const handleBudgetSourceInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewBudgetSource(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleAddBudgetSource = () => {
+    const newSourceKey = `source_${Date.now()}`;
+    const updatedSource = {
+      ...newBudgetSource,
+      source_key: newSourceKey,
+      pros_key: newProposal.pros_key
+    };
+
+    setBudgetSources([...budgetSources, updatedSource]);
+    setNewBudgetSource({ source_key: '', pros_key: newProposal.pros_key, source: '', particulars: '' });
+  };
+
+  const handleEditBudgetSource = (source_key: string) => {
+    const sourceToEdit = budgetSources.find((source) => source.source_key === source_key);
+    if (sourceToEdit) {
+      setNewBudgetSource(sourceToEdit);
+      setIsEditingBudgetSource(true);
+    }
+  };
+
+  const handleUpdateBudgetSource = () => {
+    const updatedBudgetSources = budgetSources.map((source) =>
+      source.source_key === newBudgetSource.source_key ? newBudgetSource : source
+    );
+    setBudgetSources(updatedBudgetSources);
+    setIsEditingBudgetSource(false);
+    setNewBudgetSource({ source_key: '', pros_key: newProposal.pros_key, source: '', particulars: '' });
+  };
+
+  const handleDeleteBudgetSource = (source_key: string) => {
     setBudgetSources(budgetSources.filter((source) => source.source_key !== source_key));
-  }
-};
-
-const handleDeleteBudgetSource = (source_key: string) => {
-  setBudgetSources(budgetSources.filter((source) => source.source_key !== source_key));
-};
-
-const handleBudgetAllocationInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const { name, value } = e.target;
-  setNewBudgetAllocation(prevState => ({
-    ...prevState,
-    [name]: name === 'quantity' || name === 'amount' ? Number(value) : value,
-  }));
-};
-
-const handleAddBudgetAllocation = () => {
-  const newBudgetAllocationKey = `allocation_${Date.now()}`;
-  const updatedAllocation = {
-    ...newBudgetAllocation,
-    allocation_key: newBudgetAllocationKey,
-    pros_key: newProposal.pros_key
   };
 
-  setBudgetAllocations([...budgetAllocations, updatedAllocation]);
-  setNewBudgetAllocation({ allocation_key: '', pros_key: newProposal.pros_key, particulars: '', quantity: 0, amount: 0 });
-};
+  const handleBudgetAllocationInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewBudgetAllocation(prevState => ({
+      ...prevState,
+      [name]: name === 'quantity' || name === 'amount' ? Number(value) : value,
+    }));
+  };
 
-const handleEditBudgetItem = (allocation_key: string) => {
-  const allocationToEdit = budgetAllocations.find((allocation) => allocation.allocation_key === allocation_key);
-  if (allocationToEdit) {
-    setNewBudgetAllocation(allocationToEdit);
-    setBudgetAllocations(budgetAllocations.filter((allocation) => allocation.allocation_key !== allocation.allocation_key));
-  }
-};
+  const handleAddBudgetAllocation = () => {
+    if (isEditingBudgetAllocation) {
+      const updatedBudgetAllocations = budgetAllocations.map((allocation) =>
+        allocation.allocation_key === newBudgetAllocation.allocation_key ? newBudgetAllocation : allocation
+      );
+      setBudgetAllocations(updatedBudgetAllocations);
+      setIsEditingBudgetAllocation(false);
+    } else {
+      const newBudgetAllocationKey = `allocation_${Date.now()}`;
+      const updatedAllocation = {
+        ...newBudgetAllocation,
+        allocation_key: newBudgetAllocationKey,
+        pros_key: newProposal.pros_key
+      };
 
-const handleDeleteBudgetItem = (allocation_key: string) => {
-  setBudgetAllocations(budgetAllocations.filter((allocation) => allocation.allocation_key !== allocation.allocation_key));
-};
+      setBudgetAllocations([...budgetAllocations, updatedAllocation]);
+    }
+    setNewBudgetAllocation({ allocation_key: '', pros_key: newProposal.pros_key, particulars: '', quantity: 0, amount: 0 });
+  };
 
-const getTotalAmount = () => {
-  return budgetAllocations.reduce((total, allocation) => total + allocation.amount, 0);
-};
+  const handleEditBudgetItem = (allocation_key: string) => {
+    const allocationToEdit = budgetAllocations.find((allocation) => allocation.allocation_key === allocation_key);
+    if (allocationToEdit) {
+      setNewBudgetAllocation(allocationToEdit);
+      setIsEditingBudgetAllocation(true);
+    }
+  };
 
-// Form C - Student Participants
-const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const { value } = e.target;
-  setSearchInput(value);
+  const handleDeleteBudgetItem = (allocation_key: string) => {
+    setBudgetAllocations(budgetAllocations.filter((allocation) => allocation.allocation_key !== allocation_key));
+  };
 
-  if (value.length > 2) {
-    axios.get(`http://localhost:8800/search-students?name=${value}`)
-      .then(response => {
-        setSearchResults(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching students:', error);
-      });
-  } else {
+  const getTotalAmount = () => {
+    return budgetAllocations.reduce((total, allocation) => total + allocation.amount, 0);
+  };
+
+  // Form C - Student Participants
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setSearchInput(value);
+
+    if (value.length > 2) {
+      axios.get(`http://localhost:8800/search-students?name=${value}`)
+        .then(response => {
+          setSearchResults(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching students:', error);
+        });
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  const handleSelectStudent = (student: Student) => {
+    setSelectedStudent(student);
+    setSearchInput(student.stud_name);
     setSearchResults([]);
-  }
-};
+  };
 
-const handleSelectStudent = (student: Student) => {
-  setSelectedStudent(student);
-  setSearchInput(student.stud_name);
-  setSearchResults([]);
-};
+  const handleAddStudent = () => {
+    if (selectedStudent) {
+      setStudents([...students, selectedStudent]);
+      setSelectedStudent(null);
+      setSearchInput('');
+    }
+  };
 
-const handleAddStudent = () => {
-  if (selectedStudent) {
-    setStudents([...students, selectedStudent]);
-    setSelectedStudent(null);
-    setSearchInput('');
-  }
-};
+  const handleEditStudent = (stud_id: string) => {
+    const studentToEdit = students.find((student) => student.stud_id === stud_id);
+    if (studentToEdit) {
+      setSelectedStudent(studentToEdit);
+      setStudents(students.filter((student) => student.stud_id !== stud_id));
+    }
+  };
 
-const handleEditStudent = (stud_id: string) => {
-  const studentToEdit = students.find((student) => student.stud_id === stud_id);
-  if (studentToEdit) {
-    setSelectedStudent(studentToEdit);
+  const handleDeleteStudent = (stud_id: string) => {
     setStudents(students.filter((student) => student.stud_id !== stud_id));
-  }
-};
+  };
 
-const handleDeleteStudent = (stud_id: string) => {
-  setStudents(students.filter((student) => student.stud_id !== stud_id));
-};
+  const handleAddCommittee = () => {
+    setCommittees([...committees, { comm_key: '', comm_name: '', comm_members: '', pros_key: newProposal.pros_key }]);
+  };
 
-const handleAddCommittee = () => {
-  setCommittees([...committees, { comm_key: '', comm_name: '', comm_members: '', pros_key: newProposal.pros_key }]);
-};
+  const handleCommitteeChange = (index: number, field: keyof Committee, value: string) => {
+    const updatedCommittees = committees.map((committee, i) =>
+      i === index ? { ...committee, [field]: value } : committee
+    );
+    setCommittees(updatedCommittees);
+  };
 
-const handleCommitteeChange = (index: number, field: keyof Committee, value: string) => {
-  const updatedCommittees = committees.map((committee, i) =>
-    i === index ? { ...committee, [field]: value } : committee
-  );
-  setCommittees(updatedCommittees);
-};
-
-const handleDeleteCommittee = (index: number) => {
-  const updatedCommittees = committees.filter((_, i) => i !== index);
-  setCommittees(updatedCommittees);
-};  
-
-const handleSignOut = () => {
-  navigate('/', { state: { userId: null } });
-};
+  const handleDeleteCommittee = (index: number) => {
+    const updatedCommittees = committees.filter((_, i) => i !== index);
+    setCommittees(updatedCommittees);
+  };
 
   return (
     <div className="main-wrapper">
@@ -649,7 +632,8 @@ const handleSignOut = () => {
               Cancel
             </Link>
             <button className="incampus-button-proceed" onClick={handleNewProposal}>
-              Save
+              Save & Proceed
+              <img src="/arrow-white.png" alt="Arrow" className="arrow-icon" />
             </button>
           </div>
         </div>
@@ -706,160 +690,166 @@ const handleSignOut = () => {
               >
                 Form G - House Rules
               </li>
+              <li
+                onClick={() => setActiveSection('FacultyInCharge')}
+                className={activeSection === 'FacultyInCharge' ? 'active' : ''}
+              >
+                Faculty-in-Charge
+              </li>
             </ul>
           </div>
           <div className="form-content">
-            {activeSection === 'ProjectDetails' && (
-              <div className="section">
-                <h2>Project Details</h2>
-                <hr className="title-custom-line" />
-                <form>
-                  <label className="nature-field">
-                    <span>Nature of Activity</span>
-                    <select
-                      name="pros_nature"
-                      value={newProposal.pros_nature}
+          {activeSection === 'ProjectDetails' && (
+            <div className="section">
+              <h2>Project Details</h2>
+              <hr className="title-custom-line" />
+              <form>
+                <label className="nature-field">
+                  <span>Nature of Activity</span>
+                  <select
+                    name="pros_nature"
+                    value={newProposal.pros_nature}
+                    onChange={handleInputChange}
+                  >
+                    <option value="">Select</option>
+                    <option value="Extra-Curricular">Extra-Curricular Activity</option>
+                    <option value="Co-Curricular">Co-Curricular Activity</option>
+                  </select>
+                </label>
+
+                <div className="proponent-group">
+                  <label>
+                    <span>Project Proponent</span>
+                    <input
+                      name="pros_proponent"
+                      value={newProposal.pros_proponent}
                       onChange={handleInputChange}
-                    >
-                      <option value="">Select</option>
-                      <option value="Extra-Curricular">Extra-Curricular Activity</option>
-                      <option value="Co-Curricular">Co-Curricular Activity</option>
-                    </select>
+                    />
                   </label>
+                  <label>
+                    <span>Affiliation</span>
+                    <input
+                      name="affiliation"
+                      value={newProposal.affiliation}
+                      onChange={handleInputChange}
+                    />
+                  </label>
+                </div>
 
-                  <div className="proponent-group">
-                    <label>
-                      <span>Project Proponent</span>
-                      <input
-                        name="pros_proponent"
-                        value={newProposal.pros_proponent}
-                        onChange={handleInputChange}
-                      />
-                    </label>
-                    <label>
-                      <span>Affiliation</span>
-                      <input
-                        name="pros_affiliation"
-                        value={organization ? organization.org_name : ''}
-                        onChange={handleInputChange}
-                      />
-                    </label>
-                  </div>
+                <div className="approval-group">
+                  <label>
+                    <span>Adviser</span>
+                    <input
+                      name="pros_adviser"
+                      value={adviserName}
+                      onChange={(e) => setAdviserName(e.target.value)}
+                    />
+                  </label>
+                  <label>
+                    <span>Dean (not necessary if the activity is extra-curricular)</span>
+                    <input
+                      name="pros_dean"
+                      value={deanName}
+                      onChange={(e) => setDeanName(e.target.value)}
+                    />
+                  </label>
+                </div>
 
-                  <div className="approval-group">
-                    <label>
-                      <span>Adviser</span>
-                      <input
-                        name="pros_adviser"
-                        value={adviserName}
-                        onChange={(e) => setAdviserName(e.target.value)}
-                      />
-                    </label>
-                    <label>
-                      <span>Dean (not necessary if the activity is extra-curricular)</span>
-                      <input
-                        name="pros_dean"
-                        value={deanName}
-                        onChange={(e) => setDeanName(e.target.value)}
-                      />
-                    </label>
-                  </div>
+                <label className="title-field">
+                  <span>Project Title</span>
+                  <input
+                    type="text"
+                    name="pros_title"
+                    value={newProposal.pros_title}
+                    onChange={handleInputChange}
+                  />
+                </label>
 
-                  <label className="title-field">
-                    <span>Project Title</span>
+                <div className="details-group">
+                  <label>
+                    <span>Date</span>
+                    <input
+                      type="date"
+                      name="pros_date"
+                      value={newProposal.pros_date}
+                      onChange={handleInputChange}
+                    />
+                  </label>
+                  <label>
+                    <span>Venue</span>
                     <input
                       type="text"
-                      name="pros_title"
-                      value={newProposal.pros_title}
+                      name="pros_venue"
+                      value={newProposal.pros_venue}
                       onChange={handleInputChange}
                     />
                   </label>
+                  <label>
+                    <span>Stakeholder</span>
+                    <input
+                      name="stakeholder"
+                      value={newProposal.stakeholder}
+                      onChange={handleInputChange}
+                    />
+                  </label>
+                </div>
 
-                  <div className="details-group">
-                    <label>
-                      <span>Date</span>
-                      <input
-                        type="date"
-                        name="pros_date"
-                        value={newProposal.pros_date}
-                        onChange={handleInputChange}
-                      />
-                    </label>
-                    <label>
-                      <span>Venue</span>
-                      <input
-                        type="text"
-                        name="pros_venue"
-                        value={newProposal.pros_venue}
-                        onChange={handleInputChange}
-                      />
-                    </label>
-                    <label>
-                      <span>Stakeholder</span>
-                      <input
-                        name="pros_stakeholder"
-                        value={organization ? organization.org_name : ''}
-                        onChange={handleInputChange}
-                      />
-                    </label>
+                <label className="objectives-field">
+                  <span>Objectives</span>
+                  <textarea
+                    name="pros_objectives"
+                    value={newProposal.pros_objectives}
+                    onChange={handleInputChange}
+                  />
+                </label>
+
+                <label className="rationale-field">
+                  <span>Rationale/ Project Description</span>
+                  <textarea
+                    name="pros_rationale"
+                    value={newProposal.pros_rationale}
+                    onChange={handleInputChange}
+                  />
+                </label>
+
+                <label className="participants-field">
+                  <span>Target Participants</span>
+                  <textarea
+                    name="pros_participants"
+                    value={newProposal.pros_participants}
+                    onChange={handleInputChange}
+                  />
+                </label>
+
+                <label className="committees-field">
+                  <span>Committees</span>
+                  <div className="committee-list">
+                    {committees.map((committee, index) => (
+                      <div key={index} className="committee-item">
+                        <input
+                          type="text"
+                          value={committee.comm_name}
+                          onChange={(e) => handleCommitteeChange(index, 'comm_name', e.target.value)}
+                          placeholder="Committee Name"
+                        />
+                        <textarea
+                          value={committee.comm_members}
+                          onChange={(e) => handleCommitteeChange(index, 'comm_members', e.target.value)}
+                          placeholder="Members"
+                        />
+                        <button className="committees-field-delete" type="button" onClick={() => handleDeleteCommittee(index)}>
+                          Delete
+                        </button>
+                      </div>
+                    ))}
                   </div>
-
-                  <label className="objectives-field">
-                    <span>Objectives</span>
-                    <textarea
-                      name="pros_objectives"
-                      value={newProposal.pros_objectives}
-                      onChange={handleInputChange}
-                    />
-                  </label>
-
-                  <label className="rationale-field">
-                    <span>Rationale/ Project Description</span>
-                    <textarea
-                      name="pros_rationale"
-                      value={newProposal.pros_rationale}
-                      onChange={handleInputChange}
-                    />
-                  </label>
-
-                  <label className="participants-field">
-                    <span>Target Participants</span>
-                    <textarea
-                      name="pros_participants"
-                      value={newProposal.pros_participants}
-                      onChange={handleInputChange}
-                    />
-                  </label>
-
-                  <label className="committees-field">
-                    <span>Committees</span>
-                    <div className="committee-list">
-                      {committees.map((committee, index) => (
-                        <div key={index} className="committee-item">
-                          <input
-                            type="text"
-                            value={committee.comm_name}
-                            onChange={(e) => handleCommitteeChange(index, 'comm_name', e.target.value)}
-                            placeholder="Committee Name"
-                          />
-                          <textarea
-                            value={committee.comm_members}
-                            onChange={(e) => handleCommitteeChange(index, 'comm_members', e.target.value)}
-                            placeholder="Members"
-                          />
-                          <button type="button" onClick={() => handleDeleteCommittee(index)}>
-                            Delete
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                    <button type="button" onClick={handleAddCommittee}>
-                      Add Committee
-                    </button>
-                  </label>
-                </form>
-              </div>
-            )}
+                  <button className="committees-field-add" type="button" onClick={handleAddCommittee}>
+                    Add Committee
+                  </button>
+                </label>
+              </form>
+            </div>
+          )}
             {activeSection === 'FormA' && (
               <div className="section">
                 <h2 className="form-a-title">Form A - Program of Activity</h2>
@@ -979,8 +969,8 @@ const handleSignOut = () => {
                           onChange={handleBudgetSourceInputChange}
                         />
                       </label>
-                      <button type="button" onClick={handleAddBudgetSource}>
-                        Add Source
+                      <button type="button" onClick={isEditingBudgetSource ? handleUpdateBudgetSource : handleAddBudgetSource}>
+                        {isEditingBudgetSource ? 'Update Source' : 'Add Source'}
                       </button>
                     </form>
                   </div>
@@ -1051,7 +1041,7 @@ const handleSignOut = () => {
                         />
                       </label>
                       <button type="button" onClick={handleAddBudgetAllocation}>
-                        Add Item
+                        {isEditingBudgetAllocation ? 'Update Item' : 'Add Item'}
                       </button>
                     </form>
                   </div>
@@ -1093,7 +1083,6 @@ const handleSignOut = () => {
                     </div>
                   </div>
                 </div>
-
               </div>
             )}
             {activeSection === 'FormC' && (
@@ -1264,7 +1253,7 @@ const handleSignOut = () => {
                     </label>
 
                     <label>
-                      <span>Program/ Organization Objective No. 2:</span>
+                      <span>Program/ Organization Objective No. 2 (Optional):</span>
                       <input
                         type="text"
                         name="objective2_title"
@@ -1274,7 +1263,7 @@ const handleSignOut = () => {
                     </label>
 
                     <label>
-                      <span>Brief Explanation of its Alignment:</span>
+                      <span>Brief Explanation of its Alignment (Optional):</span>
                       <textarea
                         name="objective2_explanation"
                         value={newProposal.objective2_explanation}
@@ -1283,7 +1272,7 @@ const handleSignOut = () => {
                     </label>
 
                     <label>
-                      <span>Program/ Organization Objective No. 3:</span>
+                      <span>Program/ Organization Objective No. 3 (Optional):</span>
                       <input
                         type="text"
                         name="objective3_title"
@@ -1293,14 +1282,13 @@ const handleSignOut = () => {
                     </label>
 
                     <label>
-                      <span>Brief Explanation of its Alignment:</span>
+                      <span>Brief Explanation of its Alignment (Optional):</span>
                       <textarea
                         name="objective3_explanation"
                         value={newProposal.objective3_explanation}
                         onChange={handleInputChange}
                       />
                     </label>
-
                   </div>
                 </div>
               </div>
@@ -1321,7 +1309,7 @@ const handleSignOut = () => {
                   </label>
 
                   <label>
-                    <span>ILO 2:</span>
+                    <span>ILO 2 (Optional):</span>
                     <textarea
                       name="ilo2"
                       value={newProposal.ilo2}
@@ -1330,7 +1318,7 @@ const handleSignOut = () => {
                   </label>
 
                   <label>
-                    <span>ILO 3:</span>
+                    <span>ILO 3 (Optional):</span>
                     <textarea
                       name="ilo3"
                       value={newProposal.ilo3}
@@ -1358,6 +1346,47 @@ const handleSignOut = () => {
                 </div>
               </div>
             )}
+          {activeSection === 'FacultyInCharge' && (
+  <div className="section">
+    <h2>Faculty-in-Charge</h2>
+    <hr className="title-custom-line" />
+    <form>
+      <div className="radio-formc">
+        <label>
+          <input
+            type="radio"
+            name="facultyChoice"
+            value="adviser"
+            checked={newProposal.faculty === null}
+            onChange={() => setNewProposal(prevProposal => ({ ...prevProposal, faculty: null }))}
+          />
+          <span>Adviser</span>
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="facultyChoice"
+            value="input"
+            checked={newProposal.faculty !== null}
+            onChange={() => setNewProposal(prevProposal => ({ ...prevProposal, faculty: '' }))}
+          />
+          <span>Input Faculty Name</span>
+        </label>
+      </div>
+      {newProposal.faculty !== null && (
+        <label>
+          <span>Faculty Name:</span>
+          <input
+            type="text"
+            name="faculty"
+            value={newProposal.faculty || ''}
+            onChange={handleInputChange}
+          />
+        </label>
+      )}
+    </form>
+  </div>
+)}
           </div>
         </div>
       </div>

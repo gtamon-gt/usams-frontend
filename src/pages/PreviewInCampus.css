@@ -1,256 +1,343 @@
+.content-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  position: relative;
+  font-family: "General Sans", sans-serif;
+}
+
+.sidebar_preview, .status-list-container {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  height: fit-content;
+  position: fixed; /* Make the sidebar and status list fixed */
+  top: 80px; /* Adjust based on your header height */
+  border-radius: 10px; /* Add rounded corners */
+}
+
+.sidebar_preview {
+  width: 250px; /* Reduce width */
+  left: 60px; /* Adjust left margin */
+  margin-top: 100px;
+  font-size: 14px; /* Reduce font size */
+}
+
+.status-list-container {
+  width: 250px; /* Reduce width */
+  right: 60px; /* Adjust right margin */
+  margin-top: 100px;
+}
+
 .previewmain {
-    padding: 40px 40px 100px 40px;
-    font-family: "General Sans", sans-serif;
-    border: 1px solid #e0e0e0;
-    margin-left: 60px;
-    page-break-inside: avoid; /* Avoid breaking inside this element */
-  }
+  flex: 1;
+  padding: 40px;
+  font-family: "General Sans", sans-serif;
+  border: 1px solid #e0e0e0;
+  page-break-inside: avoid;
+  margin: 0 auto; /* Center the content */
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 120px;
+}
 
-  .spacer {
-    padding-top: 160px;
-  }
-  
-  .details-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    font-size: 14px;
-    page-break-inside: auto; /* Allow breaking inside this element */
-  }
-  
-  .details-table th,
-  .details-table td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #e0e0e0;
-  }
-  
-  .details-table th {
-    font-weight: 600;
-    color: #333;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  
-  .details-table tbody tr:hover {
-    background-color: #f5f5f5;
-    transition: background-color 0.2s ease;
-  }
-  
-  @media screen and (max-width: 600px) {
-    .details-table, .details-table tbody, .details-table tr, .details-table td {
-      display: block;
-    }
-  
-    .details-table thead {
-      display: none;
-    }
-  
-    .details-table tr {
-      margin-bottom: 15px;
-      border-bottom: 2px solid #e0e0e0;
-    }
-  
-    .details-table td {
-      padding: 10px 5px 10px 50%;
-      position: relative;
-      text-align: right;
-    }
-  
-    .details-table td::before {
-      content: attr(data-label);
-      position: absolute;
-      left: 6px;
-      width: 45%;
-      text-align: left;
-      font-weight: 600;
-    }
-  }
-  
-  .preview {
-    text-align: center;
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 14px;
+  page-break-inside: auto;
+}
+
+.details-table th,
+.details-table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #e0e0e0;
+}
+
+.details-table th {
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.details-table tbody tr:hover {
+  background-color: #f5f5f5;
+  transition: background-color 0.2s ease;
+}
+
+@media screen and (max-width: 600px) {
+  .details-table, .details-table tbody, .details-table tr, .details-table td {
     display: block;
-    margin-bottom: 30px;
-  }
-  
-  .previewmain {
-    margin-left: 22%;
-    margin-right: 22%;
-  }
-  
-  .spacer1 {
-    height: 10px;
-  }
-  
-  .form-a-section strong, .form-b-section strong {
-    color:#333;
-    font-weight: 600;
-  }
-  
-  .programs-details h2 {
-    color: #a93644;
-  }
-  
-  .form-a-section h2, .form-b-section h2 {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #e0e0e0;
-    width: fit-content;
-    font-size: 21px;
-    color: #a93644;
-  }
-  
-  .budgets-details h2, .allocations-details h2 {
-    font-size: 15px;
-    color:#333;
-    padding-left: 5px;
-  }
-  
-  .previewSign {
-    text-align: center;
-    margin-top: 10px;
-    background-color: #f8b8bf;
-    font-weight: 500;
-    border-radius: 5px;
-    padding: 5px;
-  }
-  
-  .previewheader {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #e0e0e0;
-  }
-  
-  .previewheader td {
-    border: 1px solid #e0e0e0;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .previewheader h4 {
-    font-size: 14px;
-    margin: 0;
-  }
-  
-  .previewheader h1 {
-    font-size: 1.5em;
-    margin: 0;
-  }
-  
-  .previewheader h5 {
-    font-size: 1em;
-    margin: 0;
-  }
-  
-  .details-container p span {
-    font-weight: 500;
-    font-size: 14px;
-  }
-  
-  .details-container p{
-    font-size: 14px;
-    margin-top: 8px;
-    margin-bottom: 8px;
-  }
-  
-  .details-table th, .details-table td {
-    border: 1px solid #e0e0e0;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .details-table th {
-    background-color: #f2f2f2;
-  }
-  
-  .previewheader {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #e0e0e0;
-  }
-  
-  .previewheader td {
-    border: 1px solid #e0e0e0;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .previewheader h4 {
-    font-size: 14px;
-    margin: 0;
-    color: #213547;
-  }
-  
-  .previewheader h1 {
-    font-size: 20px;
-    margin: 0;
-  }
-  
-  .previewheader h5 {
-    font-size: 14px;
-    margin: 0;
-    font-weight: 500;
-  }
-  
-  .previewheader img {
-    width: 60px;
-    height: 60px;
-  }
-  
-  .logo-img_osa {
-    border-radius: 100%;
-  }
-  
-  .details-container p span {
-    font-weight: 500;
-  }
-  
-  .details-table th, .details-table td {
-    border: 1px solid #e0e0e0;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .details-table th {
-    background-color: #f2f2f2;
-  }
-  
-  .previewmain h3 {
-    font-size: 18px;
-    margin: 0;
-    color: #213547;
-    margin-bottom: 12px;
-    margin-top: 15px;
-    font-weight: 500;
-  }
-  
-  .previewmain h6 {
-    font-size: 15px;
-    margin: 0;
-    color: #213547;
-    margin-bottom: 12px;
-    font-weight: 600;
   }
 
-  .forPDF {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 20vh; /* Optional: to center vertically within the viewport */
-    margin-bottom: 60px;
-  }
-  
-  .forPDF button {
-    align-self: center;
-    background-color: #A72837;
-    color: white;
-    border: none;
+  .details-table thead {
+    display: none;
   }
 
-  .forPDF button:hover {
-    background-color: #8f222f;
+  .details-table tr {
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
   }
-  
-  .projTitleBreak {
-    height: 5px;
+
+  .details-table td {
+    padding: 10px 5px 10px 50%;
+    position: relative;
+    text-align: right;
   }
+
+  .details-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 6px;
+    width: 45%;
+    text-align: left;
+    font-weight: 600;
+  }
+}
+
+.preview {
+  text-align: center;
+  display: block;
+  margin-bottom: 30px;
+}
+
+.spacer {
+  padding-top: 160px;
+}
+
+.form-a-section strong, .form-b-section strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.programs-details h2 {
+  color: #a93644;
+}
+
+.form-a-section h2, .form-b-section h2 {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #e0e0e0;
+  width: fit-content;
+  font-size: 21px;
+  color: #a93644;
+}
+
+.budgets-details h2, .allocations-details h2 {
+  font-size: 15px;
+  color: #333;
+  padding-left: 5px;
+}
+
+.previewSign {
+  text-align: center;
+  margin-top: 10px;
+  background-color: #f8b8bf;
+  font-weight: 500;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.previewheader {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #e0e0e0;
+}
+
+.previewheader td {
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  text-align: center;
+}
+
+.previewheader h4 {
+  font-size: 14px;
+  margin: 0;
+}
+
+.previewheader h1 {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.previewheader h5 {
+  font-size: 1em;
+  margin: 0;
+}
+
+.details-container p span {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.details-container p {
+  font-size: 14px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.details-table th, .details-table td {
+  border: 1px solid #e0e0e0;
+  padding: 8px;
+  text-align: left;
+}
+
+.details-table th {
+  background-color: #f2f2f2;
+}
+
+.previewheader {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #e0e0e0;
+}
+
+.previewheader td {
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  text-align: center;
+}
+
+.previewheader h4 {
+  font-size: 14px;
+  margin: 0;
+  color: #213547;
+}
+
+.previewheader h1 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.previewheader h5 {
+  font-size: 14px;
+  margin: 0;
+  font-weight: 500;
+}
+
+.previewheader img {
+  width: 60px;
+  height: 60px;
+}
+
+.logo-img_osa {
+  border-radius: 100%;
+}
+
+.details-container p span {
+  font-weight: 500;
+}
+
+.details-table th, .details-table td {
+  border: 1px solid #e0e0e0;
+  padding: 8px;
+  text-align: left;
+}
+
+.details-table th {
+  background-color: #f2f2f2;
+}
+
+.previewmain h3 {
+  font-size: 18px;
+  margin: 0;
+  color: #213547;
+  margin-bottom: 12px;
+  margin-top: 15px;
+  font-weight: 500;
+}
+
+.previewmain h6 {
+  font-size: 15px;
+  margin: 0;
+  color: #213547;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.forPDF {
+  position: fixed; /* Fixed positioning */
+  bottom: 80px; /* Distance from the bottom of the viewport */
+  left: 50%; /* Center it horizontally */
+  transform: translateX(-50%); /* Adjust for centering */
+  width: auto; /* Adjust width as needed */
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px; /* Add padding for better appearance */
+  z-index: 1000; /* Ensure it stays above other content */
+}
+
+.forPDF button {
+  background-color: #2A2E3A; /* Gray background */
+  color: white; /* White text color */
+  border: none; /* Remove border */
+  padding: 10px 20px; /* Padding for better appearance */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+  margin: 0 10px; /* Add gap between buttons */
+}
+
+.forPDF button:hover {
+  background-color: #555; /* Darker gray on hover */
+}
+
+
+.projTitleBreak {
+  height: 5px;
+}
+
+.sidebar-content ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar-content li {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-content li.active {
+  background-color: #d4edda;
+  color: #213547;
+}
+
+.sidebar-content li:hover {
+  background-color: #e0e0e0;
+}
+
+.status-list h4 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.status-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.status-list li {
+  padding: 8px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.status-list li.pending {
+  background-color: #ffcccb;
+  color: #8b0000;
+}
+
+.status-list li.approved {
+  background-color: #d4edda;
+  color: #155724;
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import logo from '/unc_logo.png';
 import './InCampus.css';
 import axios from 'axios';
@@ -12,6 +12,7 @@ interface Organization {
   org_desc: string;
   org_img: string;
   org_header: string;
+  user_id: string;
 }
 
 interface Proposal {
@@ -38,10 +39,12 @@ interface Proposal {
   ilo2: string;
   ilo3: string;
   house_rules: string;
-  note: string;
+  faculty: string | null;
+  affiliation: string;
+  stakeholder: string;
 }
 
-interface ProgramOfActivity {
+interface Program {
   prog_key: string;
   pros_key: string;
   prog_title: string;
@@ -74,9 +77,10 @@ interface Student {
 }
 
 interface Participant {
-  part_id: string;
+  participant_id: string;
   pros_key: string;
   stud_id: string;
+  permit: string;
 }
 
 interface Adviser {
@@ -129,13 +133,19 @@ const UpdateInCampus: React.FC = () => {
   const [adviser, setAdviser] = useState<Adviser | null>(null);
   const [dean, setDean] = useState<Dean | null>(null);
   const [activeSection, setActiveSection] = useState('ProjectDetails');
-  const [participants, setParticipants] = useState<Participant[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { userId, userInfo } = location.state || {};
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [allMembersNote, setAllMembersNote] = useState('');
-  
+  const [participantChoice, setParticipantChoice] = useState('individual');
+  const [isEditingBudgetSource, setIsEditingBudgetSource] = useState(false);
+  const [isEditingBudgetAllocation, setIsEditingBudgetAllocation] = useState(false);
+  const [participants, setParticipants] = useState<Participant[]>([]);
+  const programsForProposal: Program[] | null = null;
+  const [userInfoState, setUserInfoState] = useState<Organization | null>(null);
 
   // Proposals
   const [proposal, setProposal] = useState<Proposal>({
@@ -162,18 +172,46 @@ const UpdateInCampus: React.FC = () => {
     ilo2: '',
     ilo3: '',
     house_rules: '',
-    note: ''
+    faculty: null, // Initialize faculty as null
+    affiliation: '',
+    stakeholder: '',
+  });
+
+  // Committees
+  const [committees, setCommittees] = useState<Committee[]>([]);
+  const [newCommittee, setNewCommittee] = useState<Committee>({
+    comm_key: '',
+    comm_name: '',
+    comm_members: '',
+    pros_key: '',
   });
 
   // Form A
-  const [programsOfActivity, setProgramsOfActivity] = useState<ProgramOfActivity[]>([]);
-  const [newProgramOfActivity, setNewProgramOfActivity] = useState<ProgramOfActivity>({
+  const [programs, setPrograms] = useState<Program[]>([]);
+  const [newProgram, setNewProgram] = useState<Program>({
     prog_key: '',
     pros_key: '',
     prog_title: '',
     prog_start: '',
     prog_end: '',
     prog_persons: '',
+  });
+
+  // Form B
+  const [budgetSources, setBudgetSources] = useState<BudgetSource[]>([]);
+  const [newBudgetSource, setNewBudgetSource] = useState<BudgetSource>({
+    budget_key: '',
+    pros_key: '',
+    budget_source: '',
+    budget_particulars: ''
+  });
+  const [budgetAllocations, setBudgetAllocations] = useState<BudgetAllocation[]>([]);
+  const [newBudgetAllocation, setNewBudgetAllocation] = useState<BudgetAllocation>({
+    allocation_key: '',
+    pros_key: '',
+    allocation_particulars: '',
+    allocation_quantity: 0,
+    allocation_amount: 0
   });
 
   // Form C
@@ -198,55 +236,39 @@ const UpdateInCampus: React.FC = () => {
           const advRes = await axios.get(`http://localhost:8800/advisers/`);
           const adv = advRes.data.find((a: Adviser) => a.adv_id === org.adv_id);
           setAdviser(adv || null);
-          setAdviserName(adv ? adv.adv_name : ''); // Set adviser name
+          setAdviserName(adv ? adv.adv_name : '');
         }
 
         if (org) {
           const deanRes = await axios.get(`http://localhost:8800/deans/`);
           const dean = deanRes.data.find((a: Dean) => a.dean_id === org.dean_id);
           setDean(dean || null);
-          setDeanName(dean ? dean.dean_name : ''); // Set adviser name
+          setDeanName(dean ? dean.dean_name : '');
         }
 
         const proposalRes = await axios.get(`http://localhost:8800/proposals/${pros_key}`);
         const proposalData = proposalRes.data;
-  
-        // Convert the date to a JavaScript Date object and format it
-        const formattedDate = proposalData.pros_date ? new Date(proposalData.pros_date).toISOString().split('T')[0] : '';
-  
-        setProposal({
-          ...proposalData,
-          pros_date: formattedDate,
-        });
-        setAllMembersNote(proposalData.note || ''); // Set allMembersNote based on the fetched proposal data
+        setProposal(proposalData);
 
-        const programsOfActivityRes = await axios.get(`http://localhost:8800/programs/`);
-        const programsOfActivity = programsOfActivityRes.data.filter((program: ProgramOfActivity) => program.pros_key === pros_key);
-        console.log("Fetched programs of activity:", programsOfActivity);
-        setProgramsOfActivity(programsOfActivity);
+        const programsRes = await axios.get(`http://localhost:8800/programs`);
+        const programsForProposal = programsRes.data.filter((p: Program) => p.pros_key === pros_key);
+        setPrograms(programsForProposal);
 
-        const budgetSourcesRes = await axios.get(`http://localhost:8800/budgets/`);
-        const budgetSources = budgetSourcesRes.data.filter((source: BudgetSource) => source.pros_key === pros_key);
-        console.log("Fetched budget sources:", budgetSources);
-        setBudgetSources(budgetSources);
+        const budgetSourcesRes = await axios.get(`http://localhost:8800/budgets`);
+        const budgetSourcesForProposal = budgetSourcesRes.data.filter((bs: BudgetSource) => bs.pros_key === pros_key);
+        setBudgetSources(budgetSourcesForProposal);
 
-        const budgetAllocationsRes = await axios.get(`http://localhost:8800/allocations/`);
-        const budgetAllocations = budgetAllocationsRes.data.filter((allocation: BudgetAllocation) => allocation.pros_key === pros_key);
-        console.log("Fetched budget allocations:", budgetAllocations);
-        setBudgetAllocations(budgetAllocations);
+        const budgetAllocationsRes = await axios.get(`http://localhost:8800/allocations`);
+        const budgetAllocationsForProposal = budgetAllocationsRes.data.filter((ba: BudgetAllocation) => ba.pros_key === pros_key);
+        setBudgetAllocations(budgetAllocationsForProposal);
 
-        const participantsRes = await axios.get(`http://localhost:8800/participants/`);
-        const participants = participantsRes.data.filter((participant: Participant) => participant.pros_key === pros_key);
-        console.log("Fetched participants:", participants);
-        setParticipants(participants);
+        const committeesRes = await axios.get(`http://localhost:8800/committees`);
+        const committeesForProposal = committeesRes.data.filter((c: Committee) => c.pros_key === pros_key);
+        setCommittees(committeesForProposal);
 
-        const studentsRes = await axios.get(`http://localhost:8800/students/`);
-        setStudents(studentsRes.data);
-
-        const committeesRes = await axios.get(`http://localhost:8800/committees/`);
-        const committees = committeesRes.data.filter((comm: Committee) => comm.pros_key === pros_key);
-        console.log("Fetched committees:", committees);
-        setCommittees(committees);
+        const participantsRes = await axios.get(`http://localhost:8800/participants`);
+        const participantsForProposal = participantsRes.data.filter((p: Participant) => p.pros_key === pros_key);
+        setParticipants(participantsForProposal);
 
         setLoading(false);
       } catch (err) {
@@ -259,10 +281,20 @@ const UpdateInCampus: React.FC = () => {
     fetchProposalDetails();
   }, [org_id, pros_key]);
 
-  // Proposal
+  useEffect(() => {
+    if (userId && userInfo) {
+      // Directly use userInfo if it's a single object
+      setUserInfoState(userInfo);
+    }
+  }, [userId, userInfo]);
+  
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setProposal({ ...proposal, [name]: value });
+    setProposal(prevProposal => ({
+      ...prevProposal,
+      [name]: value === '' ? null : value, // Set to null if the input is empty
+    }));
   };
 
   const handleUpdateProposal = async () => {
@@ -270,86 +302,51 @@ const UpdateInCampus: React.FC = () => {
       'pros_nature', 'pros_proponent', 'pros_title', 'pros_date', 'pros_venue',
       'pros_objectives', 'pros_rationale', 'pros_participants', 'selected_sdg',
       'alignment_explanation', 'objective1_title', 'objective1_explanation',
-      'objective2_title', 'objective2_explanation', 'objective3_title',
-      'objective3_explanation', 'ilo1', 'ilo2', 'ilo3', 'house_rules'
+      'ilo1', 'house_rules'
     ];
-  
+
     for (const field of requiredFields) {
       if (!proposal[field as keyof Proposal]) {
         alert(`Please fill in the ${field} field.`);
         return;
       }
     }
-  
-    const formData = new FormData();
+
+    let formData = new FormData();
     Object.keys(proposal).forEach((key) => {
       formData.append(key, proposal[key as keyof Proposal] as string);
     });
-  
-    if (allMembersNote) {
-      formData.append('allMembersNote', allMembersNote);
-    } else {
-      formData.append('participants', JSON.stringify(participants.map(participant => ({
-        participant_id: participant.part_id,
-        stud_id: participant.stud_id
-      }))));
-    }
-  
-    formData.append('programsOfActivity', JSON.stringify(programsOfActivity));
+
+    formData.append('programs', JSON.stringify(programs));
     formData.append('budgetSources', JSON.stringify(budgetSources));
     formData.append('budgetAllocations', JSON.stringify(budgetAllocations));
+    formData.append('participants', JSON.stringify(participants));
     formData.append('committees', JSON.stringify(committees));
-  
+
     try {
       const response = await axios.put(`http://localhost:8800/proposals/${pros_key}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-  
-      alert('Proposal successfully updated.');
-      navigate(`/in-campus/preview/${org_id}/${pros_key}`);
+
+      alert('Proposal and associated data successfully updated.');
+      navigate(`/preview/${pros_key}`, { state: { userId } });
     } catch (err) {
       console.error('Error updating proposal:', err);
       alert('Failed to update proposal.');
     }
-  };  
+  };
 
-    // Form B
-    const [budgetSources, setBudgetSources] = useState<BudgetSource[]>([]);
-    const [newBudgetSource, setNewBudgetSource] = useState<BudgetSource>({
-      budget_key: '',
-      pros_key: '',
-      budget_source: '',
-      budget_particulars: ''
-    });
-    const [budgetAllocations, setBudgetAllocations] = useState<BudgetAllocation[]>([]);
-    const [newBudgetAllocation, setNewBudgetAllocation] = useState<BudgetAllocation>({
-      allocation_key: '',
-      pros_key: '',
-      allocation_particulars: '',
-      allocation_quantity: 0,
-      allocation_amount: 0
-    });
-
-  // Committees
-    const [committees, setCommittees] = useState<Committee[]>([]);
-    const [newCommittee, setNewCommittee] = useState<Committee>({
-      comm_key: '',
-      comm_name: '',
-      comm_members: '',
-      pros_key: '',
-    });
-
-  // Form A - Programs of Activity
-  const handleAddProgramOfActivity = () => {
+  // Form A - Programs
+  const handleAddProgram = () => {
     const newProgKey = `prog_${Date.now()}`;
     const updatedProgram = {
-      ...newProgramOfActivity,
+      ...newProgram,
       prog_key: newProgKey,
       pros_key: proposal.pros_key,
     };
 
-    setProgramsOfActivity([...programsOfActivity, updatedProgram]);
-    setNewProgramOfActivity({
+    setPrograms([...programs, updatedProgram]);
+    setNewProgram({
       prog_key: '',
       pros_key: proposal.pros_key,
       prog_title: '',
@@ -359,28 +356,28 @@ const UpdateInCampus: React.FC = () => {
     });
   };
 
-  const handleProgramOfActivityInputChange = (
+  const handleProgramInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setNewProgramOfActivity({ ...newProgramOfActivity, [name]: value });
+    setNewProgram({ ...newProgram, [name]: value });
   };
 
-  const handleEditProgramOfActivity = (prog_key: string) => {
-    const programToEdit = programsOfActivity.find((program) => program.prog_key === prog_key);
+  const handleEditProgram = (prog_key: string) => {
+    const programToEdit = programs.find((program) => program.prog_key === prog_key);
     if (programToEdit) {
-      setNewProgramOfActivity({ ...programToEdit });
+      setNewProgram({ ...programToEdit });
       setIsEditing(true);
     }
   };
 
-  const handleUpdateProgramOfActivity = () => {
-    const updatedProgramsOfActivity = programsOfActivity.map((program) =>
-      program.prog_key === newProgramOfActivity.prog_key ? newProgramOfActivity : program
+  const handleUpdateProgram = () => {
+    const updatedPrograms = programs.map((program) =>
+      program.prog_key === newProgram.prog_key ? newProgram : program
     );
-    setProgramsOfActivity(updatedProgramsOfActivity);
+    setPrograms(updatedPrograms);
     setIsEditing(false);
-    setNewProgramOfActivity({
+    setNewProgram({
       prog_key: '',
       pros_key: proposal.pros_key,
       prog_title: '',
@@ -390,11 +387,12 @@ const UpdateInCampus: React.FC = () => {
     });
   };
 
-  const handleDeleteProgramOfActivity = (prog_key: string) => {
-    const updatedProgramsOfActivity = programsOfActivity.filter((program) => program.prog_key !== prog_key);
-    setProgramsOfActivity(updatedProgramsOfActivity);
+  const handleDeleteProgram = (prog_key: string) => {
+    const updatedPrograms = programs.filter((program) => program.prog_key !== prog_key);
+    setPrograms(updatedPrograms);
   };
 
+  // Form B - Budget
   const handleBudgetSourceInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setNewBudgetSource(prevState => ({
@@ -403,12 +401,11 @@ const UpdateInCampus: React.FC = () => {
     }));
   };
 
-  // Form B - Budget
   const handleAddBudgetSource = () => {
-    const newSourceKey = `source_${Date.now()}`;
+    const newBudgetKey = `budget_${Date.now()}`;
     const updatedSource = {
       ...newBudgetSource,
-      budget_key: newSourceKey,
+      budget_key: newBudgetKey,
       pros_key: proposal.pros_key
     };
 
@@ -432,7 +429,7 @@ const UpdateInCampus: React.FC = () => {
     const { name, value } = e.target;
     setNewBudgetAllocation(prevState => ({
       ...prevState,
-      [name]: name === 'allocation_quantity' || name === 'allocation_amount' ? Number(value) : value,
+      [name]: name === 'quantity' || name === 'amount' ? Number(value) : value,
     }));
   };
 
@@ -525,10 +522,14 @@ const UpdateInCampus: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log("Programs of Activity state:", programsOfActivity);
+    console.log("Programs state:", programs);
     console.log("BudgetSources state:", budgetSources);
     console.log("BudgetAllocations state:", budgetAllocations);
-  }, [programsOfActivity, budgetSources, budgetAllocations]);
+  }, [programs, budgetSources, budgetAllocations]);
+
+  const handleSignOut = () => {
+    navigate('/', { state: { userId: null } });
+  };
 
   return (
     <div className="main-wrapper">
@@ -544,7 +545,19 @@ const UpdateInCampus: React.FC = () => {
           <div className="right-section">
             <div className="ellipse-div" />
             <img className="vector-icon" loading="lazy" alt="" src="/vector.svg" />
-            <img className="pfp-1-icon" loading="lazy" alt="" src="/pfp.jpg" />
+            <img className="pfp-1-icon" loading="lazy" alt="" src="/default.png" />
+            {userInfoState && (
+              <>
+                <div className="profile-text">
+                  <div className="user-name">
+                    {userInfoState.org_name}
+                  </div>
+                  <button className="sign-out-button" onClick={handleSignOut}>
+                    SIGN OUT
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
         <div className="navbar">
@@ -627,6 +640,12 @@ const UpdateInCampus: React.FC = () => {
               >
                 Form G - House Rules
               </li>
+              <li
+                onClick={() => setActiveSection('FacultyInCharge')}
+                className={activeSection === 'FacultyInCharge' ? 'active' : ''}
+              >
+                Faculty-in-Charge
+              </li>
             </ul>
           </div>
           <div className="form-content">
@@ -660,15 +679,15 @@ const UpdateInCampus: React.FC = () => {
                     <label>
                       <span>Affiliation</span>
                       <input
-                        name="pros_affiliation"
-                        value={organization ? organization.org_name : ''}
+                        name="affiliation"
+                        value={proposal.affiliation}
                         onChange={handleInputChange}
                       />
                     </label>
                   </div>
 
                   <div className="approval-group">
-                  <label>
+                    <label>
                       <span>Adviser</span>
                       <input
                         name="pros_adviser"
@@ -719,7 +738,7 @@ const UpdateInCampus: React.FC = () => {
                       <span>Stakeholder</span>
                       <input
                         name="pros_stakeholder"
-                        value={organization ? organization.org_name : ''}
+                        value={proposal.stakeholder}
                         onChange={handleInputChange}
                       />
                     </label>
@@ -793,9 +812,9 @@ const UpdateInCampus: React.FC = () => {
                             <span>Program Name:</span>
                             <input
                             type="text"
-                            name="prog_title"
-                            value={newProgramOfActivity.prog_title}
-                            onChange={handleProgramOfActivityInputChange}
+                            name="program_name"
+                            value={newProgram.prog_title}
+                            onChange={handleProgramInputChange}
                             />
                         </label>
 
@@ -803,9 +822,9 @@ const UpdateInCampus: React.FC = () => {
                             <span>Start Time:</span>
                             <input
                             type="time"
-                            name="prog_start"
-                            value={newProgramOfActivity.prog_start}
-                            onChange={handleProgramOfActivityInputChange}
+                            name="start_time"
+                            value={newProgram.prog_start}
+                            onChange={handleProgramInputChange}
                             />
                         </label>
 
@@ -813,9 +832,9 @@ const UpdateInCampus: React.FC = () => {
                             <span>End Time:</span>
                             <input
                             type="time"
-                            name="prog_end"
-                            value={newProgramOfActivity.prog_end}
-                            onChange={handleProgramOfActivityInputChange}
+                            name="end_time"
+                            value={newProgram.prog_end}
+                            onChange={handleProgramInputChange}
                             />
                         </label>
 
@@ -823,15 +842,15 @@ const UpdateInCampus: React.FC = () => {
                             <span>Persons Involved:</span>
                             <input
                             type="text"
-                            name="prog_persons"
-                            value={newProgramOfActivity.prog_persons}
-                            onChange={handleProgramOfActivityInputChange}
+                            name="persons_involved"
+                            value={newProgram.prog_persons}
+                            onChange={handleProgramInputChange}
                             />
                         </label>
 
                         <button className="add-program"
                             type="button"
-                            onClick={isEditing ? handleUpdateProgramOfActivity : handleAddProgramOfActivity}
+                            onClick={isEditing ? handleUpdateProgram : handleAddProgram}
                         >
                             {isEditing ? 'Update Program' : 'Add Program'}
                         </button>
@@ -850,17 +869,17 @@ const UpdateInCampus: React.FC = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {programsOfActivity.map((program) => (
+                            {programs.map((program) => (
                             <tr key={program.prog_key}>
-                                <td>{program.prog_title || 'No Name'}</td>
+                                <td>{program.prog_title}</td>
                                 <td>{program.prog_start} - {program.prog_end}</td>
-                                <td>{program.prog_persons || 'No Persons'}</td>
+                                <td>{program.prog_persons}</td>
                                 <td>
                                 <div className="edit-buttons">
-                                    <button className="edit-button" onClick={() => handleEditProgramOfActivity(program.prog_key)}>
+                                    <button className="edit-button" onClick={() => handleEditProgram(program.prog_key)}>
                                     <img src="/edit.svg" alt="Edit" />
                                     </button>
-                                    <button className="delete-button" onClick={() => handleDeleteProgramOfActivity(program.prog_key)}>
+                                    <button className="delete-button" onClick={() => handleDeleteProgram(program.prog_key)}>
                                     <img src="/delete-red.svg" alt="Delete" />
                                     </button>
                                 </div>
@@ -920,8 +939,8 @@ const UpdateInCampus: React.FC = () => {
                         <tbody>
                             {budgetSources.map((source) => (
                             <tr key={source.budget_key}>
-                                <td>{source.budget_source || 'No Source'}</td>
-                                <td>{source.budget_particulars || 'No Particulars'}</td>
+                                <td>{source.budget_source}</td>
+                                <td>{source.budget_particulars}</td>
                                 <td>
                                 <div className="edit-buttons">
                                     <button className="edit-button" onClick={() => handleEditBudgetSource(source.budget_key)}>
@@ -949,7 +968,7 @@ const UpdateInCampus: React.FC = () => {
                             <span>Particulars:</span>
                             <input
                             type="text"
-                            name="allocation_particulars"
+                            name="particulars"
                             value={newBudgetAllocation.allocation_particulars}
                             onChange={handleBudgetAllocationInputChange}
                             />
@@ -958,7 +977,7 @@ const UpdateInCampus: React.FC = () => {
                             <span>Quantity:</span>
                             <input
                             type="number"
-                            name="allocation_quantity"
+                            name="quantity"
                             value={newBudgetAllocation.allocation_quantity}
                             onChange={handleBudgetAllocationInputChange}
                             />
@@ -967,7 +986,7 @@ const UpdateInCampus: React.FC = () => {
                             <span>Amount:</span>
                             <input
                             type="number"
-                            name="allocation_amount"
+                            name="amount"
                             value={newBudgetAllocation.allocation_amount}
                             onChange={handleBudgetAllocationInputChange}
                             />
@@ -992,9 +1011,9 @@ const UpdateInCampus: React.FC = () => {
                         <tbody>
                             {budgetAllocations.map((allocation) => (
                             <tr key={allocation.allocation_key}>
-                                <td>{allocation.allocation_particulars || 'No Particulars'}</td>
-                                <td>{allocation.allocation_quantity || 'No Quantity'}</td>
-                                <td>{allocation.allocation_amount || 'No Amount'}</td>
+                                <td>{allocation.allocation_particulars}</td>
+                                <td>{allocation.allocation_quantity}</td>
+                                <td>{allocation.allocation_amount}</td>
                                 <td>
                                 <div className="edit-buttons">
                                     <button className="edit-button" onClick={() => handleEditBudgetAllocation(allocation.allocation_key)}>
@@ -1023,55 +1042,104 @@ const UpdateInCampus: React.FC = () => {
                 <h2 className="form-c-title">Form C - List of Student Participants</h2>
                 <hr className="title-custom-line" />
 
+                <div className="radio-formc">
+                <label>
+                  <input
+                    type="radio"
+                    name="participantChoice"
+                    value="individual"
+                    checked={participants.length > 0}
+                    onChange={() => setAllMembersNote('')}
+                  />
+                  <span>Input Individual Students</span>
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="participantChoice"
+                    value="note"
+                    checked={allMembersNote !== ''}
+                    onChange={() => setParticipants([])}
+                  />
+                  <span>Provide a Note (e.g., all members will participate in the event)</span>
+                </label>
+              </div>
+
+              <br></br>
+
                 <div className="form-and-table-container form-c-container">
-                  {proposal.note ? (
-                    <label className="note-allmembers">
-                      <span>Note:</span>
-                      <input
-                        type="text"
-                        value={allMembersNote}
-                        onChange={(e) => setAllMembersNote(e.target.value)}
-                      />
-                    </label>
-                  ) : (
-                    <>
-                      <div className="students-table-container">
-                        <h3>Added Participants:</h3>
-                        <table>
-                          <thead>
-                            <tr>
-                              <th><span>Student ID</span></th>
-                              <th><span>Department</span></th>
-                              <th><span>Student Name</span></th>
-                              <th><span>Actions</span></th>
+                  <div className="student-form-container">
+                    <form>
+                      {allMembersNote !== '' && (
+                        <label>
+                          <span>Note:</span>
+                          <input
+                            type="text"
+                            value={allMembersNote}
+                            onChange={(e) => setAllMembersNote(e.target.value)}
+                          />
+                        </label>
+                      )}
+
+                      {allMembersNote === '' && (
+                        <>
+                          <label>
+                            <span>Student Name:</span>
+                            <input
+                              type="text"
+                              name="stud_name"
+                              value={searchInput}
+                              onChange={handleSearchInputChange}
+                            />
+                            {searchResults.length > 0 && (
+                              <ul>
+                                {searchResults.map(student => (
+                                  <li key={student.stud_id} onClick={() => handleSelectStudent(student)}>
+                                    {student.stud_name} ({student.stud_dept})
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </label>
+
+                          <button className="add-student" type="button" onClick={handleAddStudent}>
+                            Add Student
+                          </button>
+                        </>
+                      )}
+                    </form>
+                  </div>
+
+                  {allMembersNote === '' && (
+                    <div className="students-table-container">
+                      <h3>Added Students:</h3>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th><span>Student ID</span></th>
+                            <th><span>Department</span></th>
+                            <th><span>Student Name</span></th>
+                            <th><span>Actions</span></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {students.map((student) => (
+                            <tr key={student.stud_id}>
+                              <td>{student.stud_id}</td>
+                              <td>{student.stud_dept}</td>
+                              <td>{student.stud_name}</td>
+                              <td>
+                                <div className="edit-buttons">
+                                  <button className="delete-button" onClick={() => handleDeleteStudent(student.stud_id)}>
+                                    <img src="/delete-red.svg" alt="Delete" />
+                                  </button>
+                                </div>
+                              </td>
                             </tr>
-                          </thead>
-                          <tbody>
-                            {participants.map((participant) => {
-                              const student = students.find(stud => stud.stud_id === participant.stud_id);
-                              return (
-                                <tr key={participant.part_id}>
-                                  <td>{student ? student.stud_id : 'N/A'}</td>
-                                  <td>{student ? student.stud_dept : 'N/A'}</td>
-                                  <td>{student ? student.stud_name : 'N/A'}</td>
-                                  <td>
-                                    <div className="edit-buttons">
-                                      <button
-                                        className="delete-button"
-                                        onClick={() => student && handleDeleteStudent(student.stud_id)}
-                                        disabled={!student}
-                                      >
-                                        <img src="/delete-red.svg" alt="Delete" />
-                                      </button>
-                                    </div>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                      </div>
-                    </>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   )}
                 </div>
               </div>
@@ -1137,7 +1205,7 @@ const UpdateInCampus: React.FC = () => {
                     </label>
 
                     <label>
-                      <span>Program/ Organization Objective No. 2:</span>
+                      <span>Program/ Organization Objective No. 2 (Optional):</span>
                       <input
                         type="text"
                         name="objective2_title"
@@ -1147,7 +1215,7 @@ const UpdateInCampus: React.FC = () => {
                     </label>
 
                     <label>
-                      <span>Brief Explanation of its Alignment:</span>
+                      <span>Brief Explanation of its Alignment (Optional):</span>
                       <textarea
                         name="objective2_explanation"
                         value={proposal.objective2_explanation}
@@ -1156,7 +1224,7 @@ const UpdateInCampus: React.FC = () => {
                     </label>
 
                     <label>
-                      <span>Program/ Organization Objective No. 3:</span>
+                      <span>Program/ Organization Objective No. 3 (Optional):</span>
                       <input
                         type="text"
                         name="objective3_title"
@@ -1166,7 +1234,7 @@ const UpdateInCampus: React.FC = () => {
                     </label>
 
                     <label>
-                      <span>Brief Explanation of its Alignment:</span>
+                      <span>Brief Explanation of its Alignment (Optional):</span>
                       <textarea
                         name="objective3_explanation"
                         value={proposal.objective3_explanation}
@@ -1194,7 +1262,7 @@ const UpdateInCampus: React.FC = () => {
                   </label>
 
                   <label>
-                    <span>ILO 2:</span>
+                    <span>ILO 2 (Optional):</span>
                     <textarea
                       name="ilo2"
                       value={proposal.ilo2}
@@ -1203,7 +1271,7 @@ const UpdateInCampus: React.FC = () => {
                   </label>
 
                   <label>
-                    <span>ILO 3:</span>
+                    <span>ILO 3 (Optional):</span>
                     <textarea
                       name="ilo3"
                       value={proposal.ilo3}
@@ -1231,6 +1299,47 @@ const UpdateInCampus: React.FC = () => {
                 </div>
               </div>
             )}
+            {activeSection === 'FacultyInCharge' && (
+  <div className="section">
+    <h2>Faculty-in-Charge</h2>
+    <hr className="title-custom-line" />
+    <form>
+      <div className="radio-formc">
+        <label>
+          <input
+            type="radio"
+            name="facultyChoice"
+            value="adviser"
+            checked={proposal.faculty === null}
+            onChange={() => setProposal(prevProposal => ({ ...prevProposal, faculty: null }))}
+          />
+          <span>Adviser</span>
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="facultyChoice"
+            value="input"
+            checked={proposal.faculty !== null}
+            onChange={() => setProposal(prevProposal => ({ ...prevProposal, faculty: '' }))}
+          />
+          <span>Input Faculty Name</span>
+        </label>
+      </div>
+      {proposal.faculty !== null && (
+        <label>
+          <span>Faculty Name:</span>
+          <input
+            type="text"
+            name="faculty"
+            value={proposal.faculty || ''}
+            onChange={handleInputChange}
+          />
+        </label>
+      )}
+    </form>
+  </div>
+)}
           </div>
         </div>
       </div>

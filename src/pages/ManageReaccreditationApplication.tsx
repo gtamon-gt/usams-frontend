@@ -7,7 +7,6 @@ import axios from 'axios';
 interface Reaccreditation {
   acc_id: string;
   org_id: string;
- // stud_id: string;
   orgname: string;
   type: string;
   adv_letter: string;
@@ -25,19 +24,19 @@ interface Student {
 }
 
 interface Organization {
-    org_id: string;
-    org_name: string;
-    org_type: string;
-    org_tag: string;
-    org_desc: string;
-    adv_id: string;
-    dean_id: string;
-    sy_id: string;
-    org_img: string;
-    org_header: string;
-    user_id: string;
-    user_role: string;
-  }
+  org_id: string;
+  org_name: string;
+  org_type: string;
+  org_tag: string;
+  org_desc: string;
+  adv_id: string;
+  dean_id: string;
+  sy_id: string;
+  org_img: string;
+  org_header: string;
+  user_id: string;
+  user_role: string;
+}
 
 interface User {
   user_id: string;
@@ -54,7 +53,7 @@ interface Comment {
 const ManageReaccreditationApplication: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { stud_id } = useParams<{ stud_id: string }>();
+  const { stud_id, org_id } = useParams<{ stud_id: string; org_id: string }>();
   const { userId } = location.state || {};
 
   const [student, setStudent] = useState<Student | null>(null);
@@ -62,19 +61,16 @@ const ManageReaccreditationApplication: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showComments, setShowComments] = useState<{ [key: string]: boolean }>({});
 
-   const [organization, setOrganization] = useState<Organization | null>(null);
-     const { org_id } = useParams<{ org_id: string }>();
-    const [orgId, setOrgId] = useState<Organization | null>(null);
-     const [organizations, setOrganizations] = useState<Organization[]>([]);
+  const [organization, setOrganization] = useState<Organization | null>(null);
+  const [organizations, setOrganizations] = useState<Organization[]>([]);
 
-   const [comments, setComments] = useState<{ [key: string]: Comment[] }>({});
+  const [comments, setComments] = useState<{ [key: string]: Comment[] }>({});
 
   const [users, setUsers] = useState<User[]>([]);
 
   const [accreditations, setAccreditations] = useState<Reaccreditation[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
   const [userInfo, setUserInfo] = useState<User | null>(null);
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -90,7 +86,6 @@ const ManageReaccreditationApplication: React.FC = () => {
         console.log('Found organization:', accreditations);
         setLoading(false);
 
-        
         const commentsRes = await axios.get('http://localhost:8800/comments-reaccreditation');
         const commentsData = commentsRes.data;
         const commentsMap: { [key: string]: Comment[] } = {};
@@ -127,7 +122,6 @@ const ManageReaccreditationApplication: React.FC = () => {
       }
     }
   }, [userId, users, organizations]);
-
 
   useEffect(() => {
     if (userId && users.length > 0 && students.length > 0) {
@@ -174,9 +168,7 @@ const ManageReaccreditationApplication: React.FC = () => {
     navigate('/', { state: { userId: null } });
   };
 
-  const filteredAccreditations = accreditations.filter(acc =>
-    organizations.some(organization => organization.org_id === acc.org_id)
-  );
+  const filteredAccreditations = accreditations.filter(acc => acc.org_id === org_id);
 
   return (
     <div className="main-wrapper">
@@ -233,7 +225,6 @@ const ManageReaccreditationApplication: React.FC = () => {
               <div className="proposal-cell">Organization Name</div>
               <div className="proposal-cell">Type</div>
               <div className="proposal-cell">Status</div>
-              {/* <div className="proposal-cell">Comment</div> */}
               <div className="proposal-cell">Actions</div>
             </div>
             {filteredAccreditations.map(accreditation => (
@@ -243,22 +234,17 @@ const ManageReaccreditationApplication: React.FC = () => {
                   <div className="proposal-cell">{accreditation.orgname}</div>
                   <div className="proposal-cell">{accreditation.type}</div>
                   <div className="proposal-cell">{accreditation.status}</div>
-                  {/* <div className="proposal-cell">{accreditation.comment}</div> */}
                   <div className="proposal-cell ext">
                     <button onClick={() => navigate(`/viewreaccreditationform/${accreditation.acc_id}`, { state: { userId, userInfo, student } })}>View</button>
                     <button onClick={() => navigate(`/update-reaccreditation/${accreditation.acc_id}`, { state: { userId, userInfo, organization } })}>Update</button>
                     <button onClick={() => handleDeleteAccreditation(accreditation.acc_id)}>Delete</button>
-                    <button
-                     
-                     onClick={() => toggleComments(accreditation.acc_id)}
-                   >
-                     {showComments[accreditation.acc_id] ? 'Hide Comments' : 'Show Comments'}
-           </button>
+                    <button onClick={() => toggleComments(accreditation.acc_id)}>
+                      {showComments[accreditation.acc_id] ? 'Hide Comments' : 'Show Comments'}
+                    </button>
                     {accreditation.status === 'Approved' && (
                       <button onClick={() => navigate(`/view-accreditation-pass/${accreditation.acc_id}`, { state: { userId, userInfo, student, accreditation } })}>View Pass</button>
                     )}
                   </div>
-
                   {showComments[accreditation.acc_id] && (
                     <tr>
                       <td colSpan={5}>
@@ -277,7 +263,6 @@ const ManageReaccreditationApplication: React.FC = () => {
                       </td>
                     </tr>
                   )}
-                  
                 </div>
               </React.Fragment>
             ))}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import logo from '/unc_logo.png';
-import './Accreditation.css';
+import './accreditation/Accreditation.css';
 
 interface Student {
   stud_id: string;
@@ -80,6 +80,8 @@ const UpdateReaccreditationForm: React.FC = () => {
   const [constitutionFileName, setConstitutionFileName] = useState<string>('');
   const [advLetterFileName, setAdvLetterFileName] = useState<string>('');
   const [appendicesFileName, setAppendicesFileName] = useState<string>('');
+  const [icesCertFileName, setIcesCertFileName] = useState<string>('');
+
 
   const { org_id } = useParams<{ org_id: string }>();
     const [orgId, setOrgId] = useState<Organization | null>(null);
@@ -89,9 +91,9 @@ const UpdateReaccreditationForm: React.FC = () => {
 //  const [organization, setOrganization] = useState<Organization | null>(null);
 
   const [fileInputsChanged, setFileInputsChanged] = useState({
-   // constitution: false,
     adv_letter: false,
-    appendices: false
+    appendices: false,
+    ices_cert: false
   });
 
   useEffect(() => {
@@ -234,12 +236,14 @@ const UpdateReaccreditationForm: React.FC = () => {
     const formData = new FormData(event.currentTarget as HTMLFormElement);
   
     // Append existing file names if no new files are selected
-    
     if (!fileInputsChanged.adv_letter) {
       formData.append('adv_letter', advLetterFileName);
     }
     if (!fileInputsChanged.appendices) {
       formData.append('appendices', appendicesFileName);
+    }
+    if (!fileInputsChanged.ices_cert) {
+      formData.append('ices_cert', icesCertFileName);
     }
   
     formData.append('orgId', organization?.org_id || '');
@@ -259,7 +263,7 @@ const UpdateReaccreditationForm: React.FC = () => {
     } catch (error) {
       console.error('Error updating accreditation:', error);
     }
-  };
+  };  
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, setFileName: React.Dispatch<React.SetStateAction<string>>, fileType: string) => {
     const file = event.target.files?.[0];
@@ -270,7 +274,7 @@ const UpdateReaccreditationForm: React.FC = () => {
         [fileType]: true
       }));
     }
-  };
+  };  
 
   if (loading) {
     return <div>Loading...</div>;
@@ -351,34 +355,7 @@ const UpdateReaccreditationForm: React.FC = () => {
             </div>
 
             <div className="accre-form-content-section">
-              <p className="accre-form-content-label font-bold">1. List Members, Permanent Contact Numbers & Student Number</p>
-              <table className="accre-form-content-table">
-                <thead>
-                  <tr>
-                    <th>Student Number</th>
-                    <th>Name</th>
-                    <th>Contact Number</th>
-                    <th>Email</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {members.map((member, index) => (
-                    <tr key={index}>
-                      <td><input type="text" name="member_studno" value={member.stud_id} onChange={(e) => handleInputChange(index, "stud_id", e.target.value, 'members')} className="w-full" required /></td>
-                      <td><input type="text" name="member_name" value={member.member_name} onChange={(e) => handleInputChange(index, "member_name", e.target.value, 'members')} className="w-full" required /></td>
-                      <td><input type="text" name="member_contact" value={member.member_contact} onChange={(e) => handleInputChange(index, "member_contact", e.target.value, 'members')} className="w-full" required /></td>
-                      <td><input type="text" name="member_email" value={member.member_email} onChange={(e) => handleInputChange(index, "member_email", e.target.value, 'members')} className="w-full" required /></td>
-                      <td><button type="button" onClick={() => removeMember(index)} className="accre-form-content-remove-btn">Remove</button></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <button type="button" onClick={addMember} className="accre-form-content-add-member">Add Member</button>
-            </div>
-
-            <div className="accre-form-content-section">
-              <p className="accre-form-content-label font-bold">2. Officers</p>
+              <p className="accre-form-content-label font-bold">1. List of Officers</p>
               <table className="accre-form-content-table">
                 <thead>
                   <tr>
@@ -407,7 +384,30 @@ const UpdateReaccreditationForm: React.FC = () => {
             </div>
 
             <div className="accre-form-content-section">
-              <p className="accre-form-content-label font-bold">3. Plan Activities</p>
+              <p className="accre-form-content-label font-bold">2. List of members and their student numbers</p>
+              <table className="accre-form-content-table">
+                <thead>
+                  <tr>
+                    <th>Student Number</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {members.map((member, index) => (
+                    <tr key={index}>
+                      <td><input type="text" name="member_studno" value={member.stud_id} onChange={(e) => handleInputChange(index, "stud_id", e.target.value, 'members')} className="w-full" required /></td>
+                      <td><input type="text" name="member_name" value={member.member_name} onChange={(e) => handleInputChange(index, "member_name", e.target.value, 'members')} className="w-full" required /></td>
+                      <td><button type="button" onClick={() => removeMember(index)} className="accre-form-content-remove-btn">Remove</button></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <button type="button" onClick={addMember} className="accre-form-content-add-member">Add Member</button>
+            </div>
+
+            <div className="accre-form-content-section">
+              <p className="accre-form-content-label font-bold">3. Plan of Activities</p>
               <table className="accre-form-content-table">
                 <thead>
                   <tr>
@@ -442,7 +442,13 @@ const UpdateReaccreditationForm: React.FC = () => {
             </div>
 
             <div className="accre-form-content-section">
-              <label className="accre-form-content-label">5. Appendices</label>
+              <label className="accre-form-content-label">5. Community Extension Service with Certification from the ICES Director</label>
+              <input type="file" name="ices_cert" accept="application/pdf" className="accre-form-content-input" onChange={(e) => handleFileChange(e, setIcesCertFileName, 'ices_cert')} />
+              {icesCertFileName && <p>Current File: {icesCertFileName}</p>}
+            </div>
+
+            <div className="accre-form-content-section">
+              <label className="accre-form-content-label">6. Appendices</label>
               <input type="file" name="appendices" accept="application/pdf" className="accre-form-content-input" onChange={(e) => handleFileChange(e, setAppendicesFileName, 'appendices')} />
               {appendicesFileName && <p>Current File: {appendicesFileName}</p>}
             </div>

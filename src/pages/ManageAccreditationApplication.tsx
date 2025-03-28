@@ -47,14 +47,13 @@ const ManageAccreditationApplication: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showComments, setShowComments] = useState<{ [key: string]: boolean }>({});
 
-   const [comments, setComments] = useState<{ [key: string]: Comment[] }>({});
+  const [comments, setComments] = useState<{ [key: string]: Comment[] }>({});
 
   const [users, setUsers] = useState<User[]>([]);
 
   const [accreditations, setAccreditations] = useState<Accreditation[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
   const [userInfo, setUserInfo] = useState<User | null>(null);
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,7 +69,6 @@ const ManageAccreditationApplication: React.FC = () => {
 
         setLoading(false);
 
-        
         const commentsRes = await axios.get('http://localhost:8800/comments-accreditation');
         const commentsData = commentsRes.data;
         const commentsMap: { [key: string]: Comment[] } = {};
@@ -99,7 +97,6 @@ const ManageAccreditationApplication: React.FC = () => {
 
         setUsers(usersResponse.data);
         setStudents(studentsResponse.data);
-
 
       } catch (error) {
         console.error(error);
@@ -157,9 +154,7 @@ const ManageAccreditationApplication: React.FC = () => {
     navigate('/', { state: { userId: null } });
   };
 
-  const filteredAccreditations = accreditations.filter(acc =>
-    students.some(student => student.stud_id === acc.stud_id)
-  );
+  const filteredAccreditations = accreditations.filter(acc => acc.stud_id === stud_id);
 
   return (
     <div className="main-wrapper">
@@ -216,13 +211,12 @@ const ManageAccreditationApplication: React.FC = () => {
               <div className="proposal-cell">Organization Name</div>
               <div className="proposal-cell">Type</div>
               <div className="proposal-cell">Status</div>
-              {/* <div className="proposal-cell">Comment</div> */}
               <div className="proposal-cell">Actions</div>
             </div>
             {filteredAccreditations.map(accreditation => (
               <React.Fragment key={accreditation.acc_id}>
                 <div className="proposal-row">
-                <div className="proposal-cell">
+                  <div className="proposal-cell">
                     {new Date(accreditation.date_submitted).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
@@ -232,22 +226,17 @@ const ManageAccreditationApplication: React.FC = () => {
                   <div className="proposal-cell">{accreditation.orgname}</div>
                   <div className="proposal-cell">{accreditation.type}</div>
                   <div className="proposal-cell">{accreditation.status}</div>
-                  {/* <div className="proposal-cell">{accreditation.comment}</div> */}
                   <div className="proposal-cell ext">
                     <button onClick={() => navigate(`/viewaccreditationform/${accreditation.acc_id}`, { state: { userId, userInfo, student } })}>View</button>
                     <button onClick={() => navigate(`/update-accreditation/${accreditation.acc_id}`, { state: { userId, userInfo, student } })}>Update</button>
                     <button onClick={() => handleDeleteAccreditation(accreditation.acc_id)}>Delete</button>
-                    <button
-                     
-                     onClick={() => toggleComments(accreditation.acc_id)}
-                   >
-                     {showComments[accreditation.acc_id] ? 'Hide Comments' : 'Show Comments'}
-           </button>
+                    <button onClick={() => toggleComments(accreditation.acc_id)}>
+                      {showComments[accreditation.acc_id] ? 'Hide Comments' : 'Show Comments'}
+                    </button>
                     {accreditation.status === 'Approved' && (
                       <button onClick={() => navigate(`/view-accreditation-pass/${accreditation.acc_id}`, { state: { userId, userInfo, student, accreditation } })}>View Pass</button>
                     )}
                   </div>
-
                   {showComments[accreditation.acc_id] && (
                     <tr>
                       <td colSpan={5}>
@@ -266,7 +255,6 @@ const ManageAccreditationApplication: React.FC = () => {
                       </td>
                     </tr>
                   )}
-                  
                 </div>
               </React.Fragment>
             ))}

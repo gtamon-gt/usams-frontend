@@ -1,19 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import logo from '/unc_logo.png';
-import './ViewSubmittedProposals.css';
+import '../ViewSubmittedProposals.css';
 import axios from 'axios';
 
 interface Accreditation {
   acc_id: string;
-  stud_id: string;
-  constitution: string;
+  org_id: string;
   orgname: string;
   type: string;
   adv_letter: string;
   appendices: string;
   status: string;
   date_submitted: Date;
+}
+
+interface Organization {
+  org_id: string;
+  org_name: string;
+  org_type: string;
+  org_tag: string;
+  org_desc: string;
+  adv_id: string;
+  dean_id: string;
+  sy_id: string;
+  org_img: string;
+  org_header: string;
+  user_id: string;
+  user_role: string;
 }
 
 interface Director {
@@ -44,7 +58,7 @@ interface User {
   user_role: string;
 }
 
-const AccreditationList: React.FC = () => {
+const ReaccreditationList: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { stud_id } = useParams<{ stud_id: string }>();
@@ -59,12 +73,16 @@ const AccreditationList: React.FC = () => {
   const [accreditations, setAccreditations] = useState<Accreditation[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
   const [userInfo, setUserInfo] = useState<User | null>(null);
+  const [organization, setOrganization] = useState<Organization | null>(null);
+  const { org_id } = useParams<{ org_id: string }>();
+  const [orgId, setOrgId] = useState<Organization | null>(null);
+  const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [comment, setComment] = useState('');
   const [selectedProposal, setSelectedProposal] = useState<Accreditation | null>(null);
 
   const fetchAccreditations = async () => {
     try {
-      const accreditationsRes = await axios.get(`http://localhost:8800/accreditations`);
+      const accreditationsRes = await axios.get(`http://localhost:8800/reaccreditations`);
       setAccreditations(accreditationsRes.data);
     } catch (err) {
       console.error('Error fetching accreditations:', err);
@@ -78,8 +96,8 @@ const AccreditationList: React.FC = () => {
         const usersRes = await axios.get(`http://localhost:8800/users`);
         setUsers(usersRes.data);
 
-        const studentsRes = await axios.get(`http://localhost:8800/students`);
-        setStudents(studentsRes.data);
+        const orgRes = await axios.get(`http://localhost:8800/organizations`);
+        setOrganizations(orgRes.data);
 
         await fetchAccreditations();
 
@@ -143,12 +161,12 @@ const AccreditationList: React.FC = () => {
 
   const handleDeleteAccreditation = async (acc_id: string) => {
     try {
-      await axios.delete(`http://localhost:8800/accreditations/${acc_id}`);
+      await axios.delete(`http://localhost:8800/reaccreditations/${acc_id}`);
       setAccreditations(accreditations.filter(acc => acc.acc_id !== acc_id));
-      alert('Accreditation application successfully deleted.');
+      alert('Re-accreditation application successfully deleted.');
     } catch (err) {
-      console.error('Error deleting accreditation application:', err);
-      alert('Failed to delete accreditation application.');
+      console.error('Error deleting re-accreditation application:', err);
+      alert('Failed to delete re-accreditation application.');
     }
   };
 
@@ -165,12 +183,12 @@ const AccreditationList: React.FC = () => {
   };
 
   const filteredAccreditations = accreditations.filter(acc =>
-    students.some(student => student.stud_id === acc.stud_id) && acc.status === 'Pending'
+    organizations.some(organization => organization.org_id === acc.org_id) && acc.status === 'Pending'
   );
 
   const handleApprove = async (acc_id: string) => {
     try {
-      await axios.put(`http://localhost:8800/accreditation-approved/${acc_id}`);
+      await axios.put(`http://localhost:8800/reaccreditation-approved/${acc_id}`);
       alert('Application approved successfully!');
       await fetchAccreditations();
     } catch (err) {
@@ -188,7 +206,7 @@ const AccreditationList: React.FC = () => {
   const handleSubmitReject = async () => {
     if (selectedProposal && comment) {
       try {
-        await axios.post(`http://localhost:8800/accreditationreturned/${selectedProposal.acc_id}`, {
+        await axios.post(`http://localhost:8800/reaccreditationreturned/${selectedProposal.acc_id}`, {
           comment_content: `[${director?.dir_name}] ${comment}`
         });
         setSelectedProposal(null);
@@ -246,8 +264,8 @@ const AccreditationList: React.FC = () => {
 
       <div className="adviser-approval-content">
         <div className="title-top-part">
-          <h2>Accreditation Applications</h2>
-          <p className="instructions">View and manage the accreditation applications submitted by students.</p>
+          <h2>Re-Accreditation Applications</h2>
+          <p className="instructions">View and manage the accreditation applications submitted by existing student organizations.</p>
         </div>
         <hr className="title-custom-line" />
         {filteredAccreditations.length > 0 ? (
@@ -271,7 +289,7 @@ const AccreditationList: React.FC = () => {
                   <div className="proposal-cell">{accreditation.orgname}</div>
                   <div className="proposal-cell">{accreditation.type}</div>
                   <div className="proposal-cell ext">
-                    <button onClick={() => navigate(`/viewaccreditationform/${accreditation.acc_id}`, { state: { userId, userInfo} })}>View</button>
+                    <button onClick={() => navigate(`/viewreaccreditationform/${accreditation.acc_id}`, { state: { userId, userInfo} })}>View</button>
                     <button className="approve-button" onClick={() => handleApprove(accreditation.acc_id)}>Approve</button>
                     <button className="reject-button" onClick={() => handleReject(accreditation)}>Request Revision</button>
                     {accreditation.status === 'Approved' && (
@@ -283,7 +301,7 @@ const AccreditationList: React.FC = () => {
             ))}
           </div>
         ) : (
-          <p>No accreditation applications available for management.</p>
+          <p>No re-accreditation applications available for management.</p>
         )}
       </div>
 
@@ -296,7 +314,10 @@ const AccreditationList: React.FC = () => {
               onChange={(e) => setComment(e.target.value)}
               placeholder="Enter your comment or feedback..."
             ></textarea>
-            <button onClick={handleSubmitReject}>Submit</button>
+            <button onClick={handleSubmitReject} style={{
+              color: "white",
+              cursor: "pointer",
+            }}>Submit</button>
             <button onClick={() => setSelectedProposal(null)}>Cancel</button>
           </div>
         </div>
@@ -335,4 +356,4 @@ const AccreditationList: React.FC = () => {
   );
 };
 
-export default AccreditationList;
+export default ReaccreditationList;

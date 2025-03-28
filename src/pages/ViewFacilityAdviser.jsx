@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from 'react-router-dom';
-import './AdviserApproval.css';
+import './ProposalAdviserApproval.css';
 import './ViewRequests.css';
 
 const ViewFacilityAdviser = () => {

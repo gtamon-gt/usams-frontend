@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import logo from '/unc_logo.png';
-import './Accreditation.css';
+import './accreditation/Accreditation.css';
 
 interface Member {
   member_id: string;
@@ -33,6 +33,7 @@ interface Accreditation {
   adv_letter: string;
   appendices: string;
   status: string;
+  ices_cert: string;
 }
 
 interface Director {
@@ -163,33 +164,8 @@ const ViewReaccreditationForm: React.FC = () => {
                 <p className="accre-form-content-label2 font-bold-top">Type: {accreditation?.type}</p>
               </div>
 
-
-            <div className="accre-form-content-section">
-              <p className="accre-form-content-label font-bold">1. List Members, Permanent Contact Numbers & Student Number</p>
-              <table className="accre-form-content-table">
-                <thead>
-                  <tr>
-                    <th>Student Number</th>
-                    <th>Name</th>
-                    <th>Contact Number</th>
-                    <th>Email</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {members.map((member, index) => (
-                    <tr key={index}>
-                      <td>{member.stud_id}</td>
-                      <td>{member.member_name}</td>
-                      <td>{member.member_contact}</td>
-                      <td>{member.member_email}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <div className="accre-form-content-section">
-              <p className="accre-form-content-label font-bold">2. Officers</p>
+              <div className="accre-form-content-section">
+              <p className="accre-form-content-label font-bold">1. List of Officers</p>
               <table className="accre-form-content-table">
                 <thead>
                   <tr>
@@ -214,8 +190,29 @@ const ViewReaccreditationForm: React.FC = () => {
               </table>
             </div>
 
+
             <div className="accre-form-content-section">
-              <p className="accre-form-content-label font-bold">3. Plan Activities</p>
+              <p className="accre-form-content-label font-bold">2. List of members and their student numbers</p>
+              <table className="accre-form-content-table">
+                <thead>
+                  <tr>
+                    <th>Student Number</th>
+                    <th>Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {members.map((member, index) => (
+                    <tr key={index}>
+                      <td>{member.stud_id}</td>
+                      <td>{member.member_name}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="accre-form-content-section">
+              <p className="accre-form-content-label font-bold">3. Plan of Activities</p>
               <table className="accre-form-content-table">
                 <thead>
                   <tr>
@@ -248,7 +245,14 @@ const ViewReaccreditationForm: React.FC = () => {
             </div>
 
             <div className="accre-form-content-section">
-              <p className="accre-form-content-label font-bold">5. Appendices</p>
+              <p className="accre-form-content-label font-bold">5. Community Extension Service with Certification from the ICES Director</p>
+              <a href={`http://127.0.0.1/uploads/${accreditation?.ices_cert}`} target="_blank" rel="noopener noreferrer">
+                {accreditation?.ices_cert}
+              </a>
+            </div>
+
+            <div className="accre-form-content-section">
+              <p className="accre-form-content-label font-bold">6. Appendices</p>
               <a href={`http://127.0.0.1/uploads/${accreditation?.appendices}`} target="_blank" rel="noopener noreferrer">
                 {accreditation?.appendices}
               </a>

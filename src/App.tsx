@@ -19,7 +19,7 @@ import UpdateInCampus from './pages/UpdateInCampus';
 import UpdateOutCampusA from './pages/UpdateOutCampusA';
 import UpdateOutCampusB from './pages/UpdateOutCampusB';
 import PreviewOutCampusB from './pages/PreviewOutCampusB';
-import AdviserApproval from './pages/AdviserApproval';
+import AdviserApproval from './pages/ProposalAdviserApproval';
 import DirectorApproval from './pages/DirectorApproval';
 import DeanApproval from './pages/DeanApproval';
 import Guidelines from './pages/Guidelines';
@@ -59,15 +59,15 @@ import UpdateReport from './pages/UpdateReport';
 import UpdateFinancial from './pages/UpdateFinancial';
 import Financial from './pages/Financial';
 import ViewRequestFormGbm from './pages/ViewRequestFormGbm';
-import AccreditationForm from './pages/AccreditationForm';
+import AccreditationForm from './pages/accreditation/AccreditationForm';
 import ManageAccreditationApplication from './pages/ManageAccreditationApplication';
 import UpdateAccreditationForm from './pages/UpdateAccreditationForm';
-import AccreditationList from './pages/AccreditationList';
+import AccreditationList from './pages/accreditation/AccreditationList';
 import ViewAccreditationForm from './pages/ViewAccreditationForm';
-import ReaccreditationForm from './pages/ReaccreditationForm';
+import ReaccreditationForm from './pages/reaccreditation/ReaccreditationForm';
 import ManageReaccreditationApplication from './pages/ManageReaccreditationApplication';
 import UpdateReaccreditationForm from './pages/UpdateReaccreditationForm';
-import ReaccreditationList from './pages/ReaccreditationList';
+import ReaccreditationList from './pages/reaccreditation/ReaccreditationList';
 import ViewReaccreditationForm from './pages/ViewReaccreditationForm';
 import ViewConductedActivities from './pages/ViewConductedActivities';
 import DashboardGbm from './pages/DashboardGbm';
@@ -137,7 +137,7 @@ const App: React.FC = () => {
         <Route path="/update-accreditation/:acc_id" element={<UpdateAccreditationForm/>}/>
         <Route path="/approveaccreditation" element={<AccreditationList/>}/>
         <Route path="/viewaccreditationform/:acc_id" element={<ViewAccreditationForm/>}/>
-        <Route path="/re-accreditation/:stud_id" element={<ReaccreditationForm/>}/>
+        <Route path="/re-accreditation/:org_id" element={<ReaccreditationForm/>}/>
         <Route path="/manage-reaccreditation-application/:org_id" element={<ManageReaccreditationApplication/>}/>
         <Route path="/update-reaccreditation/:acc_id" element={<UpdateReaccreditationForm/>}/>
         <Route path="/approvereaccreditation" element={<ReaccreditationList/>}/>

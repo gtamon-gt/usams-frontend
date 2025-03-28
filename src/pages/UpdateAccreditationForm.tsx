@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import logo from '/unc_logo.png';
-import './Accreditation.css';
+import './accreditation/Accreditation.css';
 
 interface Student {
   stud_id: string;
@@ -107,6 +107,10 @@ const UpdateAccreditationForm: React.FC = () => {
     fetchData();
   }, [acc_id]);
 
+  useEffect(() => {
+    console.log('Accreditation Type:', accreditation?.type);
+  }, [accreditation]);
+
   const addMember = () => {
     setMembers([...members, { member_id: '', stud_id: '', acc_id: '', member_email: '', member_name: '', member_position: '', member_contact: '' }]);
   };
@@ -146,7 +150,7 @@ const UpdateAccreditationForm: React.FC = () => {
     }
     setMembers(members.filter((_, i) => i !== index));
   };
-  
+
   const removeOfficer = async (index: number) => {
     const officerId = officers[index].member_id;
     if (officerId) {
@@ -158,7 +162,7 @@ const UpdateAccreditationForm: React.FC = () => {
     }
     setOfficers(officers.filter((_, i) => i !== index));
   };
-  
+
   const removeActivity = async (index: number) => {
     const activityId = activities[index].act_id;
     if (activityId) {
@@ -170,7 +174,6 @@ const UpdateAccreditationForm: React.FC = () => {
     }
     setActivities(activities.filter((_, i) => i !== index));
   };
-  
 
   const handleSignOut = () => {
     navigate('/', { state: { userId: null } });
@@ -178,9 +181,9 @@ const UpdateAccreditationForm: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-  
+
     const formData = new FormData(event.currentTarget as HTMLFormElement);
-  
+
     // Append existing file names if no new files are selected
     if (!fileInputsChanged.constitution) {
       formData.append('constitution', constitutionFileName);
@@ -191,12 +194,12 @@ const UpdateAccreditationForm: React.FC = () => {
     if (!fileInputsChanged.appendices) {
       formData.append('appendices', appendicesFileName);
     }
-  
+
     formData.append('stud_id', student?.stud_id || '');
     formData.append('members', JSON.stringify(members));
     formData.append('officers', JSON.stringify(officers));
     formData.append('activities', JSON.stringify(activities));
-  
+
     try {
       const response = await axios.post(`http://localhost:8800/accreditation/update/${acc_id}`, formData, {
         headers: {
@@ -301,7 +304,13 @@ const UpdateAccreditationForm: React.FC = () => {
               </div>
               <div className="accre-form-content-section">
                 <label className="accre-form-content-label">Type</label>
-                <select name="type" className="accre-form-content-input" defaultValue={accreditation?.type} required>
+                <select
+                  name="type"
+                  className="accre-form-content-input"
+                  value={accreditation?.type || ''}
+                  onChange={(e) => setAccreditation({ ...accreditation, type: e.target.value } as Accreditation)}
+                  required
+                >
                   <option value="">Select</option>
                   <option value="academic">Academic</option>
                   <option value="non-academic">Non-Academic</option>

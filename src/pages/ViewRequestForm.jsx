@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import logo from '/unc_logo.png';
+import './PreviewFacility.css';
 
 const ViewRequestForm = () => {
   const location = useLocation();
@@ -288,7 +289,7 @@ const ViewRequestForm = () => {
 
       <div id="proposal-preview" className="previewmain">
         <div className="incampus-content preview">
-          <table className="previewheader">
+          <table className="previewheaderfaci">
             <tr>
               <td><img src="/unc_logo.png" alt="Logo" className="logo-img" /></td>
               <td>
@@ -306,352 +307,515 @@ const ViewRequestForm = () => {
         </div>
 <br></br>
         <div className="details-container">
-        <div className="acttype-container">
+        <div className="acttype-containerprev">
           <div className="acttype-section">
-            <div className="acttype-text">Activity Type:</div>
+            <div className="acttype-textprev">Activity Type:</div>
             <div className="acttype-choices">
-              <div className="student-sponsored">
-                <input type="checkbox" value='Student Sponsored' name='acttype' onChange={handleActtype} checked={acttype.includes("Student Sponsored")} />
+              <div className="student-sponsoredprev">
+                <input type="checkbox" value='Student Sponsored' name='acttype' 
+                onChange={handleActtype} checked={acttype.includes("Student Sponsored")} disabled/>
                 Student Sponsored
               </div>
-              <div className="university-sponsored">
-                <input type="checkbox" value='University Sponsored' name='acttype' onChange={handleActtype} checked={acttype.includes("University Sponsored")} />
+              <div className="student-sponsoredprev">
+                <input type="checkbox" value='University Sponsored' name='acttype' 
+                onChange={handleActtype} checked={acttype.includes("University Sponsored")} disabled/>
                 University Sponsored
               </div>
             </div>
           </div>
           <div className="title-act-section">
-            <label htmlFor="orgname" className="title-act-label">Title of Activity:</label>
-            <input type="text" id="orgname" name="actname" className='actname-guide' value={actname} onChange={e => setActname(e.target.value)} />
+            <label htmlFor="orgname" className="acttype-textprev">Title of Activity:</label>
+            <input type="text" id="orgname" name="actname" className='actname-guideprev' value={actname} 
+            onChange={e => setActname(e.target.value)} readOnly/>
           </div>
         </div>
 
         <hr className="section-divider" />
 
-<div className="additional-info">
-  <label htmlFor="additional-info-textarea" className="additional-info-label">Program Details:</label>
-  <textarea id="additional-info-textarea" className="additional-info-textarea" value={progdetails} onChange={e => setProgdetails(e.target.value)}></textarea>
+<div className="additional-infoprev">
+  <label htmlFor="additional-info-textarea" className="acttype-textprev">Program Details:</label>
+  <textarea id="additional-info-textarea" className="additional-info-textarea" value={progdetails}
+   onChange={e => setProgdetails(e.target.value)} readOnly></textarea>
 </div>
 <br></br>
-<div className="progdetails-form">
+<div className="progdetails-formprev">
             <div className="progdetails-row">
               <div className="progdetails-group">
-                <label htmlFor="dateformlabel1" className='dateform-label'>Inclusive Date(s)</label>
-                <input type="text" id="orgidfaci" name="date" className="dateform-label1" value={date} 
-                onChange={e => setDate(e.target.value)}/>
+                <label htmlFor="dateformlabel1" className='dateform-labelprev'>Inclusive Date(s)</label>
+                <input type="text" id="orgidfaci" name="date" className="dateform-prev" value={date} 
+                onChange={e => setDate(e.target.value)} readOnly/>
               </div>
               <div className="progdetails-group">
-                <label htmlFor="dateformlabel1" className='time-label'>Start Time</label>
-                <input type="text" id="orgidfaci" className="time-field" value={timefaci} onChange={e => setTimefaci(e.target.value)} />
+                <label htmlFor="dateformlabel1" className='time-labelprev'>Start Time</label>
+                <input type="text" id="orgidfaci" className="time-fieldprev" value={timefaci} 
+                onChange={e => setTimefaci(e.target.value)} readOnly/>
               </div>
               <div className="progdetails-group">
-                <label htmlFor="endtime" className='time-label'>End Time</label>
-                <input type="text" id="endtime" className="time-field" value={timefaciend} onChange={e => setTimefaciend(e.target.value)} />
+                <label htmlFor="endtime" className='time-labelprev'>End Time</label>
+                <input type="text" id="endtime" className="time-fieldprev" value={timefaciend} 
+                onChange={e => setTimefaciend(e.target.value)} readOnly/>
               </div>
               <div className="progdetails-group">
-                <label htmlFor="suspensionfield" className='suspension-label'>Suspension of Classes</label>
-                <input type="text" id="endtime" className="suspension-field"  value={suspension} 
-                 onChange={e => setSuspension(e.target.value)} />
+                <label htmlFor="suspensionfield" className='suspension-labelprev'>Suspension of Classes</label>
+                <input type="text" id="endtime" className="suspension-fieldprev"  value={suspension} 
+                 onChange={e => setSuspension(e.target.value)} readOnly/>
                
               </div>
             </div>
             <div className="progdetails-row">
             <div className="progdetails-group">
-                <label htmlFor="dateformlabel1" className='invpers-form'>Invited Persons not from UNC</label>
-                <input type="text" id="orgidfaci" name="invitedpers" className="dateform-label1" value={invitedpers} onChange={e => setInvitedpers(e.target.value)} />
+                <label htmlFor="dateformlabel1" className='invpers-formprev'>Invited Persons not from UNC</label>
+                <input type="text" id="orgidfaci" name="invitedpers" className="dateform-prev" value={invitedpers} 
+                onChange={e => setInvitedpers(e.target.value)} readOnly/>
               </div>
               <div className="progdetails-group">
-                <label htmlFor="dateformlabel1" className='office-label'>Office/Institution</label>
-                <input type="text" id="orgidfaci" name="office" className="dateform-label1" value={office} onChange={e => setOffice(e.target.value)} />
+                <label htmlFor="dateformlabel1" className='office-labelprev'>Office/Institution</label>
+                <input type="text" id="orgidfaci" name="office" className="dateform-prev" value={office} 
+                onChange={e => setOffice(e.target.value)} readOnly/>
               </div>
               <div className="progdetails-group">
-                <label htmlFor="dateformlabel1" className='position-label'>Position/Designation</label>
-                <input type="text" id="orgidfaci" name="position" className="dateform-label1" value={position} onChange={e => setPosition(e.target.value)} />
+                <label htmlFor="dateformlabel1" className='position-labelprev'>Position/Designation</label>
+                <input type="text" id="orgidfaci" name="position" className="dateform-prev" value={position} 
+                onChange={e => setPosition(e.target.value)} readOnly/>
               </div>
             </div>
             <div className="progdetails-row">
               <div className="progdetails-group">
-                <label htmlFor="dateformlabel1" className='reqdept-form'>Requesting Dept./Organization</label>
-                <input type="text" id="orgidfaci" name="reqdep" className="dateform-label1" value={reqdep}  readOnly />
+                <label htmlFor="dateformlabel1" className='reqdept-formprev'>Requesting Dept./Organization</label>
+                <input type="text" id="orgidfaci" name="reqdep" className="dateform-prev" value={reqdep}  readOnly />
               </div>
               <div className="progdetails-group">
-                <label htmlFor="dateformlabel1" className='participants-label'>Participants/Audiences</label>
-                <input type="text" id="orgidfaci" name="participants" className="dateform-label1" value={participants} onChange={e => setParticipants(e.target.value)} />
+                <label htmlFor="dateformlabel1" className='participants-labelprev'>Participants/Audiences</label>
+                <input type="text" id="orgidfaci" name="participants" className="dateform-prev" value={participants} 
+                onChange={e => setParticipants(e.target.value)} readOnly/>
               </div>
               <div className="progdetails-group">
-                <label htmlFor="dateformlabel1" className='number-label'>Expected number of participants</label>
-                <input type="text" id="orgidfaci" name="numberpart" className="dateform-label1" value={numberpart} onChange={e => setNumberpart(e.target.value)} />
+                <label htmlFor="dateformlabel1" className='number-labelprev'>Expected number of participants</label>
+                <input type="text" id="orgidfaci" name="numberpart" className="dateform-prev" value={numberpart}
+                onChange={e => setNumberpart(e.target.value)} readOnly/>
               </div>
             </div>
           </div>
 
           <hr className="section-divider" />
 
-          <div className="venuetext">Venue:</div>
-          <div className="venue-form">
+          <div className="venuetextprev">Venue:</div>
+          <div className="venue-formprev">
             <div className="venue-row">
               <div className="venue-group">
                 <input type="checkbox" value='Sports Palace' name='facility' onChange={handleChange} 
-                checked={facility.includes("Sports Palace")}/> Sports Palace
+                checked={facility.includes("Sports Palace")} disabled/> Sports Palace
               </div>
               <div className="venue-group">
                 <input type="checkbox" value='Social Hall' name='facility' onChange={handleChange} 
-                checked={facility.includes("Social Hall")}/> Social Hall
+                checked={facility.includes("Social Hall")}disabled /> Social Hall
               </div>
               <div className="venue-group">
                 <input type="checkbox" value='Cov. Court A' name='facility' onChange={handleChange} 
-                checked={facility.includes("Cov. Court A")}/> Cov. Court A
+                checked={facility.includes("Cov. Court A")}disabled/> Cov. Court A
               </div>
               <div className="venue-group">
                 <input type="checkbox" value='Cov. Court B' name='facility' onChange={handleChange} 
-                checked={facility.includes("Cov. Court B")}/> Cov. Court B
+                checked={facility.includes("Cov. Court B")}disabled/> Cov. Court B
               </div>
             </div>
             <div className="venue-row">
               <div className="venue-group">
                 <input type="checkbox" value='AVR E-Library' name='facility' onChange={handleChange} 
-                checked={facility.includes("AVR E-Library")}/> AVR E-Library
+                checked={facility.includes("AVR E-Library")}disabled/> AVR E-Library
               </div>
               <div className="venue-group">
                 <input type="checkbox" value='Student Pavilion' name='facility' onChange={handleChange} 
-                checked={facility.includes("Student Pavilion")}/> Student Pavilion
+                checked={facility.includes("Student Pavilion")}disabled/> Student Pavilion
               </div>
               <div className="venue-group">
                 <input type="checkbox" value='Chapel' name='facility' onChange={handleChange} 
-                checked={facility.includes("Chapel")}/> Chapel
+                checked={facility.includes("Chapel")}disabled/> Chapel
               </div>
               <div className="venue-group">
                 <input type="checkbox" name='facility' value='Others:' onChange={handleChange} 
-                checked={facility.includes("Others:")}/> Others:
-                <input type="text" id="orgidfaci" name="facility" className="other-venue-label1" value={otherfacility} onChange={e => setOtherfacility(e.target.value)} />
+                checked={facility.includes("Others:")}disabled/> Others:
+                <input type="text" id="orgidfaci" name="facility" className="suspension-fieldprev" value={otherfacility} 
+                onChange={e => setOtherfacility(e.target.value)} readOnly/>
               </div>
             </div>
           </div>
 
           <hr className="section-divider" />
 
-<div className="venuetext">Resources Needed:</div>
-<div className="venue-form">
+<div className="venuetextprev">Resources Needed:</div>
+<div className="venue-formprev2">
   <div className="resources-row">
     <div className="resources-group">
       <input type="checkbox" value='Philippine Flag' name='resources' className='resources-check' onChange={handleResources} 
-      checked={resources.includes("Philippine Flag")}/> Philippine Flag
+      checked={resources.includes("Philippine Flag")} disabled/> Philippine Flag
     </div>
     <div className="resources-group">
       <input type="checkbox" value='UNC Flag' name='resources' className='resources-check' onChange={handleResources} 
-      checked={resources.includes("UNC Flag")}/> UNC Flag
+      checked={resources.includes("UNC Flag")} disabled/> UNC Flag
     </div>
     <div className="resources-group">
       <input type="checkbox" value='Aircon' name='resources' className='resources-check' onChange={handleResources} 
-      checked={resources.includes("Aircon")}/> Aircon
+      checked={resources.includes("Aircon")} disabled/> Aircon
     </div>
     <div className="resources-group">
       <input type="checkbox" value='Mako Fan' name='resources' onChange={handleResources} 
-      checked={resources.includes("Mako Fan")}/> Mako Fan
+      checked={resources.includes("Mako Fan")} disabled/> Mako Fan
     </div>
   </div>
   <div className="resources-row">
     <div className="resources-group">
       <input type="checkbox" value='Aeratron' name='resources' onChange={handleResources} 
-      checked={resources.includes("Aeratron")}/> Aeratron
+      checked={resources.includes("Aeratron")} disabled/> Aeratron
     </div>
     <div className="resources-group">
       <input type="checkbox" value='Air Coolers' name='resources' onChange={handleResources} 
-      checked={resources.includes("Air Coolers")}/> Air Coolers
-      <input type="text" id="orgidfaci" name="orgid" className="aircoolers-label" value={acunits} onChange={e => setAcunits(e.target.value)} />
+      checked={resources.includes("Air Coolers")} disabled/> Air Coolers
+      <input type="text" id="orgidfaci" name="orgid" className="aircoolers-labelprev" value={acunits}
+       onChange={e => setAcunits(e.target.value)} readOnly/>
       <label htmlFor="aircoolers-label" className='aircooler-label'>units</label>
     </div>
     <div className="resources-group">
       <input type="checkbox" value='Rostrum' name='resources' onChange={handleResources} 
-      checked={resources.includes("Rostrum")}/> Rostrum
+      checked={resources.includes("Rostrum")} disabled/> Rostrum
     </div>
     <div className="resources-group">
       <input type="checkbox" value='Standby Generator' name='resources' onChange={handleResources} 
-      checked={resources.includes("Standby Generator")}/> Standby Generator
+      checked={resources.includes("Standby Generator")} disabled/> Standby Generator
     </div>
   </div>
   <div className="resources-row">
     <div className="resources-group">
       <input type="checkbox" value='Display Boards' name='resources' onChange={handleResources} 
-      checked={resources.includes("Display Boards")}/> Display Boards
-      <input type="text" id="orgidfaci" name="orgid" className="aircoolers-label" value={displayboardpcs} onChange={e => setDisplayboardpcs(e.target.value)} />
+      checked={resources.includes("Display Boards")} disabled/> Display Boards
+      <input type="text" id="orgidfaci" name="orgid" className="aircoolers-labelprev" value={displayboardpcs} 
+      onChange={e => setDisplayboardpcs(e.target.value)} readOnly/>
       <label htmlFor="aircoolers-label" className='aircooler-label'>pcs</label>
     </div>
     <div className="resources-group">
       <input type="checkbox" value='Monobloc Chairs' name='resources' onChange={handleResources} 
-      checked={resources.includes("Monobloc Chairs")}/> Monobloc Chairs
-      <input type="text" id="orgidfaci" name="orgid" className="aircoolers-label" value={monoblocpcs} onChange={e => setMonoblocpcs(e.target.value)} />
+      checked={resources.includes("Monobloc Chairs")} disabled/> Monobloc Chairs
+      <input type="text" id="orgidfaci" name="orgid" className="aircoolers-labelprev" value={monoblocpcs} 
+      onChange={e => setMonoblocpcs(e.target.value)} readOnly/>
       <label htmlFor="aircoolers-label" className='aircooler-label'>pcs</label>
     </div>
     <div className="resources-group">
       <input type="checkbox" value='Pavilion Table' name='resources' onChange={handleResources} 
-      checked={resources.includes("Pavilion Table")}/> Pavilion Table
-      <input type="text" id="orgidfaci" name="orgid" className="aircoolers-label" value={pavtablepcs} onChange={e => setPavtablepcs(e.target.value)} />
+      checked={resources.includes("Pavilion Table")} disabled/> Pavilion Table
+      <input type="text" id="orgidfaci" name="orgid" className="aircoolers-labelprev" value={pavtablepcs} 
+      onChange={e => setPavtablepcs(e.target.value)} readOnly/>
       <label htmlFor="aircoolers-label" className='aircooler-label'>pcs</label>
     </div>
     <div className="resources-group">
       <input type="checkbox" name='resources' value='Others:' onChange={handleResources}
-      checked={resources.includes("Others:")} /> Others:
-      <input type="text" id="orgidfaci" name="resources" className="other-venue-label1" value={otherresources} onChange={e => setOtherresources(e.target.value)} />
+      checked={resources.includes("Others:")} disabled/> Others:
+      <input type="text" id="orgidfaci" name="resources" className="suspension-fieldprev" value={otherresources}
+       onChange={e => setOtherresources(e.target.value)} readOnly/>
     </div>
   </div>
 </div>
 
 <hr className="section-divider" />
 
-          <div className="venuetext">AMSCO Resources:</div>
-          <div className="venue-form">
+          <div className="venuetextprev">AMSCO Resources:</div>
+          <div className="venue-formprev">
             <div className="amsco-row">
               <div className="amsco-group">
                 <input type="checkbox" value='Documentation' name='amsco' className='amsco-check' onChange={handleAmsco}
-                checked={amsco.includes("Documentation")} /> Documentation
+                checked={amsco.includes("Documentation")} disabled /> Documentation
               </div>
               <div className="amsco-group">
                 <input type="checkbox" value='Video' name='amsco' className='amsco-check' onChange={handleAmsco} 
-                checked={amsco.includes("Video")}/> Video
+                checked={amsco.includes("Video")} disabled/> Video
               </div>
               <div className="amsco-group">
                 <input type="checkbox" value='Still Camera' name='amsco' className='amsco-check' onChange={handleAmsco} 
-                checked={amsco.includes("Still Camera")}/> Still Camera
+                checked={amsco.includes("Still Camera")} disabled/> Still Camera
               </div>
             </div>
           </div>
 
           <hr className="section-divider" />
 
-          <div className="venuetext">ICT Resources:</div>
-          <div className="venue-form">
+          <div className="venuetextprev">ICT Resources:</div>
+          <div className="venue-formprev2">
             <div className="amsco-row">
               <div className="amsco-group">
                 <input type="checkbox" value='Sound System' name='amsco' onChange={handleAmsco} 
-                checked={amsco.includes("Sound System")}/> Sound System
+                checked={amsco.includes("Sound System")} disabled/> Sound System
               </div>
               <div className="amsco-group">
                 <input type="checkbox" value='Microphones' name='amsco' onChange={handleAmsco} 
-                checked={amsco.includes("Microphones")}/> Microphones
+                checked={amsco.includes("Microphones")} disabled/> Microphones
               </div>
               <div className="amsco-group">
                 <input type="checkbox" value='Computers' name='amsco' onChange={handleAmsco} 
-                checked={amsco.includes("Computers")}/> Computer(s)
-                <input type="text" id="orgidfaci" name="orgid" className="aircoolers-label" value={computerunits} onChange={e => setComputerunits(e.target.value)} />
+                checked={amsco.includes("Computers")} disabled/> Computer(s)
+                <input type="text" id="orgidfaci" name="orgid" className="aircoolers-labelprev" value={computerunits} 
+                onChange={e => setComputerunits(e.target.value)} readOnly/>
                 <label htmlFor="aircoolers-label" className='aircooler-label'>units</label>
               </div>
               <div className="amsco-group">
                 <input type="checkbox" value='Internet/Wifi' name='amsco' onChange={handleAmsco} 
-                checked={amsco.includes("Internet/Wifi")}/> Internet/Wifi
+                checked={amsco.includes("Internet/Wifi")} disabled/> Internet/Wifi
               </div>
               <div className="amsco-group">
                 <input type="checkbox" value='Multi-Media Projector' name='amsco' onChange={handleAmsco} 
-                checked={amsco.includes("Multi-Media Projector")}/> Multi-Media Projector
+                checked={amsco.includes("Multi-Media Projector")} disabled/> Multi-Media Projector
               </div>
             </div>
             <div className="amsco-row">
               <div className="amsco-group">
                 <input type="checkbox" value='Projector Screen' name='amsco' onChange={handleAmsco} 
-                checked={amsco.includes("Projector Screen")}/> Projector Screen
-                <input type="text" id="orgidfaci" name="orgid" className="aircoolers-label" value={projectorpcs} onChange={e => setProjectorpcs(e.target.value)} />
-                <label htmlFor="aircoolers-label" className='aircooler-label'>pcs</label>
+                checked={amsco.includes("Projector Screen")} disabled/> Projector Screen
+                <input type="text" id="orgidfaci" name="orgid" className="aircoolers-label" value={projectorpcs} 
+                onChange={e => setProjectorpcs(e.target.value)} readOnly/>
+                <label htmlFor="aircoolers-label" className='aircoolers-labelprev'>pcs</label>
               </div>
               <div className="amsco-group">
                 <input type="checkbox" value='Printer' name='amsco' onChange={handleAmsco} 
-                checked={amsco.includes("Printer")}/> Printer(s)
-                <input type="text" id="orgidfaci" name="orgid" className="aircoolers-label" value={printerunits} onChange={e => setPrinterunits(e.target.value)} />
-                <label htmlFor="aircoolers-label" className='aircooler-label'>units</label>
+                checked={amsco.includes("Printer")} disabled/> Printer(s)
+                <input type="text" id="orgidfaci" name="orgid" className="aircoolers-label" value={printerunits} 
+                onChange={e => setPrinterunits(e.target.value)} readOnly/>
+                <label htmlFor="aircoolers-label" className='aircoolers-labelprev'>units</label>
               </div>
               <div className="amsco-group">
                 <input type="checkbox" value='Others:' name='amsco' onChange={handleAmsco} 
-                checked={amsco.includes("Ohters:")}/> Others:
-                <input type="text" id="orgidfaci" name="orgid" className="other-venue-label1" value={otheramsco} onChange={e => setOtheramsco(e.target.value)} />
+                checked={amsco.includes("Ohters:")} disabled/> Others:
+                <input type="text" id="orgidfaci" name="orgid" className="suspension-fieldprev" value={otheramsco} 
+                onChange={e => setOtheramsco(e.target.value)} readOnly/>
               </div>
             </div>
           </div>
 
           <hr className="section-divider" />
 
-<div className="venuetext">Personnel and Special Services:</div>
-<div className="venue-form">
+<div className="venuetextprev">Personnel and Special Services:</div>
+<div className="venue-formprev">
   <div className="services-row">
     <div className="services-group">
       <input type="checkbox" value='Janitorial' name='services' className='services-check' onChange={handleServices} 
-      checked={services.includes("Janitorial")}/> Janitorial
+      checked={services.includes("Janitorial")} disabled/> Janitorial
     </div>
     <div className="services-group">
       <input type="checkbox" value='Security' name='services' className='services-check' onChange={handleServices} 
-      checked={services.includes("Security")}/> Security
+      checked={services.includes("Security")} disabled/> Security
     </div>
     <div className="services-group">
       <input type="checkbox" value='Driver' name='services' className='services-check' onChange={handleServices} 
-      checked={services.includes("Driver")}/> Driver
+      checked={services.includes("Driver")} disabled/> Driver
     </div>
     <div className="services-group">
       <input type="checkbox" value='ICT Technician' name='services' className='services-check' onChange={handleServices} 
-      checked={services.includes("ICT Technician")}/> ICT Technician
+      checked={services.includes("ICT Technician")} disabled/> ICT Technician
     </div>
   </div>
   <div className="services-row">
     <div className="services-group">
       <input type="checkbox" value='Electricians' name='services' onChange={handleServices} 
-      checked={services.includes("Electricians")}/> Electricians
+      checked={services.includes("Electricians")} disabled/> Electricians
     </div>
     <div className="services-group">
       <input type="checkbox" value='Sound System Operators' name='services' onChange={handleServices} 
-      checked={services.includes("Sound System Operators")}/> Sound System Operators
+      checked={services.includes("Sound System Operators")} disabled/> Sound System Operators
     </div>
     <div className="services-group">
       <input type="checkbox" value='Generator Set Operators' name='services' onChange={handleServices} 
-      checked={services.includes("Generator Set Operators")}/> Generator Set Operators
+      checked={services.includes("Generator Set Operators")} disabled/> Generator Set Operators
     </div>
     <div className="services-group">
       <input type="checkbox" value='Glee Club' name='services' onChange={handleServices} 
-      checked={services.includes("Glee Club")}/> Glee Club
+      checked={services.includes("Glee Club")} disabled/> Glee Club
     </div>
   </div>
   <div className="services-row">
     <div className="services-group">
       <input type="checkbox" value='College Band' name='services' onChange={handleServices} 
-      checked={services.includes("College Band")}/> College Band
+      checked={services.includes("College Band")} disabled/> College Band
     </div>
     <div className="services-group">
       <input type="checkbox" value='H/S DXMC' name='services' onChange={handleServices} 
-      checked={services.includes("H/S DXMC")}/> H/S DXMC
+      checked={services.includes("H/S DXMC")} disabled/> H/S DXMC
     </div>
     <div className="services-group">
       <input type="checkbox" value='College Majorettes' name='services' onChange={handleServices} 
-      checked={services.includes("College Majorettes")}/> College Majorettes
+      checked={services.includes("College Majorettes")} disabled/> College Majorettes
     </div>
     <div className="services-group">
       <input type="checkbox" value='H/S Majorettes' name='services' onChange={handleServices} 
-      checked={services.includes("H/S Majorettes")}/> H/S Majorettes
+      checked={services.includes("H/S Majorettes")} disabled/> H/S Majorettes
     </div>
   </div>
   <div className="services-row">
     <div className="services-group">
       <input type="checkbox" value='CAT/ROTC Colors' name='services' onChange={handleServices} 
-      checked={services.includes("CAT/ROTC Colors")}/> CAT/ROTC Colors
+      checked={services.includes("CAT/ROTC Colors")} disabled/> CAT/ROTC Colors
     </div>
     <div className="services-group">
       <input type="checkbox" value='Van' name='services' onChange={handleServices} 
-      checked={services.includes("Van")}/> Van (to be approved by VPAAS)
+      checked={services.includes("Van")} disabled/> Van (to be approved by VPAAS)
     </div>
   </div>
 </div>
 
 <hr className="section-divider" />
 
-          <div className="venuetext">Organization Adviser:</div>
-            <input
-              type="text"
-              name="adviser"
-              value={adviser.adv_name}
-              className="adviser-input"
-            //  onChange={e => setAdviser(e.target.value)}
-              readOnly
-            />
+
+<div className="input-row-faci">
+  <div className="input-group-faci">
+    <label className="venuetextprev-dean">Dean/Department Head:</label>
+    <input
+      type="text"
+      name="dean"
+      className="adviser-inputprev"
+      onChange={e => setDean(e.target.value)}
+      readOnly
+    />
+  </div>
+
+  <div className="input-group-faci2">
+    <label className="venuetextprev-officer">Engr. Christian R. Encila</label>
+    <div className="engrlabel1">Grounds and Buildings Superintendent</div>
+   
+  </div>
+</div>
+
+<div className="input-row-faci">
+  <div className="input-group-faci">
+    <label className="venuetextprev-dean">Safety Officer:</label>
+    <input
+      type="text"
+      name="dean"
+      className="adviser-inputprev"
+      onChange={e => setDean(e.target.value)}
+      readOnly
+    />
+  </div>
+
+  <div className="input-group-faci2">
+    <label className="venuetextprev-officer">Engr. Leon B. Palmiano IV</label>
+    <div className="engrlabel1">VP for Administration and Auxiliary Services</div>
+   
+  </div>
+</div>
+
+
 
         </div>
+
+        
+
       </div>
 
-      <div className="forPDF" onClick={generatePDF}>
+      <div id="proposal-preview" className="previewmain">
+        
+      <h3 className='guidelinestexth3'>General Guidelines for University Activities</h3>
+
+      
+          <div className="guidelineformprev">
+            <div className="text1guide">
+              1. Secure the Activity/Facility Form from the Grounds and Buildings Management Office and inquire if proposed activity has any conflict of schedule.
+            </div>
+            
+            <div className="text2guide">
+              2. Filing of Activity/Facility Form must be done at least five (5) days prior to the start of the activity.
+            </div>
+         
+            <div className="text3guide">
+              3. No activities sponsored by accredited student organizations must be scheduled ten (10) days before major examinations.
+            </div>
+          
+            <div className="text4guide">
+              4. In case of any change in the submitted form such as date, time or use of facilities, the requesting party must inform all signatories and concerned offices.
+            </div>
+          
+            <div className="text5guide">
+              5. At least two (2) days before the scheduled activity, approved copies of the Activity/Facilities Forms will be distributed as follows:
+            </div>
+            <div className="text5guide2">
+              5.1 Office of the Vice President for Administration & Auxiliary Services <br />
+              5.2 Office of the Vice President for Academic Affairs <br />
+              5.3 Office of the Grounds and Buildings Management <br />
+              5.4 AMSCO Office <br />
+              5.5 Security Office <br />
+              5.6 Generator Operator (If Necessary) <br />
+              5.7 Requesting Party
+            </div>
+          
+            <div className="text6guide">
+              6. Only officers of accredited student organizations in the university are authorized to make requests for the use of University facilities.
+            </div>
+        
+            <div className="text7guide">
+              7. The use of the facilities for fund raising activities sponsored by the students or any other school and organization shall be charged accordingly.
+            </div>
+          
+            <div className="text8guide">
+              8. Activities sponsored jointly with outside groups are required to execute a contract indicating the facilities to be used, the date, the time and the amount of rental.
+            </div>
+          
+            <div className="text9guide">
+              9. In case there is a prescribed arrangement of the requested facilities such as tables, chairs, sound system, ornamental plants, lights, etc., the requesting party must attach a proposed <br />
+              &nbsp;&nbsp;&nbsp;    layout of the arrangement in the Facility/Activity Form.
+            </div>
+
+           
+  <textarea id="additional-info-textarea" className="additional-info-textarea" placeholder='Layout of Tables and Chairs...'
+   onChange={e => setProgdetails(e.target.value)} readOnly></textarea>
+         
+            <div className="text10guide">
+              10. The adviser should be present during the whole duration of the activity.
+            </div>
+         
+            <div className="text11guide">
+              11. During night, after class or holiday reservations, the requesting party, guests and participants are discouraged to loiter.
+            </div>
+
+            <div className="text12guide">
+              I will be present during the activity and I recommend its approval
+            </div>
+
+            <br></br>
+            <br></br>
+
+            <table className='table-adviser'>
+        <tr>
+            <th>Adviser Name:</th>
+            <th>Adviser Signature:</th>
+            <th>Date:</th>
+        </tr>
+        <tr>
+            <td>{adviser.adv_name}</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+<br></br>
+<br></br>
+<br></br>
+    <table className='table-adviser'>
+        <tr>
+            <th>VPAAS</th>
+            <th>GBM</th>
+            <th>Security</th>
+            <th>Generator</th>
+            <th>File Copy</th>
+        </tr>
+      
+        <tr>
+            <td>Date: </td>
+            <td>Date: </td>
+            <td>Date: </td>
+            <td>Date: </td>
+            <td>Date: </td>
+        </tr>
+    </table>
+
+          </div>
+        </div>
+      
+
+      <div className="forPDF-faci" onClick={generatePDF}>
         <button >Download PDF</button>
       </div>
 

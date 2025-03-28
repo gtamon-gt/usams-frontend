@@ -81,12 +81,13 @@
 
 .sidebar li:hover {
   background-color: #eef0f2;
-  color: #A72837;
+  color: #555;
+  font-weight: 500;
 }
 
 .sidebar li.active {
-  background-color: #f8e5e7;
-  color: #A72837;
+  background-color: #d4edda;
+  color: #555;
   font-weight: 500;
 }
 
@@ -104,17 +105,6 @@
   transition: all 0.2s ease;
   font-size: 14px;
   color: #555;
-}
-
-.sidebar li:hover {
-  background-color: #eef0f2;
-  color: #A72837;
-}
-
-.sidebar li.active {
-  background-color: #eef0f2;
-  color: #A72837;
-  font-weight: 500;
 }
 
 .form-content {
@@ -162,7 +152,7 @@
 .section select:focus,
 .section textarea:focus {
   outline: none;
-  border-color: #A72837;
+  border-color: #5fa361;
 }
 
 .section textarea {
@@ -193,7 +183,7 @@
 }
 
 .incampus-button-proceed {
-  background-color: #A72837;
+  background-color: #5fa361;
   color: white;
   border: none;
 }
@@ -203,7 +193,7 @@
 }
 
 .incampus-button-proceed:hover {
-  background-color: #8f222f;
+  background-color: #4c7c50;
 }
 
 .form-a-title {
@@ -243,7 +233,7 @@
 
 .add-program {
   padding: 6px 12px;
-  background-color: #A72837;
+  background-color: #5fa361;
   color: white;
   border: none;
   border-radius: 6px;
@@ -252,7 +242,7 @@
 }
 
 .add-program:hover {
-  background-color: #8f222f;
+  background-color: #4c7c50;
 }
 
 /* Common button styles for Edit and Delete */
@@ -445,7 +435,7 @@
 
 .budget-table button {
   padding: 6px 12px;
-  background-color: #A72837;
+  background-color: #5fa361;
   color: white;
   border: none;
   border-radius: 6px;
@@ -454,7 +444,7 @@
 }
 
 .budget-table button:hover {
-  background-color: #8f222f;
+  background-color: #4c7c50;
 }
 
 .budget-form form {
@@ -477,7 +467,7 @@
 
 .budget-form button {
   padding: 10px 20px;
-  background-color: #A72837;
+  background-color: #5fa361;
   color: white;
   border: none;
   border-radius: 6px;
@@ -486,7 +476,7 @@
 }
 
 .budget-form button:hover {
-  background-color: #8f222f;
+  background-color: #4c7c50;
 }
 
 .total-amount {
@@ -632,7 +622,7 @@
 
 .add-student {
   padding: 6px 12px;
-  background-color: #A72837;
+  background-color: #5fa361;
   color: white;
   border: none;
   border-radius: 6px;
@@ -641,7 +631,7 @@
 }
 
 .add-student:hover {
-  background-color: #8f222f;
+  background-color: #4c7c50;
 }
 
 .withpermit {
@@ -758,7 +748,7 @@
 .form-d-content select:focus,
 .form-d-content textarea:focus {
   outline: none;
-  border-color: #A72837;
+  border-color: #5fa361;
 }
 
 .form-e-section {
@@ -886,7 +876,7 @@
 .committee-item input:focus,
 .committee-item textarea:focus {
   outline: none;
-  border-color: #A72837;
+  border-color: #5fa361;
 }
 
 .committee-item textarea {
@@ -894,10 +884,10 @@
   resize: vertical;
 }
 
-.committee-item button {
-  align-self: flex-end;
-  padding: 6px 12px;
-  background-color: #A72837;
+.committees-field-add {
+  align-self: flex-start;
+  padding: 10px 20px;
+  background-color: #5fa361;
   color: white;
   border: none;
   border-radius: 6px;
@@ -905,11 +895,11 @@
   transition: background-color 0.2s ease;
 }
 
-.committee-item button:hover {
-  background-color: #8f222f;
+.committees-field-add:hover {
+  background-color: #4c7c50;
 }
 
-.committees-field button {
+.committees-field-delete button {
   align-self: flex-start;
   padding: 10px 20px;
   background-color: #A72837;
@@ -920,8 +910,8 @@
   transition: background-color 0.2s ease;
 }
 
-.committees-field button:hover {
-  background-color: #8f222f;
+.committees-field-delete button:hover {
+  background-color: darkred;
 }
 
 .main-table th:nth-child(1),

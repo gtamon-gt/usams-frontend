@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import logo from '/unc_logo.png';
-import './Accreditation.css';
+import './accreditation/Accreditation.css';
 
 interface Member {
   member_id: string;

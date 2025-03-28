@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import logo from '/unc_logo.png';
-import './AdviserApproval.css';
+import './ProposalAdviserApproval.css';
 import axios from 'axios';
 
 interface User {
